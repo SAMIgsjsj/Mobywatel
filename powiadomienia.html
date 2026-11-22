@@ -1,0 +1,264 @@
+<html>
+<head>
+<link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoiIiwic2hvcnRfbmFtZSI6IiIsInRoZW1lX2NvbG9yIjoiI2Y1ZjZmYiIsImJhY2tncm91bmRfY29sb3IiOiIjZjVmNmZiIiwiZGlzcGxheSI6InN0YW5kYWxvbmUifQ==">
+    <title>mObywatel</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <link rel="stylesheet" href="assets/main.css">
+    <link rel="stylesheet" href="assets/more.css">
+    <link rel="icon" type="image/x-icon" href="assets/images/logo.png">
+    <link rel="apple-touch-icon" href="assets/images/logo.png">
+    <link rel="shortcut icon" href="assets/images/logo.png">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, initial-scale=0.8, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <style>
+        body {
+            background-color: #f5f6fb;
+            color: #111827;
+            margin: 0;
+        }
+
+        .notif_header {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 18px 18px 14px;
+            background-color: #f5f6fb;
+        }
+
+        .notif_back_btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 34px;
+            height: 34px;
+            border: none;
+            background: transparent;
+            color: #111827;
+            font-size: 22px;
+            line-height: 1;
+            cursor: pointer;
+            padding: 0;
+            border-radius: 50%;
+        }
+
+        .notif_back_btn:active {
+            background-color: rgba(17, 24, 39, 0.06);
+        }
+
+        .notif_title {
+            margin: 0;
+            font-size: 20px;
+            font-weight: 700;
+            color: #111827;
+            letter-spacing: -0.2px;
+        }
+
+        .notif_container {
+            padding: 6px 16px 120px;
+        }
+
+        .notif_lead {
+            margin: 0 4px 16px;
+            font-size: 14px;
+            color: #4b5563;
+            line-height: 1.45;
+        }
+
+        .notif_card {
+            background-color: #ffffff;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(15, 23, 42, 0.04);
+        }
+
+        .notif_row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 18px;
+            background-color: #ffffff;
+            border-bottom: 1px solid #eef0f6;
+        }
+
+        .notif_row:last-child {
+            border-bottom: none;
+        }
+
+        .notif_text_group {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .notif_item_title {
+            margin: 0 0 6px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #111827;
+            line-height: 1.35;
+        }
+
+        .notif_item_desc {
+            margin: 0;
+            font-size: 13.5px;
+            color: #4b5563;
+            line-height: 1.45;
+        }
+
+        .notif_switch {
+            position: relative;
+            display: inline-block;
+            width: 52px;
+            height: 30px;
+            flex-shrink: 0;
+        }
+
+        .notif_switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .notif_slider {
+            position: absolute;
+            cursor: pointer;
+            inset: 0;
+            background-color: #cbd5e1;
+            transition: background-color 0.2s ease;
+            border-radius: 999px;
+        }
+
+        .notif_slider::before {
+            position: absolute;
+            content: "";
+            height: 24px;
+            width: 24px;
+            left: 3px;
+            top: 3px;
+            background-color: #ffffff;
+            transition: transform 0.2s ease;
+            border-radius: 50%;
+            box-shadow: 0 1px 4px rgba(15, 23, 42, 0.2);
+        }
+
+        .notif_switch input:checked + .notif_slider {
+            background-color: #1d4ed8;
+        }
+
+        .notif_switch input:checked + .notif_slider::before {
+            transform: translateX(22px);
+        }
+
+        .notif_switch input:focus-visible + .notif_slider {
+            box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.2);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bottom_bar" style="height: 85px;">
+        <div class="bottom_bar_grid">
+            <div class="bottom_element_grid" send="home">
+                <div class="bottom_element_image home"></div>
+                <p class="bottom_element_text">Pulpit</p>
+            </div>
+            <div class="bottom_element_grid" send="documents">
+                <div class="bottom_element_image documents"></div>
+                <p class="bottom_element_text">Dokumenty</p>
+            </div>
+            <div class="bottom_element_grid" send="services">
+                <div class="bottom_element_image services"></div>
+                <p class="bottom_element_text">Usługi</p>
+            </div>
+            <div class="bottom_element_grid" send="qr">
+                <div class="bottom_element_image qr"></div>
+                <p class="bottom_element_text">Kod QR</p>
+            </div>
+            <div class="bottom_element_grid" send="more">
+                <div class="bottom_element_image more more_open"></div>
+                <p class="bottom_element_text open">Więcej</p>
+            </div>
+        </div>
+    </div>
+
+    <header class="notif_header">
+        <button type="button" class="notif_back_btn" onclick="sendTo('more')" aria-label="Wróć">←</button>
+        <h1 class="notif_title">Powiadomienia</h1>
+    </header>
+
+    <main class="notif_container">
+        <p class="notif_lead">Możesz wybrać powiadomienia, które chcesz dostawać.</p>
+
+        <div class="notif_card">
+            <div class="notif_row">
+                <div class="notif_text_group">
+                    <p class="notif_item_title">Dokumenty</p>
+                    <p class="notif_item_desc">Powiadomienia na przykład o możliwości odbioru, zbliżającym się końcu ważności czy unieważnieniu dokumentu.</p>
+                </div>
+
+                <label class="notif_switch" aria-label="Powiadomienia o dokumentach">
+                    <input type="checkbox" id="notifDocumentsToggle" checked>
+                    <span class="notif_slider"></span>
+                </label>
+            </div>
+
+            <div class="notif_row">
+                <div class="notif_text_group">
+                    <p class="notif_item_title">Informacyjne</p>
+                    <p class="notif_item_desc">Powiadomienia na przykład o nowościach, zmianach czy przerwach technicznych w aplikacji.</p>
+                </div>
+
+                <label class="notif_switch" aria-label="Powiadomienia informacyjne">
+                    <input type="checkbox" id="notifInformationalToggle" checked>
+                    <span class="notif_slider"></span>
+                </label>
+            </div>
+        </div>
+    </main>
+
+    <script src="assets/bar.js"></script>
+    <script src="assets/manifest.js"></script>
+    <script src="assets/cache.js"></script>
+    <script>
+        const DOCS_KEY = 'mobywatel_notif_documents';
+        const INFO_KEY = 'mobywatel_notif_informational';
+
+        const docsToggle = document.getElementById('notifDocumentsToggle');
+        const infoToggle = document.getElementById('notifInformationalToggle');
+
+        function sendTo(page) {
+            const query = window.location.search;
+            location.href = query ? `${page}.html${query}` : `${page}.html`;
+        }
+
+        function loadToggleState(inputEl, storageKey) {
+            try {
+                const saved = localStorage.getItem(storageKey);
+                if (saved !== null) {
+                    inputEl.checked = saved === 'true';
+                }
+            } catch (e) {}
+        }
+
+        function bindToggleState(inputEl, storageKey) {
+            inputEl.addEventListener('change', () => {
+                try {
+                    localStorage.setItem(storageKey, String(inputEl.checked));
+                } catch (e) {}
+            });
+        }
+
+        loadToggleState(docsToggle, DOCS_KEY);
+        loadToggleState(infoToggle, INFO_KEY);
+        bindToggleState(docsToggle, DOCS_KEY);
+        bindToggleState(infoToggle, INFO_KEY);
+    </script>
+</body>
+</html>

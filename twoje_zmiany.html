@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoiIiwic2hvcnRfbmFtZSI6IiIsInRoZW1lX2NvbG9yIjoiI2Y1ZjZmYiIsImJhY2tncm91bmRfY29sb3IiOiIjZjVmNmZiIiwiZGlzcGxheSI6InN0YW5kYWxvbmUifQ==">
+    <title>mObywatel</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <link rel="stylesheet" href="assets/main.css">
+    <link rel="icon" type="image/x-icon" href="assets/images/logo.png">
+    <link rel="apple-touch-icon" href="assets/images/logo.png">
+    <link rel="shortcut icon" href="assets/images/logo.png">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, initial-scale=0.8, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            background-color: #f5f6fb;
+            color: #111827;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        .top_bar_simple {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 18px;
+            background-color: #f5f6fb;
+        }
+
+        .back_btn_simple {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            border: none;
+            background: transparent;
+            color: #1d4ed8;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 4px 6px;
+        }
+
+        .page_title_simple {
+            margin: 0;
+            font-size: 18px;
+            font-weight: 700;
+            color: #111827;
+        }
+
+        .empty_state_wrap {
+            min-height: calc(100vh - 160px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px 20px 110px;
+            text-align: center;
+        }
+
+        .empty_state_box {
+            max-width: 360px;
+            background-color: #ffffff;
+            border-radius: 16px;
+            padding: 28px 22px;
+            box-shadow: 0 2px 10px rgba(15, 23, 42, 0.04);
+        }
+
+        .empty_state_title {
+            margin: 0 0 8px;
+            font-size: 17px;
+            font-weight: 700;
+            color: #111827;
+        }
+
+        .empty_state_text {
+            margin: 0;
+            font-size: 14.5px;
+            color: #4b5563;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="top_bar_simple">
+        <button type="button" class="back_btn_simple" onclick="sendTo('pesel')">← Wróć</button>
+        <h1 class="page_title_simple">Twoje zmiany</h1>
+    </div>
+
+    <div class="bottom_bar" style="height: 85px;">
+        <div class="bottom_bar_grid">
+            <div class="bottom_element_grid" send="home">
+                <div class="bottom_element_image home_open"></div>
+                <p class="bottom_element_text open">Pulpit</p>
+            </div>
+            <div class="bottom_element_grid" send="documents">
+                <div class="bottom_element_image documents"></div>
+                <p class="bottom_element_text">Dokumenty</p>
+            </div>
+            <div class="bottom_element_grid" send="services">
+                <div class="bottom_element_image services"></div>
+                <p class="bottom_element_text">Usługi</p>
+            </div>
+            <div class="bottom_element_grid" send="qr">
+                <div class="bottom_element_image qr"></div>
+                <p class="bottom_element_text">Kod QR</p>
+            </div>
+            <div class="bottom_element_grid" send="more">
+                <div class="bottom_element_image more"></div>
+                <p class="bottom_element_text">Więcej</p>
+            </div>
+        </div>
+    </div>
+
+    <main class="empty_state_wrap">
+        <div class="empty_state_box">
+            <p class="empty_state_title">Brak zmian w ostatnim czasie</p>
+            <p class="empty_state_text">Nie odnotowano żadnych zmian statusu Twojego numeru PESEL.</p>
+        </div>
+    </main>
+
+    <script src="assets/bar.js"></script>
+    <script src="assets/manifest.js"></script>
+    <script src="assets/cache.js"></script>
+    <script>
+        function sendTo(page) {
+            const query = window.location.search;
+            location.href = query ? `${page}.html${query}` : `${page}.html`;
+        }
+    </script>
+</body>
+</html>

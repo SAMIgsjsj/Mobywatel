@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoiIiwic2hvcnRfbmFtZSI6IiIsInRoZW1lX2NvbG9yIjoiI2Y1ZjZmYiIsImJhY2tncm91bmRfY29sb3IiOiIjZjVmNmZiIiwiZGlzcGxheSI6InN0YW5kYWxvbmUifQ==">
+    <title>mObywatel</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <link rel="stylesheet" href="assets/main.css">
+    <link rel="icon" type="image/x-icon" href="assets/images/logo.png">
+    <link rel="apple-touch-icon" href="assets/images/logo.png">
+    <link rel="shortcut icon" href="assets/images/logo.png">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, initial-scale=0.8, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            background-color: #f6f7fb;
+            color: #111827;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
+        }
+
+        .flood_topbar {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            display: grid;
+            grid-template-columns: 96px 1fr 96px;
+            align-items: center;
+            padding: 16px 14px 12px;
+            background-color: #f6f7fb;
+        }
+
+        .flood_back {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            border: none;
+            background: transparent;
+            color: #1665e3;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            padding: 4px 2px;
+            justify-self: start;
+        }
+
+        .flood_back svg {
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+        }
+
+        .flood_header_title {
+            margin: 0;
+            text-align: center;
+            font-size: 17px;
+            font-weight: 600;
+            color: #111827;
+        }
+
+        .flood_container {
+            max-width: 460px;
+            margin: 0 auto;
+            padding: 12px 18px 124px;
+        }
+
+        .flood_icon_wrap {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            background-color: #d6f5df;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 22px;
+        }
+
+        .flood_icon_wrap svg {
+            width: 38px;
+            height: 38px;
+        }
+
+        .flood_main_heading {
+            margin: 0 0 10px;
+            font-size: 32px;
+            line-height: 1.15;
+            font-weight: 800;
+            letter-spacing: -0.6px;
+            color: #111827;
+        }
+
+        .flood_subtitle {
+            margin: 0 0 24px;
+            font-size: 16px;
+            line-height: 1.45;
+            color: #4b5563;
+            font-weight: 400;
+        }
+
+        .flood_menu_card {
+            background-color: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 2px 14px rgba(15, 23, 42, 0.04);
+            overflow: hidden;
+            margin-bottom: 18px;
+        }
+
+        .flood_menu_item {
+            width: 100%;
+            border: none;
+            background: #ffffff;
+            padding: 18px 18px;
+            display: grid;
+            grid-template-columns: 32px 1fr 18px;
+            align-items: center;
+            gap: 14px;
+            text-align: left;
+            cursor: pointer;
+            transition: background-color 0.15s ease;
+        }
+
+        .flood_menu_item:active {
+            background-color: #f8fafc;
+        }
+
+        .flood_menu_item + .flood_menu_item {
+            border-top: 1px solid #eef0f5;
+        }
+
+        .flood_item_icon {
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #374151;
+        }
+
+        .flood_item_icon svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .flood_item_title {
+            margin: 0 0 4px;
+            font-size: 17px;
+            font-weight: 700;
+            color: #111827;
+            line-height: 1.3;
+        }
+
+        .flood_item_desc {
+            margin: 0;
+            font-size: 14px;
+            line-height: 1.4;
+            color: #525866;
+        }
+
+        .flood_chevron {
+            color: #6b7280;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
+
+        .flood_chevron svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .flood_support_card {
+            background-color: #dbeafe;
+            border-radius: 20px;
+            padding: 20px 18px;
+            display: grid;
+            grid-template-columns: 28px 1fr;
+            gap: 14px;
+            align-items: start;
+        }
+
+        .flood_support_icon {
+            width: 26px;
+            height: 26px;
+            color: #1665e3;
+            margin-top: 1px;
+        }
+
+        .flood_support_icon svg {
+            width: 26px;
+            height: 26px;
+        }
+
+        .flood_support_title {
+            margin: 0 0 8px;
+            font-size: 17px;
+            font-weight: 700;
+            color: #111827;
+            line-height: 1.3;
+        }
+
+        .flood_support_desc {
+            margin: 0 0 12px;
+            font-size: 15px;
+            line-height: 1.45;
+            color: #1f2937;
+        }
+
+        .flood_support_link {
+            display: inline-block;
+            color: #1665e3;
+            font-size: 15px;
+            font-weight: 500;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+
+        .flood_detail_box {
+            display: none;
+            margin-top: 14px;
+            background-color: #ffffff;
+            border-radius: 16px;
+            padding: 16px 18px;
+            box-shadow: 0 2px 10px rgba(15, 23, 42, 0.04);
+            border-left: 4px solid #1665e3;
+        }
+
+        .flood_detail_box.open {
+            display: block;
+        }
+
+        .flood_detail_heading {
+            margin: 0 0 6px;
+            font-size: 15.5px;
+            font-weight: 700;
+            color: #111827;
+        }
+
+        .flood_detail_text {
+            margin: 0;
+            font-size: 13.5px;
+            line-height: 1.5;
+            color: #4b5563;
+        }
+    </style>
+</head>
+<body>
+    <header class="flood_topbar">
+        <button type="button" class="flood_back" onclick="sendTo('services')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+            <span>Usługi</span>
+        </button>
+        <h1 class="flood_header_title">Alert powodziowy</h1>
+        <span></span>
+    </header>
+
+    <div class="bottom_bar" style="height: 85px;">
+        <div class="bottom_bar_grid">
+            <div class="bottom_element_grid" send="home">
+                <div class="bottom_element_image home"></div>
+                <p class="bottom_element_text">Pulpit</p>
+            </div>
+            <div class="bottom_element_grid" send="documents">
+                <div class="bottom_element_image documents"></div>
+                <p class="bottom_element_text">Dokumenty</p>
+            </div>
+            <div class="bottom_element_grid" send="services">
+                <div class="bottom_element_image services services_open"></div>
+                <p class="bottom_element_text open">Usługi</p>
+            </div>
+            <div class="bottom_element_grid" send="qr">
+                <div class="bottom_element_image qr"></div>
+                <p class="bottom_element_text">Kod QR</p>
+            </div>
+            <div class="bottom_element_grid" send="more">
+                <div class="bottom_element_image more"></div>
+                <p class="bottom_element_text">Więcej</p>
+            </div>
+        </div>
+    </div>
+
+    <main class="flood_container">
+        <div class="flood_icon_wrap" aria-hidden="true">
+            <svg viewBox="0 0 40 40" fill="none" stroke="#16a34a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 6L9 25h22L20 6z"></path>
+                <line x1="20" y1="13" x2="20" y2="19"></line>
+                <circle cx="20" cy="22.5" r="0.6" fill="#16a34a"></circle>
+                <path d="M7 30c2 2 4.5 2 6.5 0s4.5-2 6.5 0 4.5 2 6.5 0 4.5-2 6.5 0"></path>
+            </svg>
+        </div>
+
+        <h2 class="flood_main_heading">Sprawdź oficjalne informacje o powodzi</h2>
+        <p class="flood_subtitle">Tu znajdziesz aktualne i potwierdzone dane.</p>
+
+        <section class="flood_menu_card" aria-label="Opcje alertu powodziowego">
+            <button type="button" class="flood_menu_item" onclick="showFloodSection('map')">
+                <span class="flood_item_icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon>
+                        <line x1="8" y1="2" x2="8" y2="18"></line>
+                        <line x1="16" y1="6" x2="16" y2="22"></line>
+                        <circle cx="18.5" cy="7.5" r="2" fill="#f6f7fb"></circle>
+                    </svg>
+                </span>
+                <div>
+                    <p class="flood_item_title">Mapa ostrzeżeń</p>
+                    <p class="flood_item_desc">Zobacz, na których obszarach obowiązują ostrzeżenia hydrologiczne.</p>
+                </div>
+                <span class="flood_chevron" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </span>
+            </button>
+
+            <button type="button" class="flood_menu_item" onclick="showFloodSection('warnings')">
+                <span class="flood_item_icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 3L2.5 19.5h19L12 3z"></path>
+                        <line x1="12" y1="9" x2="12" y2="14"></line>
+                        <circle cx="12" cy="17" r="0.8" fill="currentColor"></circle>
+                    </svg>
+                </span>
+                <div>
+                    <p class="flood_item_title">Ostrzeżenia hydrologiczne</p>
+                    <p class="flood_item_desc">Zapoznaj się z aktualnymi ostrzeżeniami hydrologicznymi.</p>
+                </div>
+                <span class="flood_chevron" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </span>
+            </button>
+
+            <button type="button" class="flood_menu_item" onclick="showFloodSection('howto')">
+                <span class="flood_item_icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="9.5"></circle>
+                        <line x1="12" y1="11" x2="12" y2="16.5"></line>
+                        <circle cx="12" cy="7.5" r="0.9" fill="currentColor"></circle>
+                    </svg>
+                </span>
+                <div>
+                    <p class="flood_item_title">Jak postępować?</p>
+                    <p class="flood_item_desc">Dowiedz się, co robić w razie powodzi.</p>
+                </div>
+                <span class="flood_chevron" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </span>
+            </button>
+        </section>
+
+        <section class="flood_support_card" aria-label="Wsparcie materialne">
+            <span class="flood_support_icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="9.5"></circle>
+                    <line x1="12" y1="11" x2="12" y2="16.5"></line>
+                    <circle cx="12" cy="7.5" r="0.9" fill="currentColor"></circle>
+                </svg>
+            </span>
+            <div>
+                <h3 class="flood_support_title">Wsparcie materialne</h3>
+                <p class="flood_support_desc">Szukasz informacji o wsparciu materialnym dla osób poszkodowanych przez powódź?</p>
+                <a href="https://www.gov.pl" target="_blank" rel="noopener noreferrer" class="flood_support_link">Przejdź do gov.pl</a>
+            </div>
+        </section>
+
+        <div class="flood_detail_box" id="floodDetailBox">
+            <h4 class="flood_detail_heading" id="floodDetailTitle"></h4>
+            <p class="flood_detail_text" id="floodDetailText"></p>
+        </div>
+    </main>
+
+    <script src="assets/bar.js"></script>
+    <script src="assets/manifest.js"></script>
+    <script src="assets/cache.js"></script>
+    <script>
+        function sendTo(page) {
+            const query = window.location.search;
+            location.href = query ? `${page}.html${query}` : `${page}.html`;
+        }
+
+        const floodSections = {
+            map: {
+                title: 'Mapa ostrzeżeń',
+                text: 'W tym widoku sprawdzisz obszary objęte aktualnymi komunikatami i stopniami ostrzeżeń hydrologicznych.'
+            },
+            warnings: {
+                title: 'Ostrzeżenia hydrologiczne',
+                text: 'Brak aktywnych ostrzeżeń hydrologicznych dla wybranego obszaru. Śledź bieżące komunikaty służb.'
+            },
+            howto: {
+                title: 'Jak postępować?',
+                text: 'Stosuj się do poleceń służb ratunkowych i władz lokalnych, zabezpiecz ważne dokumenty oraz urządzenia na wyższych kondygnacjach i nie wchodź do wody w miejscach zagrożonych.'
+            }
+        };
+
+        let activeSectionKey = null;
+
+        function showFloodSection(key) {
+            const box = document.getElementById('floodDetailBox');
+            const titleEl = document.getElementById('floodDetailTitle');
+            const textEl = document.getElementById('floodDetailText');
+            const data = floodSections[key];
+            if (!data) return;
+
+            if (activeSectionKey === key && box.classList.contains('open')) {
+                box.classList.remove('open');
+                activeSectionKey = null;
+                return;
+            }
+
+            titleEl.textContent = data.title;
+            textEl.textContent = data.text;
+            box.classList.add('open');
+            activeSectionKey = key;
+        }
+    </script>
+</body>
+</html>

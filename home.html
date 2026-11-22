@@ -1,0 +1,232 @@
+<html>
+<head>
+<link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoiIiwic2hvcnRfbmFtZSI6IiIsInRoZW1lX2NvbG9yIjoiI2Y1ZjZmYiIsImJhY2tncm91bmRfY29sb3IiOiIjZjVmNmZiIiwiZGlzcGxheSI6InN0YW5kYWxvbmUifQ==">
+    <title>mObywatel</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <script>
+        (function guardHomeByPassword() {
+            try {
+                const savedPass = localStorage.getItem('mobywatel_app_password');
+                if (!savedPass) {
+                    const query = window.location.search;
+                    location.replace(query ? `id.html${query}` : 'id.html');
+                }
+            } catch (e) {}
+        })();
+    </script>
+    <link rel="stylesheet" href="assets/home.css">
+    <link rel="stylesheet" href="assets/main.css">
+    <link rel="icon" type="image/x-icon" href="assets/images/logo.png">
+    <link rel="apple-touch-icon" href="assets/images/logo.png">
+    <link rel="shortcut icon" href="assets/images/logo.png">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, initial-scale=0.8, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <style>
+        .profile_avatar_badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: #1665e3;
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 14px;
+            line-height: 1;
+            letter-spacing: 0.4px;
+            user-select: none;
+            box-sizing: border-box;
+            flex-shrink: 0;
+        }
+        .cards_row {
+            display: flex;
+            flex-direction: row;
+            gap: 12px;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            padding-bottom: 4px;
+            scrollbar-width: none;
+        }
+        .cards_row::-webkit-scrollbar {
+            display: none;
+        }
+        .cards_row .card {
+            flex: 0 0 86%;
+            max-width: 340px;
+            min-width: 260px;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        .dl_card_bg {
+            background: linear-gradient(135deg, #c2c8e8 0%, #dcd0e8 55%, #ebd0dc 100%);
+        }
+        .dl_icon {
+            position: absolute;
+            top: 14px;
+            left: 14px;
+            width: 28px;
+            height: 28px;
+            z-index: 2;
+            object-fit: contain;
+        }
+        .top_image.right,
+        .service_box {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="bottom_bar" style="height: 85px;">
+        <div class="bottom_bar_grid">
+            <div class="bottom_element_grid" send="home">
+                <div class="bottom_element_image home_open home"></div>
+                <p class="bottom_element_text open">Pulpit</p>
+            </div>
+            <div class="bottom_element_grid" send="documents">
+                <div class="bottom_element_image documents"></div>
+                <p class="bottom_element_text">Dokumenty</p>
+            </div>
+            <div class="bottom_element_grid" send="services">
+                <div class="bottom_element_image services"></div>
+                <p class="bottom_element_text">Usługi</p>
+            </div>
+            <div class="bottom_element_grid" send="qr">
+                <div class="bottom_element_image qr"></div>
+                <p class="bottom_element_text">Kod QR</p>
+            </div>
+            <div class="bottom_element_grid" send="more">
+                <div class="bottom_element_image more"></div>
+                <p class="bottom_element_text">Więcej</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="top_grid">
+            <div id="topProfileAvatar" class="top_image profile_avatar_badge" aria-label="Inicjały użytkownika">MN</div>
+            <img src="assets/images/bell.png" class="top_image right" onclick="sendTo('powiadomienia')">
+        </div>
+        <div class="card_grid">
+            <p class="title">Dokumenty</p>
+            <button class="main_button" onclick="sendTo('dodawanie_dokumentu')">Dodaj</button>
+            <button class="main_button all_documents" onclick="sendTo('documents')">Wszystkie</button>
+        </div>
+
+        <div class="cards_row">
+            <div class="card dl_card_bg" onclick="sendTo('prawo_jazdy')">
+                <img src="assets/images/steering_wheel.png" class="dl_icon" alt="">
+                <img class="background" src="assets/images/card_background.png" style="opacity: 0.25;">
+                <div class="id_bottom">
+                    <p class="name">mPrawo jazdy</p>
+                    <img class="arrow" src="assets/images/right_arrow_sharp.png">
+                </div>
+            </div>
+
+            <div class="card" onclick="sendTo('card')">
+                <img class="background" src="assets/images/card_background.png">
+                <img class="human" src="assets/images/human.png">
+                <div class="id_bottom">
+                    <p class="name">mDowód</p>
+                    <img class="arrow" src="assets/images/right_arrow_sharp.png">
+                </div>
+            </div>
+        </div>
+
+        <div class="card_below_grid">
+            <p class="title">Usługi</p>
+            <button class="main_button all_services" onclick="sendTo('services')">Wszystkie</button>
+        </div>
+        <div class="services_grid">
+            <div class="service_box" onclick="sendTo('bezpiecznie_w_sieci')">
+                <img class="service_box_icon" src="assets/images/safe_in_web.png">
+                <p class="service_box_name">Bezpiecznie w sieci</p>
+            </div>
+            <div class="service_box" onclick="sendTo('historia')">
+                <img class="service_box_icon" src="assets/images/vehicle.png">
+                <p class="service_box_name">Historia pojazdu</p>
+            </div>
+            <div class="service_box" onclick="sendTo('pesel')">
+                <img class="service_box_icon" src="assets/images/pesel.png">
+                <p class="service_box_name">Zastrzeż PESEL</p>
+            </div>
+            <div class="service_box" onclick="sendTo('firma')">
+                <img class="service_box_icon" src="assets/images/business.png">
+                <p class="service_box_name">Firma</p>
+            </div>
+            <div class="service_box" onclick="sendTo('punkty_karne')">
+                <img class="service_box_icon" src="assets/images/penalties.png">
+                <p class="service_box_name">Punkty karne</p>
+            </div>
+            <div class="service_box" onclick="sendTo('mandaty')">
+                <img class="service_box_icon" src="assets/images/tickets.png">
+                <p class="service_box_name">Mandaty</p>
+            </div>
+        </div>
+    </div>
+    
+    <script src="assets/bar.js"></script>
+    <script src="assets/manifest.js"></script>
+    <script src="assets/cache.js"></script>
+    <script>
+        function sendTo(page) {
+            const query = window.location.search;
+            location.href = query ? `${page}.html${query}` : `${page}.html`;
+        }
+
+        (function initProfileAvatarBadge() {
+            function getInitials() {
+                let profile = null;
+                try {
+                    const raw = localStorage.getItem('mobywatel_profile_data');
+                    if (raw) profile = JSON.parse(raw);
+                } catch (e) {}
+
+                const namePart = profile && profile.name ? String(profile.name).trim() : '';
+                const surnamePart = profile && profile.surname ? String(profile.surname).trim() : '';
+
+                const firstInitial = namePart ? Array.from(namePart)[0] : 'M';
+                const lastInitial = surnamePart ? Array.from(surnamePart)[0] : 'N';
+
+                return `${firstInitial}${lastInitial}`.toUpperCase();
+            }
+
+            function syncAvatarSize() {
+                const badge = document.getElementById('topProfileAvatar');
+                if (!badge) return;
+
+                badge.textContent = getInitials();
+
+                const bell = document.querySelector('.top_image.right');
+                const rect = badge.getBoundingClientRect();
+                const bellRect = bell ? bell.getBoundingClientRect() : null;
+
+                let size = Math.round(rect.width || rect.height || 0);
+                if (!size && bellRect && bellRect.height > 0) {
+                    size = Math.round(bellRect.height);
+                }
+                if (!size) {
+                    size = 36;
+                }
+
+                badge.style.width = `${size}px`;
+                badge.style.height = `${size}px`;
+                badge.style.fontSize = `${Math.max(11, Math.round(size * 0.4))}px`;
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', syncAvatarSize);
+            } else {
+                syncAvatarSize();
+            }
+            window.addEventListener('load', syncAvatarSize);
+            window.addEventListener('resize', syncAvatarSize);
+        })();
+    </script>
+</body>
+</html>

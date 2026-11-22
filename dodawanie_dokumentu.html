@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoiIiwic2hvcnRfbmFtZSI6IiIsInRoZW1lX2NvbG9yIjoiI2Y1ZjZmYiIsImJhY2tncm91bmRfY29sb3IiOiIjZjVmNmZiIiwiZGlzcGxheSI6InN0YW5kYWxvbmUifQ==">
+    <title>mObywatel — Dodaj dokument</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <link rel="stylesheet" href="assets/main.css">
+    <link rel="stylesheet" href="assets/card.css">
+    <link rel="icon" type="image/x-icon" href="assets/images/logo.png">
+    <link rel="apple-touch-icon" href="assets/images/logo.png">
+    <link rel="shortcut icon" href="assets/images/logo.png">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, initial-scale=0.8, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <style>
+        .add_doc_container {
+            padding-top: 76px;
+            padding-bottom: 120px;
+            box-sizing: border-box;
+        }
+
+        .add_doc_heading {
+            margin: 8px 2px 6px;
+            font-size: 20px;
+            font-weight: 700;
+            color: #1f2125;
+        }
+
+        .add_doc_sub {
+            margin: 0 2px 14px;
+            font-size: 13.5px;
+            line-height: 1.45;
+            color: #525866;
+        }
+
+        .add_doc_list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .add_doc_item {
+            width: 100%;
+            border: none;
+            background-color: #ffffff;
+            border-radius: 14px;
+            padding: 15px 16px;
+            box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            cursor: pointer;
+            text-align: left;
+            box-sizing: border-box;
+        }
+
+        .add_doc_item_left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 0;
+        }
+
+        .add_doc_icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            background-color: #eef3fe;
+            color: #1665e3;
+            font-size: 14px;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .add_doc_name {
+            margin: 0;
+            font-size: 15px;
+            font-weight: 600;
+            color: #1f2125;
+        }
+
+        .add_doc_desc {
+            margin: 2px 0 0;
+            font-size: 12px;
+            color: #6b7280;
+        }
+
+        .add_doc_arrow {
+            font-size: 20px;
+            color: #6b7280;
+            flex-shrink: 0;
+        }
+
+        .add_doc_card {
+            background-color: #ffffff;
+            border-radius: 16px;
+            padding: 18px;
+            box-shadow: 0 2px 10px rgba(15, 23, 42, 0.05);
+            box-sizing: border-box;
+        }
+
+        .add_doc_step_badge {
+            display: inline-block;
+            background-color: #e8f0fe;
+            color: #1665e3;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 999px;
+            margin-bottom: 10px;
+        }
+
+        .add_doc_card_title {
+            margin: 0 0 8px;
+            font-size: 18px;
+            font-weight: 700;
+            color: #1f2125;
+        }
+
+        .add_doc_card_text {
+            margin: 0 0 14px;
+            font-size: 13.5px;
+            line-height: 1.5;
+            color: #4b5563;
+        }
+
+        .add_doc_progress_track {
+            width: 100%;
+            height: 8px;
+            background-color: #e5e7eb;
+            border-radius: 999px;
+            overflow: hidden;
+            margin-bottom: 14px;
+        }
+
+        .add_doc_progress_bar {
+            width: 0%;
+            height: 100%;
+            background-color: #1665e3;
+            transition: width 0.35s ease;
+        }
+
+        .add_doc_summary {
+            background-color: #f8fafc;
+            border-radius: 12px;
+            padding: 12px 14px;
+            margin-bottom: 14px;
+            font-size: 13px;
+            line-height: 1.5;
+            color: #1f2937;
+        }
+
+        .add_doc_actions {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .add_doc_primary_btn {
+            width: 100%;
+            border: none;
+            background-color: #1665e3;
+            color: #ffffff;
+            font-size: 15px;
+            font-weight: 600;
+            padding: 13px 16px;
+            border-radius: 12px;
+            cursor: pointer;
+        }
+
+        .add_doc_secondary_btn {
+            width: 100%;
+            border: 1px solid #d1d5db;
+            background-color: #ffffff;
+            color: #1f2125;
+            font-size: 14px;
+            font-weight: 600;
+            padding: 12px 16px;
+            border-radius: 12px;
+            cursor: pointer;
+        }
+
+        .add_doc_hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="top_grid_fixed">
+        <div class="action_grid_fixed">
+            <img src="assets/images/back_blue.png" class="back_img_fixed" alt="" onerror="this.style.display='none'">
+            <p onclick="handleBackClick()" class="back_text_fixed">Wróć</p>
+        </div>
+        <p class="title_text_fixed">Dodaj dokument</p>
+        <img src="assets/images/help.png" class="help_img_fixed" alt="" onclick="alert('Wybierz dokument z listy, aby zasymulować sprawdzenie w rejestrze i dodanie go do aplikacji.')" onerror="this.style.display='none'">
+    </div>
+
+    <div class="bottom_bar" style="height: 85px;">
+        <div class="bottom_bar_grid">
+            <div class="bottom_element_grid" send="home">
+                <div class="bottom_element_image home"></div>
+                <p class="bottom_element_text">Pulpit</p>
+            </div>
+            <div class="bottom_element_grid" send="documents">
+                <div class="bottom_element_image documents documents_open"></div>
+                <p class="bottom_element_text open">Dokumenty</p>
+            </div>
+            <div class="bottom_element_grid" send="services">
+                <div class="bottom_element_image services"></div>
+                <p class="bottom_element_text">Usługi</p>
+            </div>
+            <div class="bottom_element_grid" send="qr">
+                <div class="bottom_element_image qr"></div>
+                <p class="bottom_element_text">Kod QR</p>
+            </div>
+            <div class="bottom_element_grid" send="more">
+                <div class="bottom_element_image more"></div>
+                <p class="bottom_element_text">Więcej</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container add_doc_container">
+        <div id="stepSelectDoc">
+            <p class="add_doc_heading">Wybierz dokument</p>
+            <p class="add_doc_sub">Wybierz dokument, który chcesz zasymulować i dodać do swojego profilu w aplikacji.</p>
+
+            <div class="add_doc_list">
+                <button type="button" class="add_doc_item" onclick="startDocFlow('dowod')">
+                    <span class="add_doc_item_left">
+                        <span class="add_doc_icon">ID</span>
+                        <span>
+                            <span class="add_doc_name">mDowód</span><br>
+                            <span class="add_doc_desc">Potwierdzenie tożsamości • Rejestr PESEL</span>
+                        </span>
+                    </span>
+                    <span class="add_doc_arrow">›</span>
+                </button>
+
+                <button type="button" class="add_doc_item" onclick="startDocFlow('prawo_jazdy')">
+                    <span class="add_doc_item_left">
+                        <span class="add_doc_icon">PJ</span>
+                        <span>
+                            <span class="add_doc_name">mPrawo jazdy</span><br>
+                            <span class="add_doc_desc">Uprawnienia do kierowania pojazdami • CEPiK</span>
+                        </span>
+                    </span>
+                    <span class="add_doc_arrow">›</span>
+                </button>
+
+                <button type="button" class="add_doc_item" onclick="startDocFlow('szkolna')">
+                    <span class="add_doc_item_left">
+                        <span class="add_doc_icon">LS</span>
+                        <span>
+                            <span class="add_doc_name">Legitymacja szkolna</span><br>
+                            <span class="add_doc_desc">System informacji oświatowej</span>
+                        </span>
+                    </span>
+                    <span class="add_doc_arrow">›</span>
+                </button>
+
+                <button type="button" class="add_doc_item" onclick="startDocFlow('studencka')">
+                    <span class="add_doc_item_left">
+                        <span class="add_doc_icon">ELS</span>
+                        <span>
+                            <span class="add_doc_name">Legitymacja studencka</span><br>
+                            <span class="add_doc_desc">Rejestr uczelni i studentów</span>
+                        </span>
+                    </span>
+                    <span class="add_doc_arrow">›</span>
+                </button>
+
+                <button type="button" class="add_doc_item" onclick="startDocFlow('kdr')">
+                    <span class="add_doc_item_left">
+                        <span class="add_doc_icon">KDR</span>
+                        <span>
+                            <span class="add_doc_name">Karta Dużej Rodziny</span><br>
+                            <span class="add_doc_desc">Uprawnienia dla rodzin wielodzietnych</span>
+                        </span>
+                    </span>
+                    <span class="add_doc_arrow">›</span>
+                </button>
+            </div>
+        </div>
+
+        <div id="stepVerifyDoc" class="add_doc_card add_doc_hidden">
+            <span class="add_doc_step_badge" id="verifyBadge">Krok 1 z 2 • Sprawdzanie rejestru</span>
+            <h2 class="add_doc_card_title" id="verifyTitle">Pobieranie danych dokumentu</h2>
+            <p class="add_doc_card_text" id="verifyStatusText">Trwa łączenie z rejestrem i weryfikacja uprawnień...</p>
+
+            <div class="add_doc_progress_track">
+                <div class="add_doc_progress_bar" id="verifyProgressBar"></div>
+            </div>
+
+            <div class="add_doc_summary" id="verifySummary"></div>
+
+            <div class="add_doc_actions">
+                <button type="button" class="add_doc_primary_btn" id="confirmAddBtn" onclick="completeAddingDoc()">
+                    Potwierdź i dodaj dokument
+                </button>
+                <button type="button" class="add_doc_secondary_btn" onclick="resetDocFlow()">
+                    Zmień dokument
+                </button>
+            </div>
+        </div>
+
+        <div id="stepDoneDoc" class="add_doc_card add_doc_hidden">
+            <span class="add_doc_step_badge">Gotowe • Dodano do profilu</span>
+            <h2 class="add_doc_card_title" id="doneTitle">Dokument został dodany</h2>
+            <p class="add_doc_card_text" id="doneText">Dokument jest już widoczny w Twoim profilu i możesz go otworzyć jednym kliknięciem.</p>
+
+            <div class="add_doc_actions">
+                <button type="button" class="add_doc_primary_btn" id="openAddedDocBtn" onclick="openTargetDoc()">
+                    Otwórz dokument
+                </button>
+                <button type="button" class="add_doc_secondary_btn" onclick="sendTo('home')">
+                    Wróć na pulpit
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/encode.js"></script>
+    <script src="assets/bar.js"></script>
+    <script src="assets/manifest.js"></script>
+    <script src="assets/cache.js"></script>
+    <script>
+        const DOC_CONFIG = {
+            dowod: {
+                name: 'mDowód',
+                registry: 'Rejestr Dowodów Osobistych / PESEL',
+                targetPage: 'card'
+            },
+            prawo_jazdy: {
+                name: 'mPrawo jazdy',
+                registry: 'Centralna Ewidencja Kierowców (CEPiK)',
+                targetPage: 'prawo_jazdy'
+            },
+            szkolna: {
+                name: 'Legitymacja szkolna',
+                registry: 'System Informacji Oświatowej',
+                targetPage: 'documents'
+            },
+            studencka: {
+                name: 'Legitymacja studencka',
+                registry: 'Zintegrowany System Informacji o Szkolnictwie Wyższym',
+                targetPage: 'documents'
+            },
+            kdr: {
+                name: 'Karta Dużej Rodziny',
+                registry: 'Rejestr Karty Dużej Rodziny',
+                targetPage: 'documents'
+            }
+        };
+
+        let activeDocKey = null;
+
+        function sendTo(page) {
+            const currentParams = new URLSearchParams(window.location.search);
+            const query = currentParams.toString();
+            location.href = query ? `${page}.html?${query}` : `${page}.html`;
+        }
+
+        function handleBackClick() {
+            const verifyVisible = !document.getElementById('stepVerifyDoc').classList.contains('add_doc_hidden');
+            const doneVisible = !document.getElementById('stepDoneDoc').classList.contains('add_doc_hidden');
+            if (verifyVisible || doneVisible) {
+                resetDocFlow();
+            } else {
+                sendTo('home');
+            }
+        }
+
+        function getProfilePreview() {
+            try {
+                const raw = localStorage.getItem('mobywatel_profile_data');
+                if (!raw) return null;
+                return JSON.parse(raw);
+            } catch (e) {
+                return null;
+            }
+        }
+
+        function startDocFlow(docKey) {
+            const cfg = DOC_CONFIG[docKey];
+            if (!cfg) return;
+            activeDocKey = docKey;
+
+            document.getElementById('stepSelectDoc').classList.add('add_doc_hidden');
+            document.getElementById('stepDoneDoc').classList.add('add_doc_hidden');
+            document.getElementById('stepVerifyDoc').classList.remove('add_doc_hidden');
+
+            document.getElementById('verifyBadge').textContent = 'Krok 1 z 2 • Sprawdzanie rejestru';
+            document.getElementById('verifyTitle').textContent = `Dodawanie: ${cfg.name}`;
+            document.getElementById('verifyStatusText').textContent = `Trwa sprawdzanie uprawnień w: ${cfg.registry}...`;
+
+            const bar = document.getElementById('verifyProgressBar');
+            bar.style.width = '25%';
+
+            const profile = getProfilePreview();
+            const fullName = profile && (profile.name || profile.surname)
+                ? `${profile.name || ''} ${profile.surname || ''}`.trim()
+                : 'Użytkownik profilu';
+
+            document.getElementById('verifySummary').innerHTML =
+                `<strong>Dokument:</strong> ${cfg.name}<br>` +
+                `<strong>Rejestr:</strong> ${cfg.registry}<br>` +
+                `<strong>Posiadacz:</strong> ${fullName}`;
+
+            setTimeout(() => {
+                bar.style.width = '75%';
+                document.getElementById('verifyBadge').textContent = 'Krok 2 z 2 • Potwierdzenie dodania';
+                document.getElementById('verifyStatusText').textContent = 'Dane zostały odnalezione. Potwierdź, aby dodać dokument do aplikacji.';
+            }, 450);
+        }
+
+        function resetDocFlow() {
+            activeDocKey = null;
+            document.getElementById('stepVerifyDoc').classList.add('add_doc_hidden');
+            document.getElementById('stepDoneDoc').classList.add('add_doc_hidden');
+            document.getElementById('stepSelectDoc').classList.remove('add_doc_hidden');
+            document.getElementById('verifyProgressBar').style.width = '0%';
+        }
+
+        function completeAddingDoc() {
+            const cfg = DOC_CONFIG[activeDocKey];
+            if (!cfg) return;
+
+            document.getElementById('verifyProgressBar').style.width = '100%';
+
+            try {
+                const rawList = localStorage.getItem('mobywatel_added_docs');
+                const parsed = rawList ? JSON.parse(rawList) : [];
+                const list = Array.isArray(parsed) ? parsed : [];
+                if (!list.includes(activeDocKey)) {
+                    list.push(activeDocKey);
+                    localStorage.setItem('mobywatel_added_docs', JSON.stringify(list));
+                }
+            } catch (e) {}
+
+            document.getElementById('stepVerifyDoc').classList.add('add_doc_hidden');
+            document.getElementById('stepDoneDoc').classList.remove('add_doc_hidden');
+            document.getElementById('doneTitle').textContent = `Dodano: ${cfg.name}`;
+            document.getElementById('doneText').textContent =
+                `Dokument ${cfg.name} został pomyślnie pobrany z rejestru i zapisany w Twoim profilu.`;
+        }
+
+        function openTargetDoc() {
+            const cfg = DOC_CONFIG[activeDocKey];
+            if (!cfg) {
+                sendTo('home');
+                return;
+            }
+            sendTo(cfg.targetPage);
+        }
+    </script>
+</body>
+</html>

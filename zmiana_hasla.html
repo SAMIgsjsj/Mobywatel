@@ -1,0 +1,400 @@
+<html>
+<head>
+<link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoiIiwic2hvcnRfbmFtZSI6IiIsInRoZW1lX2NvbG9yIjoiI2Y1ZjZmYiIsImJhY2tncm91bmRfY29sb3IiOiIjZjVmNmZiIiwiZGlzcGxheSI6InN0YW5kYWxvbmUifQ==">
+    <title>mObywatel</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <link rel="stylesheet" href="assets/main.css">
+    <link rel="stylesheet" href="assets/more.css">
+    <link rel="icon" type="image/x-icon" href="assets/images/logo.png">
+    <link rel="apple-touch-icon" href="assets/images/logo.png">
+    <link rel="shortcut icon" href="assets/images/logo.png">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, initial-scale=0.8, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <style>
+        body {
+            background-color: #f5f6fb;
+            color: #111827;
+            margin: 0;
+        }
+
+        .pass_header {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 18px 18px 14px;
+            background-color: #f5f6fb;
+        }
+
+        .pass_back_btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 34px;
+            height: 34px;
+            border: none;
+            background: transparent;
+            color: #111827;
+            font-size: 22px;
+            line-height: 1;
+            cursor: pointer;
+            padding: 0;
+            border-radius: 50%;
+        }
+
+        .pass_back_btn:active {
+            background-color: rgba(17, 24, 39, 0.06);
+        }
+
+        .pass_header_title {
+            margin: 0;
+            font-size: 19px;
+            font-weight: 700;
+            color: #111827;
+            letter-spacing: -0.2px;
+        }
+
+        .pass_container {
+            padding: 26px 20px 120px;
+            max-width: 440px;
+            margin: 0 auto;
+        }
+
+        .pass_icon_wrap {
+            margin-bottom: 18px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+        }
+
+        .pass_icon_img {
+            width: 36px;
+            height: 36px;
+            object-fit: contain;
+        }
+
+        .pass_icon_fallback {
+            font-size: 30px;
+            line-height: 1;
+        }
+
+        .pass_prompt {
+            margin: 0 0 18px;
+            font-size: 22px;
+            font-weight: 700;
+            color: #111827;
+            letter-spacing: -0.3px;
+            line-height: 1.3;
+        }
+
+        .pass_input_card {
+            background-color: #ffffff;
+            border-radius: 14px;
+            padding: 12px 14px;
+            box-shadow: 0 2px 10px rgba(15, 23, 42, 0.04);
+            border: 1.5px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: border-color 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .pass_input_card:focus-within {
+            border-color: #1d4ed8;
+            box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.12);
+        }
+
+        .pass_long_input {
+            flex: 1;
+            width: 100%;
+            min-width: 0;
+            border: none;
+            background: transparent;
+            font-size: 16px;
+            font-weight: 500;
+            color: #111827;
+            outline: none;
+            padding: 4px 0;
+        }
+
+        .pass_toggle_btn {
+            flex-shrink: 0;
+            border: none;
+            background: transparent;
+            color: #4b5563;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 6px 8px;
+            border-radius: 8px;
+        }
+
+        .pass_toggle_btn:active {
+            background-color: #f3f4f6;
+        }
+
+        .pass_helper_row {
+            margin-top: 12px;
+            min-height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .pass_error_text {
+            margin: 0;
+            font-size: 13px;
+            font-weight: 500;
+            color: #dc2626;
+        }
+
+        .pass_reset_step_btn {
+            border: none;
+            background: transparent;
+            color: #1d4ed8;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 4px 0;
+        }
+
+        .pass_submit_btn {
+            margin-top: 18px;
+            width: 100%;
+            padding: 14px 16px;
+            border: none;
+            border-radius: 12px;
+            background-color: #1d4ed8;
+            color: #ffffff;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .pass_submit_btn:active {
+            background-color: #1e40af;
+        }
+
+        .pass_success_card {
+            display: none;
+            margin-top: 16px;
+            background-color: #ffffff;
+            border-radius: 16px;
+            padding: 22px 18px;
+            box-shadow: 0 2px 10px rgba(15, 23, 42, 0.04);
+        }
+
+        .pass_success_card.active {
+            display: block;
+        }
+
+        .pass_success_title {
+            margin: 0 0 6px;
+            font-size: 17px;
+            font-weight: 700;
+            color: #111827;
+        }
+
+        .pass_success_desc {
+            margin: 0 0 16px;
+            font-size: 14px;
+            color: #4b5563;
+            line-height: 1.45;
+        }
+
+        .pass_done_btn {
+            width: 100%;
+            padding: 13px 16px;
+            border: none;
+            border-radius: 12px;
+            background-color: #1d4ed8;
+            color: #ffffff;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .pass_done_btn:active {
+            background-color: #1e40af;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bottom_bar" style="height: 85px;">
+        <div class="bottom_bar_grid">
+            <div class="bottom_element_grid" send="home">
+                <div class="bottom_element_image home"></div>
+                <p class="bottom_element_text">Pulpit</p>
+            </div>
+            <div class="bottom_element_grid" send="documents">
+                <div class="bottom_element_image documents"></div>
+                <p class="bottom_element_text">Dokumenty</p>
+            </div>
+            <div class="bottom_element_grid" send="services">
+                <div class="bottom_element_image services"></div>
+                <p class="bottom_element_text">Usługi</p>
+            </div>
+            <div class="bottom_element_grid" send="qr">
+                <div class="bottom_element_image qr"></div>
+                <p class="bottom_element_text">Kod QR</p>
+            </div>
+            <div class="bottom_element_grid" send="more">
+                <div class="bottom_element_image more more_open"></div>
+                <p class="bottom_element_text open">Więcej</p>
+            </div>
+        </div>
+    </div>
+
+    <header class="pass_header">
+        <button type="button" class="pass_back_btn" onclick="sendTo('more')" aria-label="Wróć">←</button>
+        <h1 class="pass_header_title">Zmień hasło</h1>
+    </header>
+
+    <main class="pass_container">
+        <div id="stepFormArea">
+            <div class="pass_icon_wrap">
+                <img class="pass_icon_img" src="assets/images/key.png" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
+                <span class="pass_icon_fallback" style="display:none;">🔐</span>
+            </div>
+
+            <p class="pass_prompt" id="passPrompt">Wpisz aktualne hasło</p>
+
+            <div class="pass_input_card">
+                <input
+                    type="password"
+                    id="passwordInput"
+                    class="pass_long_input"
+                    placeholder="Wpisz hasło"
+                    autocomplete="off"
+                    autocapitalize="off"
+                    spellcheck="false"
+                >
+                <button type="button" class="pass_toggle_btn" id="toggleVisibilityBtn" onclick="togglePasswordVisibility()">Pokaż</button>
+            </div>
+
+            <div class="pass_helper_row">
+                <p class="pass_error_text" id="passError"></p>
+                <button type="button" class="pass_reset_step_btn" id="resetFlowBtn" onclick="resetFlow()" style="display:none;">Zacznij od nowa</button>
+            </div>
+
+            <button type="button" class="pass_submit_btn" id="submitStepBtn" onclick="handleStepSubmit()">Dalej</button>
+        </div>
+
+        <div class="pass_success_card" id="successCard">
+            <p class="pass_success_title">Hasło zostało zmienione</p>
+            <p class="pass_success_desc">Twoje nowe hasło do aplikacji zostało zapisane na tym urządzeniu.</p>
+            <button type="button" class="pass_done_btn" onclick="sendTo('more')">Wróć do Więcej</button>
+        </div>
+    </main>
+
+    <script src="assets/bar.js"></script>
+    <script src="assets/manifest.js"></script>
+    <script src="assets/cache.js"></script>
+    <script>
+        let currentStep = 'current'; // 'current' | 'new' | 'repeat'
+        let newPasswordValue = '';
+
+        const passwordInput = document.getElementById('passwordInput');
+        const toggleVisibilityBtn = document.getElementById('toggleVisibilityBtn');
+        const passPrompt = document.getElementById('passPrompt');
+        const passError = document.getElementById('passError');
+        const resetFlowBtn = document.getElementById('resetFlowBtn');
+        const submitStepBtn = document.getElementById('submitStepBtn');
+        const stepFormArea = document.getElementById('stepFormArea');
+        const successCard = document.getElementById('successCard');
+
+        function sendTo(page) {
+            const query = window.location.search;
+            location.href = query ? `${page}.html${query}` : `${page}.html`;
+        }
+
+        function togglePasswordVisibility() {
+            const isHidden = passwordInput.type === 'password';
+            passwordInput.type = isHidden ? 'text' : 'password';
+            toggleVisibilityBtn.textContent = isHidden ? 'Ukryj' : 'Pokaż';
+            passwordInput.focus();
+        }
+
+        function setStep(step) {
+            currentStep = step;
+            passwordInput.value = '';
+            passError.textContent = '';
+
+            if (step === 'current') {
+                passPrompt.textContent = 'Wpisz aktualne hasło';
+                passwordInput.placeholder = 'Wpisz aktualne hasło';
+                submitStepBtn.textContent = 'Dalej';
+                resetFlowBtn.style.display = 'none';
+            } else if (step === 'new') {
+                passPrompt.textContent = 'Wpisz nowe hasło';
+                passwordInput.placeholder = 'Wpisz nowe hasło';
+                submitStepBtn.textContent = 'Dalej';
+                resetFlowBtn.style.display = 'inline-block';
+            } else if (step === 'repeat') {
+                passPrompt.textContent = 'Powtórz nowe hasło';
+                passwordInput.placeholder = 'Powtórz nowe hasło';
+                submitStepBtn.textContent = 'Zapisz hasło';
+                resetFlowBtn.style.display = 'inline-block';
+            }
+
+            passwordInput.focus();
+        }
+
+        function resetFlow() {
+            newPasswordValue = '';
+            setStep('current');
+        }
+
+        function handleStepSubmit() {
+            const entered = passwordInput.value;
+            if (!entered.trim()) {
+                passError.textContent = 'Wpisz hasło, aby przejść dalej.';
+                passwordInput.focus();
+                return;
+            }
+
+            passError.textContent = '';
+
+            if (currentStep === 'current') {
+                setStep('new');
+            } else if (currentStep === 'new') {
+                newPasswordValue = entered;
+                setStep('repeat');
+            } else if (currentStep === 'repeat') {
+                if (entered === newPasswordValue) {
+                    try {
+                        localStorage.setItem('mobywatel_custom_password', entered);
+                    } catch (e) {}
+                    stepFormArea.style.display = 'none';
+                    successCard.classList.add('active');
+                } else {
+                    passError.textContent = 'Hasła nie są takie same. Spróbuj ponownie.';
+                    passwordInput.value = '';
+                    passwordInput.focus();
+                }
+            }
+        }
+
+        passwordInput.addEventListener('input', () => {
+            passError.textContent = '';
+        });
+
+        passwordInput.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                handleStepSubmit();
+            }
+        });
+    </script>
+</body>
+</html>

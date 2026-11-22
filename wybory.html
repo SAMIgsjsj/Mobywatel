@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoiIiwic2hvcnRfbmFtZSI6IiIsInRoZW1lX2NvbG9yIjoiI2Y1ZjZmYiIsImJhY2tncm91bmRfY29sb3IiOiIjZjVmNmZiIiwiZGlzcGxheSI6InN0YW5kYWxvbmUifQ==">
+    <title>mObywatel</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <link rel="stylesheet" href="assets/main.css">
+    <link rel="icon" type="image/x-icon" href="assets/images/logo.png">
+    <link rel="apple-touch-icon" href="assets/images/logo.png">
+    <link rel="shortcut icon" href="assets/images/logo.png">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, initial-scale=0.8, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fc;
+            color: #111827;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
+        }
+
+        .crw_topbar {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            display: grid;
+            grid-template-columns: 48px 1fr 48px;
+            align-items: center;
+            padding: 16px 14px 12px;
+            background-color: #f8f9fc;
+        }
+
+        .crw_back_btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border: none;
+            background: transparent;
+            color: #1665e3;
+            cursor: pointer;
+            padding: 0;
+            border-radius: 50%;
+            justify-self: start;
+        }
+
+        .crw_back_btn:active {
+            background-color: rgba(22, 101, 227, 0.08);
+        }
+
+        .crw_back_btn svg {
+            width: 22px;
+            height: 22px;
+        }
+
+        .crw_header_title {
+            margin: 0;
+            text-align: center;
+            font-size: 17px;
+            font-weight: 700;
+            color: #111827;
+        }
+
+        .crw_main {
+            min-height: calc(100vh - 145px);
+            max-width: 460px;
+            margin: 0 auto;
+            padding: 18px 22px 128px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-sizing: border-box;
+        }
+
+        .crw_hero_icon {
+            width: 84px;
+            height: 84px;
+            border-radius: 50%;
+            background-color: #f8e3ea;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 12px auto 24px;
+        }
+
+        .crw_hero_icon svg {
+            width: 42px;
+            height: 42px;
+        }
+
+        .crw_title {
+            margin: 0 0 14px;
+            text-align: center;
+            font-size: 25px;
+            line-height: 1.24;
+            font-weight: 800;
+            letter-spacing: -0.4px;
+            color: #111827;
+        }
+
+        .crw_subtitle {
+            margin: 0 0 28px;
+            text-align: center;
+            font-size: 15px;
+            line-height: 1.48;
+            color: #6b7280;
+            max-width: 330px;
+        }
+
+        .crw_features {
+            width: 100%;
+            max-width: 340px;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            margin-bottom: 28px;
+        }
+
+        .crw_feature_row {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            text-align: left;
+            background: transparent;
+            border: none;
+            padding: 4px 0;
+            cursor: pointer;
+            color: #1f2937;
+        }
+
+        .crw_feature_icon {
+            width: 28px;
+            height: 28px;
+            flex-shrink: 0;
+            color: #e11d48;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .crw_feature_icon svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .crw_feature_text {
+            margin: 0;
+            font-size: 15px;
+            line-height: 1.35;
+            font-weight: 500;
+            color: #1f2937;
+        }
+
+        .crw_next_btn {
+            margin-top: auto;
+            width: 100%;
+            max-width: 380px;
+            height: 48px;
+            border: none;
+            border-radius: 999px;
+            background-color: #0b4da2;
+            color: #ffffff;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(11, 77, 162, 0.18);
+        }
+
+        .crw_next_btn:active {
+            background-color: #093d80;
+        }
+
+        .crw_summary_box {
+            display: none;
+            width: 100%;
+            max-width: 380px;
+            margin-top: 16px;
+            background-color: #ffffff;
+            border-radius: 16px;
+            padding: 16px 18px;
+            box-shadow: 0 2px 10px rgba(15, 23, 42, 0.05);
+            border-left: 4px solid #0b4da2;
+            text-align: left;
+        }
+
+        .crw_summary_box.open {
+            display: block;
+        }
+
+        .crw_summary_heading {
+            margin: 0 0 6px;
+            font-size: 15px;
+            font-weight: 700;
+            color: #111827;
+        }
+
+        .crw_summary_text {
+            margin: 0;
+            font-size: 13.5px;
+            line-height: 1.5;
+            color: #4b5563;
+        }
+    </style>
+</head>
+<body>
+    <header class="crw_topbar">
+        <button type="button" class="crw_back_btn" onclick="sendTo('services')" aria-label="Wróć">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+        </button>
+        <h1 class="crw_header_title">Centralny Rejestr Wyborców</h1>
+        <span></span>
+    </header>
+
+    <div class="bottom_bar" style="height: 85px;">
+        <div class="bottom_bar_grid">
+            <div class="bottom_element_grid" send="home">
+                <div class="bottom_element_image home"></div>
+                <p class="bottom_element_text">Pulpit</p>
+            </div>
+            <div class="bottom_element_grid" send="documents">
+                <div class="bottom_element_image documents"></div>
+                <p class="bottom_element_text">Dokumenty</p>
+            </div>
+            <div class="bottom_element_grid" send="services">
+                <div class="bottom_element_image services services_open"></div>
+                <p class="bottom_element_text open">Usługi</p>
+            </div>
+            <div class="bottom_element_grid" send="qr">
+                <div class="bottom_element_image qr"></div>
+                <p class="bottom_element_text">Kod QR</p>
+            </div>
+            <div class="bottom_element_grid" send="more">
+                <div class="bottom_element_image more"></div>
+                <p class="bottom_element_text">Więcej</p>
+            </div>
+        </div>
+    </div>
+
+    <main class="crw_main">
+        <div class="crw_hero_icon" aria-hidden="true">
+            <svg viewBox="0 0 44 44" fill="none">
+                <path d="M15 15L22 7L30 13L24 20" stroke="#e11d48" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M20.5 13.5L23.5 16L27.5 11.5" stroke="#e11d48" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+                <rect x="8" y="21" width="28" height="15" rx="3" fill="#e11d48"/>
+                <rect x="13" y="20" width="18" height="3" rx="1.5" fill="#f8e3ea"/>
+            </svg>
+        </div>
+
+        <h2 class="crw_title">Twoje dane w Centralnym<br>Rejestrze Wyborców</h2>
+        <p class="crw_subtitle">Znajdziesz tu informacje o swoich prawach wyborczych oraz danych przechowywanych w rejestrze.</p>
+
+        <div class="crw_features">
+            <button type="button" class="crw_feature_row" onclick="toggleCrwInfo('elections')">
+                <span class="crw_feature_icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <circle cx="10" cy="14" r="2"></circle>
+                        <path d="M7 18c0-1.5 1.3-2.5 3-2.5s3 1 3 2.5"></path>
+                    </svg>
+                </span>
+                <p class="crw_feature_text">Sprawdź informacje o<br>najbliższych wyborach</p>
+            </button>
+
+            <button type="button" class="crw_feature_row" onclick="toggleCrwInfo('polling')">
+                <span class="crw_feature_icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                        <circle cx="12" cy="10" r="3"></circle>
+                    </svg>
+                </span>
+                <p class="crw_feature_text">Sprawdź miejsce głosowania</p>
+            </button>
+        </div>
+
+        <button type="button" class="crw_next_btn" onclick="toggleCrwInfo('next')">Dalej</button>
+
+        <div class="crw_summary_box" id="crwSummaryBox">
+            <h3 class="crw_summary_heading" id="crwSummaryTitle"></h3>
+            <p class="crw_summary_text" id="crwSummaryText"></p>
+        </div>
+    </main>
+
+    <script src="assets/bar.js"></script>
+    <script src="assets/manifest.js"></script>
+    <script src="assets/cache.js"></script>
+    <script>
+        function sendTo(page) {
+            const query = window.location.search;
+            location.href = query ? `${page}.html${query}` : `${page}.html`;
+        }
+
+        const crwDetails = {
+            elections: {
+                title: 'Najbliższe wybory',
+                text: 'W tym widoku możesz sprawdzić komunikaty dotyczące terminów i zasad głosowania w nadchodzących wyborach.'
+            },
+            polling: {
+                title: 'Miejsce głosowania',
+                text: 'Informacje o przypisanym obwodzie oraz adresie lokalu wyborczego są powiązane z Twoimi danymi w rejestrze.'
+            },
+            next: {
+                title: 'Podgląd rejestru wyborców',
+                text: 'W lokalnym prototypie ekran prezentuje widok startowy Centralnego Rejestru Wyborców bez pobierania danych z zewnętrznych rejestrów.'
+            }
+        };
+
+        let activeCrwKey = null;
+
+        function toggleCrwInfo(key) {
+            const box = document.getElementById('crwSummaryBox');
+            const titleEl = document.getElementById('crwSummaryTitle');
+            const textEl = document.getElementById('crwSummaryText');
+            const item = crwDetails[key];
+            if (!item) return;
+
+            if (activeCrwKey === key && box.classList.contains('open')) {
+                box.classList.remove('open');
+                activeCrwKey = null;
+                return;
+            }
+
+            titleEl.textContent = item.title;
+            textEl.textContent = item.text;
+            box.classList.add('open');
+            activeCrwKey = key;
+        }
+    </script>
+</body>
+</html>

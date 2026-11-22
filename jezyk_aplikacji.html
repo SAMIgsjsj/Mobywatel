@@ -1,0 +1,329 @@
+<html>
+<head>
+<link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoiIiwic2hvcnRfbmFtZSI6IiIsInRoZW1lX2NvbG9yIjoiI2Y1ZjZmYiIsImJhY2tncm91bmRfY29sb3IiOiIjZjVmNmZiIiwiZGlzcGxheSI6InN0YW5kYWxvbmUifQ==">
+    <title>mObywatel</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <link rel="stylesheet" href="assets/main.css">
+    <link rel="stylesheet" href="assets/more.css">
+    <link rel="icon" type="image/x-icon" href="assets/images/logo.png">
+    <link rel="apple-touch-icon" href="assets/images/logo.png">
+    <link rel="shortcut icon" href="assets/images/logo.png">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, initial-scale=0.8, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <style>
+        body {
+            background-color: #f5f6fb;
+            color: #111827;
+            margin: 0;
+        }
+
+        .lang_header {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 18px 18px 14px;
+            background-color: #f5f6fb;
+        }
+
+        .lang_back_btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 34px;
+            height: 34px;
+            border: none;
+            background: transparent;
+            color: #111827;
+            font-size: 22px;
+            line-height: 1;
+            cursor: pointer;
+            padding: 0;
+            border-radius: 50%;
+        }
+
+        .lang_back_btn:active {
+            background-color: rgba(17, 24, 39, 0.06);
+        }
+
+        .lang_title {
+            margin: 0;
+            font-size: 20px;
+            font-weight: 700;
+            color: #111827;
+            letter-spacing: -0.2px;
+        }
+
+        .lang_container {
+            padding: 8px 16px 120px;
+        }
+
+        .lang_list {
+            background-color: #ffffff;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(15, 23, 42, 0.04);
+        }
+
+        .lang_item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 18px 18px;
+            background-color: #ffffff;
+            border-bottom: 1px solid #eef0f6;
+            cursor: pointer;
+            transition: background-color 0.15s ease;
+        }
+
+        .lang_item:last-child {
+            border-bottom: none;
+        }
+
+        .lang_item:active {
+            background-color: #f1f3fa;
+        }
+
+        .lang_item_label {
+            margin: 0;
+            font-size: 16px;
+            font-weight: 500;
+            color: #111827;
+            line-height: 1.35;
+        }
+
+        .lang_item.selected .lang_item_label {
+            font-weight: 700;
+            color: #1d4ed8;
+        }
+
+        .lang_radio {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            border: 2px solid #cbd5e1;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: border-color 0.15s ease;
+        }
+
+        .lang_item.selected .lang_radio {
+            border-color: #1d4ed8;
+        }
+
+        .lang_radio_dot {
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+            background-color: #1d4ed8;
+            transform: scale(0);
+            transition: transform 0.15s ease;
+        }
+
+        .lang_item.selected .lang_radio_dot {
+            transform: scale(1);
+        }
+
+        .lang_modal_backdrop {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.45);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .lang_modal_backdrop.active {
+            display: flex;
+        }
+
+        .lang_modal_box {
+            width: 100%;
+            max-width: 340px;
+            background: #ffffff;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.22);
+            text-align: center;
+        }
+
+        .lang_modal_content {
+            padding: 22px 20px 20px;
+        }
+
+        .lang_modal_title {
+            margin: 0 0 8px;
+            font-size: 17px;
+            font-weight: 700;
+            color: #111827;
+            line-height: 1.35;
+        }
+
+        .lang_modal_subtitle {
+            margin: 0;
+            font-size: 13.5px;
+            color: #4b5563;
+            line-height: 1.45;
+        }
+
+        .lang_modal_actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .lang_modal_btn {
+            padding: 15px 10px;
+            font-size: 15px;
+            font-weight: 600;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+        }
+
+        .lang_modal_btn.cancel_btn {
+            color: #4b5563;
+            border-right: 1px solid #e5e7eb;
+        }
+
+        .lang_modal_btn.confirm_btn {
+            color: #1d4ed8;
+        }
+
+        .lang_modal_btn:active {
+            background: #f3f4f6;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bottom_bar" style="height: 85px;">
+        <div class="bottom_bar_grid">
+            <div class="bottom_element_grid" send="home">
+                <div class="bottom_element_image home"></div>
+                <p class="bottom_element_text">Pulpit</p>
+            </div>
+            <div class="bottom_element_grid" send="documents">
+                <div class="bottom_element_image documents"></div>
+                <p class="bottom_element_text">Dokumenty</p>
+            </div>
+            <div class="bottom_element_grid" send="services">
+                <div class="bottom_element_image services"></div>
+                <p class="bottom_element_text">Usługi</p>
+            </div>
+            <div class="bottom_element_grid" send="qr">
+                <div class="bottom_element_image qr"></div>
+                <p class="bottom_element_text">Kod QR</p>
+            </div>
+            <div class="bottom_element_grid" send="more">
+                <div class="bottom_element_image more more_open"></div>
+                <p class="bottom_element_text open">Więcej</p>
+            </div>
+        </div>
+    </div>
+
+    <header class="lang_header">
+        <button type="button" class="lang_back_btn" onclick="sendTo('more')" aria-label="Wróć">←</button>
+        <h1 class="lang_title">Język aplikacji</h1>
+    </header>
+
+    <main class="lang_container">
+        <div class="lang_list">
+            <div class="lang_item selected" data-lang="pl" onclick="selectLanguage('pl')">
+                <p class="lang_item_label">Polski</p>
+                <span class="lang_radio"><span class="lang_radio_dot"></span></span>
+            </div>
+
+            <div class="lang_item" data-lang="en" onclick="selectLanguage('en')">
+                <p class="lang_item_label">English</p>
+                <span class="lang_radio"><span class="lang_radio_dot"></span></span>
+            </div>
+
+            <div class="lang_item" data-lang="uk" onclick="selectLanguage('uk')">
+                <p class="lang_item_label">Українська</p>
+                <span class="lang_radio"><span class="lang_radio_dot"></span></span>
+            </div>
+        </div>
+    </main>
+
+    <div class="lang_modal_backdrop" id="restartModal">
+        <div class="lang_modal_box">
+            <div class="lang_modal_content">
+                <p class="lang_modal_title">Zmiana języka aplikacji</p>
+                <p class="lang_modal_subtitle">Aby zastosować zmiany, trzeba zrestartować aplikację.</p>
+            </div>
+            <div class="lang_modal_actions">
+                <button type="button" class="lang_modal_btn cancel_btn" onclick="cancelLanguageChange()">Anuluj</button>
+                <button type="button" class="lang_modal_btn confirm_btn" onclick="confirmLanguageChange()">Zrestartuj</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/bar.js"></script>
+    <script src="assets/manifest.js"></script>
+    <script src="assets/cache.js"></script>
+    <script>
+        const LANG_STORAGE_KEY = 'mobywatel_app_language';
+        let currentLang = 'pl';
+        let pendingLang = null;
+
+        const langItems = Array.from(document.querySelectorAll('.lang_item'));
+        const restartModal = document.getElementById('restartModal');
+
+        function sendTo(page) {
+            const query = window.location.search;
+            location.href = query ? `${page}.html${query}` : `${page}.html`;
+        }
+
+        function renderSelection(langCode) {
+            langItems.forEach((item) => {
+                item.classList.toggle('selected', item.dataset.lang === langCode);
+            });
+        }
+
+        try {
+            const savedLang = localStorage.getItem(LANG_STORAGE_KEY);
+            if (savedLang && ['pl', 'en', 'uk'].includes(savedLang)) {
+                currentLang = savedLang;
+            }
+        } catch (e) {}
+
+        renderSelection(currentLang);
+
+        function selectLanguage(langCode) {
+            if (langCode === currentLang) return;
+            pendingLang = langCode;
+            renderSelection(langCode);
+            restartModal.classList.add('active');
+        }
+
+        function cancelLanguageChange() {
+            pendingLang = null;
+            renderSelection(currentLang);
+            restartModal.classList.remove('active');
+        }
+
+        function confirmLanguageChange() {
+            if (pendingLang) {
+                currentLang = pendingLang;
+                try {
+                    localStorage.setItem(LANG_STORAGE_KEY, currentLang);
+                } catch (e) {}
+            }
+            restartModal.classList.remove('active');
+            sendTo('id');
+        }
+    </script>
+</body>
+</html>

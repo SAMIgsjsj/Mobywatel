@@ -1,0 +1,243 @@
+<html>
+<head>
+<link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoiIiwic2hvcnRfbmFtZSI6IiIsInRoZW1lX2NvbG9yIjoiI2Y1ZjZmYiIsImJhY2tncm91bmRfY29sb3IiOiIjZjVmNmZiIiwiZGlzcGxheSI6InN0YW5kYWxvbmUifQ==">
+    <title>mObywatel</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <link rel="stylesheet" href="assets/more.css">
+    <link rel="stylesheet" href="assets/main.css">
+    <link rel="stylesheet" href="assets/flow.css">
+<link rel="icon" type="image/x-icon" href="assets/images/logo.png">
+<link rel="apple-touch-icon" href="assets/images/logo.png">
+<link rel="shortcut icon" href="assets/images/logo.png">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, initial-scale=0.8, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <style>
+        .service,
+        .top_action_button {
+            cursor: pointer;
+        }
+
+        .confirm_modal_backdrop {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.45);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .confirm_modal_backdrop.active {
+            display: flex;
+        }
+        .confirm_modal_box {
+            width: 100%;
+            max-width: 340px;
+            background: #ffffff;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.22);
+            text-align: center;
+        }
+        .confirm_modal_content {
+            padding: 22px 20px 20px;
+        }
+        .confirm_modal_title {
+            margin: 0 0 8px;
+            font-size: 17px;
+            font-weight: 700;
+            color: #111827;
+            line-height: 1.35;
+        }
+        .confirm_modal_subtitle {
+            margin: 0;
+            font-size: 13px;
+            color: #4b5563;
+            line-height: 1.45;
+        }
+        .confirm_modal_actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            border-top: 1px solid #e5e7eb;
+        }
+        .confirm_modal_btn {
+            padding: 15px 10px;
+            font-size: 15px;
+            font-weight: 600;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+        }
+        .confirm_modal_btn.back_btn {
+            color: #1d4ed8;
+            border-right: 1px solid #e5e7eb;
+        }
+        .confirm_modal_btn.confirm_btn {
+            color: #dc2626;
+        }
+        .confirm_modal_btn:active {
+            background: #f3f4f6;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bottom_bar" style="height: 85px;">
+        <div class="bottom_bar_grid">
+            <div class="bottom_element_grid" send="home">
+                <div class="bottom_element_image home"></div>
+                <p class="bottom_element_text">Pulpit</p>
+            </div>
+            <div class="bottom_element_grid" send="documents">
+                <div class="bottom_element_image documents"></div>
+                <p class="bottom_element_text">Dokumenty</p>
+            </div>
+            <div class="bottom_element_grid" send="services">
+                <div class="bottom_element_image services"></div>
+                <p class="bottom_element_text">Usługi</p>
+            </div>
+            <div class="bottom_element_grid" send="qr">
+                <div class="bottom_element_image qr"></div>
+                <p class="bottom_element_text">Kod QR</p>
+            </div>
+            <div class="bottom_element_grid" send="more">
+                <div class="bottom_element_image more more_open"></div>
+                <p class="bottom_element_text open">Więcej</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="top_slide_bar">
+        <div class="top_action_grid">
+            <p class="top_action_button" onclick="openLogoutModal()">Wyloguj</p>
+        </div>
+        <p class="main_page_title">Więcej</p>
+    </div>
+    <div class="container">
+        <p class="title settings">Ustawienia</p>
+        <div class="services_list">
+            <div class="service" onclick="sendTo('zmiana_hasla')">
+                <img class="service_icon" src="assets/images/key.png">
+                <p class="service_name">Zmień hasło</p>
+                <img class="arrow" src="assets/images/arrow_light.png">
+            </div>
+            <div class="service" onclick="sendTo('logowanie_biometryczne')">
+                <img class="service_icon" src="assets/images/fingerprint.png">
+                <p class="service_name">Logowanie biometryczne</p>
+                <img class="arrow" src="assets/images/arrow_light.png">
+            </div>
+            <div class="service" onclick="sendTo('powiadomienia')">
+                <img class="service_icon" src="assets/images/bell.png">
+                <p class="service_name">Powiadomienia</p>
+                <img class="arrow" src="assets/images/arrow_light.png">
+            </div>
+            <div class="service" onclick="sendTo('jezyk_aplikacji')">
+                <img class="service_icon" src="assets/images/globe.png">
+                <p class="service_name">Język aplikacji</p>
+                <img class="arrow" src="assets/images/arrow_light.png">
+            </div>
+            <div class="service" onclick="sendTo('certyfikaty')">
+                <img class="service_icon" src="assets/images/certificates.png">
+                <p class="service_name">Wydane certyfikaty</p>
+                <img class="arrow" src="assets/images/arrow_light.png">
+            </div>
+            <div class="service" onclick="openDeactivateModal()">
+                <img class="service_icon" src="assets/images/delete.png">
+                <p class="service_name">Dezaktywuj aplikację</p>
+                <img class="arrow" src="assets/images/arrow_light.png">
+            </div>
+            <div class="service" style="border: none;" onclick="openLogoutModal()">
+                <img class="service_icon" src="assets/images/key.png">
+                <p class="service_name">Wyloguj</p>
+                <img class="arrow" src="assets/images/arrow_light.png">
+            </div>
+        </div>
+        <p class="title">Pozostałe</p>
+        <div class="services_list" style="margin-bottom: 150px;">
+            <div class="service" onclick="sendTo('historia_aktywnosci')">
+                <img class="service_icon" src="assets/images/clock.png">
+                <p class="service_name">Historia aktywności</p>
+                <img class="arrow" src="assets/images/arrow_light.png">
+            </div>
+            <div class="service" onclick="sendTo('informacje_prawne')">
+                <img class="service_icon" src="assets/images/documents.png">
+                <p class="service_name">Informacje prawne</p>
+                <img class="arrow" src="assets/images/arrow_light.png">
+            </div>
+            <div class="service" style="border: none;" onclick="sendTo('pomoc_techniczna')">
+                <img class="service_icon" src="assets/images/help_black.png">
+                <p class="service_name">Pomoc techniczna</p>
+                <img class="arrow" src="assets/images/arrow_light.png">
+            </div>
+        </div>
+    </div>
+
+    <div class="confirm_modal_backdrop" id="deactivateModal">
+        <div class="confirm_modal_box">
+            <div class="confirm_modal_content">
+                <p class="confirm_modal_title">Chcesz dezaktywować aplikację?</p>
+                <p class="confirm_modal_subtitle">To spowoduje, że trzeba będzie dodać dokumenty jeszcze raz.</p>
+            </div>
+            <div class="confirm_modal_actions">
+                <button type="button" class="confirm_modal_btn back_btn" onclick="closeDeactivateModal()">Wróć</button>
+                <button type="button" class="confirm_modal_btn confirm_btn" onclick="confirmDeactivate()">Dezaktywuj</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="confirm_modal_backdrop" id="logoutModal">
+        <div class="confirm_modal_box">
+            <div class="confirm_modal_content">
+                <p class="confirm_modal_title">Czy na pewno chcesz się wylogować?</p>
+                <p class="confirm_modal_subtitle">Zostaniesz przeniesiony do ekranu logowania.</p>
+            </div>
+            <div class="confirm_modal_actions">
+                <button type="button" class="confirm_modal_btn back_btn" onclick="closeLogoutModal()">Wróć</button>
+                <button type="button" class="confirm_modal_btn confirm_btn" onclick="confirmLogout()">Wyloguj</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/bar.js"></script>
+    <script src="assets/manifest.js"></script>
+    <script src="assets/cache.js"></script>
+    <script src="assets/flow.js"></script>
+    <script>
+        function sendTo(page) {
+            const query = window.location.search;
+            location.href = query ? `${page}.html${query}` : `${page}.html`;
+        }
+
+        function openDeactivateModal() {
+            document.getElementById('deactivateModal').classList.add('active');
+        }
+
+        function closeDeactivateModal() {
+            document.getElementById('deactivateModal').classList.remove('active');
+        }
+
+        function confirmDeactivate() {
+            localStorage.clear();
+            closeDeactivateModal();
+            sendTo('id');
+        }
+
+        function openLogoutModal() {
+            document.getElementById('logoutModal').classList.add('active');
+        }
+
+        function closeLogoutModal() {
+            document.getElementById('logoutModal').classList.remove('active');
+        }
+
+        function confirmLogout() {
+            closeLogoutModal();
+            sendTo('id');
+        }
+    </script>
+</body>
+</html>

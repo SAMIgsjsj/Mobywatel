@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoiIiwic2hvcnRfbmFtZSI6IiIsInRoZW1lX2NvbG9yIjoiI2Y1ZjZmYiIsImJhY2tncm91bmRfY29sb3IiOiIjZjVmNmZiIiwiZGlzcGxheSI6InN0YW5kYWxvbmUifQ==">
+    <title>mObywatel</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <link rel="stylesheet" href="assets/main.css">
+    <link rel="icon" type="image/x-icon" href="assets/images/logo.png">
+    <link rel="apple-touch-icon" href="assets/images/logo.png">
+    <link rel="shortcut icon" href="assets/images/logo.png">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, initial-scale=0.8, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            background-color: #f6f7fb;
+            color: #111827;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
+        }
+
+        .firm_topbar {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            display: grid;
+            grid-template-columns: 96px 1fr 96px;
+            align-items: center;
+            padding: 16px 14px 12px;
+            background-color: #f6f7fb;
+        }
+
+        .firm_back_btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            border: none;
+            background: transparent;
+            color: #1665e3;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            padding: 4px 2px;
+            justify-self: start;
+        }
+
+        .firm_back_btn svg {
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+        }
+
+        .firm_header_title {
+            margin: 0;
+            text-align: center;
+            font-size: 17px;
+            font-weight: 700;
+            color: #111827;
+        }
+
+        .firm_main {
+            max-width: 460px;
+            margin: 0 auto;
+            padding: 12px 20px 128px;
+            box-sizing: border-box;
+        }
+
+        .firm_icon_circle {
+            width: 78px;
+            height: 78px;
+            border-radius: 50%;
+            background-color: #e8dfd5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 4px auto 22px;
+        }
+
+        .firm_icon_circle svg {
+            width: 40px;
+            height: 40px;
+        }
+
+        .firm_heading {
+            margin: 0 0 14px;
+            font-size: 31px;
+            line-height: 1.15;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: #111827;
+        }
+
+        .firm_lead {
+            margin: 0 0 18px;
+            font-size: 15.5px;
+            line-height: 1.5;
+            color: #374151;
+        }
+
+        .firm_lead a {
+            color: #1665e3;
+            text-decoration: underline;
+            text-underline-offset: 2px;
+        }
+
+        .firm_bullets {
+            margin: 0 0 22px;
+            padding-left: 20px;
+            font-size: 15px;
+            line-height: 1.48;
+            color: #374151;
+        }
+
+        .firm_bullets li {
+            margin-bottom: 12px;
+        }
+
+        .firm_bullets li:last-child {
+            margin-bottom: 0;
+        }
+
+        .firm_data_link {
+            display: inline-block;
+            border: none;
+            background: transparent;
+            padding: 0;
+            margin-bottom: 22px;
+            color: #1665e3;
+            font-size: 15px;
+            font-weight: 500;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+            cursor: pointer;
+            text-align: left;
+        }
+
+        .firm_submit_btn {
+            width: 100%;
+            height: 48px;
+            border: none;
+            border-radius: 999px;
+            background-color: #0b4da2;
+            color: #ffffff;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(11, 77, 162, 0.18);
+        }
+
+        .firm_submit_btn:active {
+            background-color: #093d80;
+        }
+
+        .firm_panel_box {
+            display: none;
+            margin-top: 16px;
+            background-color: #ffffff;
+            border-radius: 16px;
+            padding: 15px 17px;
+            box-shadow: 0 2px 10px rgba(15, 23, 42, 0.04);
+            border-left: 4px solid #0b4da2;
+            font-size: 13.5px;
+            line-height: 1.5;
+            color: #4b5563;
+        }
+
+        .firm_panel_box.open {
+            display: block;
+        }
+
+        .firm_panel_title {
+            margin: 0 0 6px;
+            font-size: 15px;
+            font-weight: 700;
+            color: #111827;
+        }
+    </style>
+</head>
+<body>
+    <header class="firm_topbar">
+        <button type="button" class="firm_back_btn" onclick="sendTo('services')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+            <span>Wróć</span>
+        </button>
+        <h1 class="firm_header_title">Firma</h1>
+        <span></span>
+    </header>
+
+    <div class="bottom_bar" style="height: 85px;">
+        <div class="bottom_bar_grid">
+            <div class="bottom_element_grid" send="home">
+                <div class="bottom_element_image home"></div>
+                <p class="bottom_element_text">Pulpit</p>
+            </div>
+            <div class="bottom_element_grid" send="documents">
+                <div class="bottom_element_image documents"></div>
+                <p class="bottom_element_text">Dokumenty</p>
+            </div>
+            <div class="bottom_element_grid" send="services">
+                <div class="bottom_element_image services services_open"></div>
+                <p class="bottom_element_text open">Usługi</p>
+            </div>
+            <div class="bottom_element_grid" send="qr">
+                <div class="bottom_element_image qr"></div>
+                <p class="bottom_element_text">Kod QR</p>
+            </div>
+            <div class="bottom_element_grid" send="more">
+                <div class="bottom_element_image more"></div>
+                <p class="bottom_element_text">Więcej</p>
+            </div>
+        </div>
+    </div>
+
+    <main class="firm_main">
+        <div class="firm_icon_circle" aria-hidden="true">
+            <svg viewBox="0 0 44 44" fill="none">
+                <path d="M16 14V11.5C16 10.1 17.1 9 18.5 9H25.5C26.9 9 28 10.1 28 11.5V14" stroke="#7c4a21" stroke-width="2.6" stroke-linecap="round"/>
+                <rect x="8" y="14" width="28" height="20" rx="4" fill="#9a5b28"/>
+                <rect x="19" y="14" width="6" height="20" fill="#b87338"/>
+                <rect x="19.5" y="21" width="5" height="6" rx="1" fill="#f8e7d5"/>
+            </svg>
+        </div>
+
+        <h2 class="firm_heading">Załóż firmę</h2>
+        <p class="firm_lead">
+            Zrobisz to w aplikacji – szybko i wygodnie. Przejdziesz tu podstawowy proces rejestracji działalności. Jeśli potrzebujesz bardziej zaawansowanych opcji, przejdź na <a href="https://www.biznes.gov.pl" target="_blank" rel="noopener noreferrer">biznes.gov.pl</a>.
+        </p>
+
+        <ul class="firm_bullets">
+            <li>Zarejestrujesz firmę w Centralnej Ewidencji i Informacji o Działalności Gospodarczej (CEIDG).</li>
+            <li>Uzyskasz numery NIP i REGON, jeśli ich jeszcze nie masz.</li>
+            <li>Zgłosisz się jako płatnik składek na ubezpieczenia społeczne i zdrowotne.</li>
+        </ul>
+
+        <button type="button" class="firm_data_link" onclick="toggleFirmPanel('data')">
+            Sprawdź, jakie dane trzeba podać we wniosku
+        </button>
+
+        <button type="button" class="firm_submit_btn" onclick="toggleFirmPanel('apply')">
+            Złóż wniosek
+        </button>
+
+        <div class="firm_panel_box" id="firmPanelBox">
+            <p class="firm_panel_title" id="firmPanelTitle"></p>
+            <p id="firmPanelText" style="margin: 0;"></p>
+        </div>
+    </main>
+
+    <script src="assets/bar.js"></script>
+    <script src="assets/manifest.js"></script>
+    <script src="assets/cache.js"></script>
+    <script>
+        function sendTo(page) {
+            const query = window.location.search;
+            location.href = query ? `${page}.html${query}` : `${page}.html`;
+        }
+
+        const firmPanels = {
+            data: {
+                title: 'Dane potrzebne we wniosku CEIDG',
+                text: 'We wniosku podaje się m.in. dane osobowe i adresowe, nazwę oraz rodzaj działalności (kody PKD), datę jej rozpoczęcia oraz informacje dotyczące ubezpieczeń.'
+            },
+            apply: {
+                title: 'Rozpoczęcie wniosku',
+                text: 'W lokalnym prototypie kreator wniosku nie wysyła danych na zewnątrz — pozwala jedynie podejrzeć układ sekcji rejestracji firmy.'
+            }
+        };
+
+        let activeFirmKey = null;
+
+        function toggleFirmPanel(key) {
+            const box = document.getElementById('firmPanelBox');
+            const titleEl = document.getElementById('firmPanelTitle');
+            const textEl = document.getElementById('firmPanelText');
+            const data = firmPanels[key];
+            if (!data) return;
+
+            if (activeFirmKey === key && box.classList.contains('open')) {
+                box.classList.remove('open');
+                activeFirmKey = null;
+                return;
+            }
+
+            titleEl.textContent = data.title;
+            textEl.textContent = data.text;
+            box.classList.add('open');
+            activeFirmKey = key;
+        }
+    </script>
+</body>
+</html>

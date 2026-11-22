@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoiIiwic2hvcnRfbmFtZSI6IiIsInRoZW1lX2NvbG9yIjoiI2Y1ZjZmYiIsImJhY2tncm91bmRfY29sb3IiOiIjZjVmNmZiIiwiZGlzcGxheSI6InN0YW5kYWxvbmUifQ==">
+    <title>mObywatel</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <link rel="stylesheet" href="assets/main.css">
+    <link rel="icon" type="image/x-icon" href="assets/images/logo.png">
+    <link rel="apple-touch-icon" href="assets/images/logo.png">
+    <link rel="shortcut icon" href="assets/images/logo.png">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, initial-scale=0.8, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            background-color: #f6f7fb;
+            color: #111827;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
+        }
+
+        .voucher_topbar {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            display: grid;
+            grid-template-columns: 96px 1fr 96px;
+            align-items: center;
+            padding: 16px 14px 12px;
+            background-color: #f6f7fb;
+        }
+
+        .voucher_back_btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            border: none;
+            background: transparent;
+            color: #1665e3;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            padding: 4px 2px;
+            justify-self: start;
+        }
+
+        .voucher_back_btn svg {
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+        }
+
+        .voucher_header_title {
+            margin: 0;
+            text-align: center;
+            font-size: 17px;
+            font-weight: 700;
+            color: #111827;
+        }
+
+        .voucher_main {
+            max-width: 460px;
+            margin: 0 auto;
+            padding: 12px 18px 128px;
+            box-sizing: border-box;
+        }
+
+        .voucher_hero_icon {
+            width: 74px;
+            height: 74px;
+            border-radius: 50%;
+            background-color: #dbeafe;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 4px auto 20px;
+        }
+
+        .voucher_hero_icon svg {
+            width: 36px;
+            height: 36px;
+        }
+
+        .voucher_hero_title {
+            margin: 0 0 10px;
+            font-size: 30px;
+            line-height: 1.15;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: #111827;
+        }
+
+        .voucher_hero_desc {
+            margin: 0 0 22px;
+            font-size: 15px;
+            line-height: 1.45;
+            color: #525866;
+        }
+
+        .voucher_card {
+            background-color: #ffffff;
+            border-radius: 18px;
+            box-shadow: 0 2px 12px rgba(15, 23, 42, 0.04);
+            overflow: hidden;
+            margin-bottom: 16px;
+        }
+
+        .voucher_item {
+            width: 100%;
+            border: none;
+            background: #ffffff;
+            padding: 17px 18px;
+            display: grid;
+            grid-template-columns: 1fr 18px;
+            align-items: center;
+            gap: 12px;
+            text-align: left;
+            cursor: pointer;
+        }
+
+        .voucher_item:active {
+            background-color: #f8fafc;
+        }
+
+        .voucher_item + .voucher_item {
+            border-top: 1px solid #eef0f5;
+        }
+
+        .voucher_item_title {
+            margin: 0 0 4px;
+            font-size: 16.5px;
+            font-weight: 700;
+            color: #111827;
+            line-height: 1.3;
+        }
+
+        .voucher_item_desc {
+            margin: 0;
+            font-size: 14px;
+            line-height: 1.4;
+            color: #525866;
+        }
+
+        .voucher_chevron {
+            color: #6b7280;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
+
+        .voucher_chevron svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .voucher_info_banner {
+            background-color: #dbeafe;
+            border-radius: 18px;
+            padding: 18px;
+            display: grid;
+            grid-template-columns: 24px 1fr;
+            gap: 12px;
+            align-items: start;
+        }
+
+        .voucher_info_icon {
+            width: 24px;
+            height: 24px;
+            color: #1665e3;
+            margin-top: 1px;
+        }
+
+        .voucher_info_text {
+            margin: 0 0 8px;
+            font-size: 14.5px;
+            line-height: 1.42;
+            color: #1f2937;
+        }
+
+        .voucher_link_btn {
+            border: none;
+            background: transparent;
+            padding: 0;
+            color: #1665e3;
+            font-size: 14.5px;
+            font-weight: 500;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+            cursor: pointer;
+        }
+
+        .voucher_detail_box {
+            display: none;
+            margin-top: 14px;
+            background-color: #ffffff;
+            border-radius: 16px;
+            padding: 15px 17px;
+            box-shadow: 0 2px 10px rgba(15, 23, 42, 0.04);
+            border-left: 4px solid #1665e3;
+            font-size: 13.5px;
+            line-height: 1.5;
+            color: #374151;
+        }
+
+        .voucher_detail_box.open {
+            display: block;
+        }
+
+        .voucher_detail_title {
+            margin: 0 0 6px;
+            font-size: 15px;
+            font-weight: 700;
+            color: #111827;
+        }
+    </style>
+</head>
+<body>
+    <header class="voucher_topbar">
+        <button type="button" class="voucher_back_btn" onclick="sendTo('services')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+            <span>Usługi</span>
+        </button>
+        <h1 class="voucher_header_title">Bon energetyczny</h1>
+        <span></span>
+    </header>
+
+    <div class="bottom_bar" style="height: 85px;">
+        <div class="bottom_bar_grid">
+            <div class="bottom_element_grid" send="home">
+                <div class="bottom_element_image home"></div>
+                <p class="bottom_element_text">Pulpit</p>
+            </div>
+            <div class="bottom_element_grid" send="documents">
+                <div class="bottom_element_image documents"></div>
+                <p class="bottom_element_text">Dokumenty</p>
+            </div>
+            <div class="bottom_element_grid" send="services">
+                <div class="bottom_element_image services services_open"></div>
+                <p class="bottom_element_text open">Usługi</p>
+            </div>
+            <div class="bottom_element_grid" send="qr">
+                <div class="bottom_element_image qr"></div>
+                <p class="bottom_element_text">Kod QR</p>
+            </div>
+            <div class="bottom_element_grid" send="more">
+                <div class="bottom_element_image more"></div>
+                <p class="bottom_element_text">Więcej</p>
+            </div>
+        </div>
+    </div>
+
+    <main class="voucher_main">
+        <div class="voucher_hero_icon" aria-hidden="true">
+            <svg viewBox="0 0 36 36" fill="none" stroke="#1665e3" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="20 5 9 20 18 20 16 31 27 16 18 16 20 5"></polygon>
+            </svg>
+        </div>
+
+        <h2 class="voucher_hero_title">Wsparcie na koszty energii elektrycznej</h2>
+        <p class="voucher_hero_desc">Sprawdź najważniejsze zasady bonu energetycznego oraz przebieg składania wniosku.</p>
+
+        <section class="voucher_card" aria-label="Zasady bonu energetycznego">
+            <button type="button" class="voucher_item" onclick="toggleVoucherDetail('period')">
+                <div>
+                    <p class="voucher_item_title">Cel i okres naboru</p>
+                    <p class="voucher_item_desc">Bezzwrotne świadczenie; nabór trwał od 1 sierpnia do 30 września 2024 r.</p>
+                </div>
+                <span class="voucher_chevron" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </span>
+            </button>
+
+            <button type="button" class="voucher_item" onclick="toggleVoucherDetail('income')">
+                <div>
+                    <p class="voucher_item_title">Kryteria dochodowe</p>
+                    <p class="voucher_item_desc">Do 2500 zł netto (1 os.) lub 1700 zł/os. oraz zasada „złotówka za złotówkę”.</p>
+                </div>
+                <span class="voucher_chevron" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </span>
+            </button>
+
+            <button type="button" class="voucher_item" onclick="toggleVoucherDetail('amounts')">
+                <div>
+                    <p class="voucher_item_title">Wysokość dopłat</p>
+                    <p class="voucher_item_desc">Od 300 zł do 600 zł lub od 600 zł do 1200 zł przy ogrzewaniu w CEEB.</p>
+                </div>
+                <span class="voucher_chevron" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </span>
+            </button>
+
+            <button type="button" class="voucher_item" onclick="toggleVoucherDetail('form')">
+                <div>
+                    <p class="voucher_item_title">Wniosek online</p>
+                    <p class="voucher_item_desc">Wypełnienie danych, weryfikacja rejestrów (PESEL, adres) i Profil Zaufany.</p>
+                </div>
+                <span class="voucher_chevron" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </span>
+            </button>
+        </section>
+
+        <section class="voucher_info_banner">
+            <span class="voucher_info_icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="9.5"></circle>
+                    <line x1="12" y1="11" x2="12" y2="16.5"></line>
+                    <circle cx="12" cy="7.5" r="0.9" fill="currentColor"></circle>
+                </svg>
+            </span>
+            <div>
+                <p class="voucher_info_text">Szczegółowe informacje o dopłatach do rachunków są dostępne również na portalu Gov.pl.</p>
+                <button type="button" class="voucher_link_btn" onclick="toggleVoucherDetail('gov')">Zobacz podsumowanie</button>
+            </div>
+        </section>
+
+        <div class="voucher_detail_box" id="voucherDetailBox">
+            <p class="voucher_detail_title" id="voucherDetailTitle"></p>
+            <p id="voucherDetailText" style="margin: 0;"></p>
+        </div>
+    </main>
+
+    <script src="assets/bar.js"></script>
+    <script src="assets/manifest.js"></script>
+    <script src="assets/cache.js"></script>
+    <script>
+        function sendTo(page) {
+            const query = window.location.search;
+            location.href = query ? `${page}.html${query}` : `${page}.html`;
+        }
+
+        const voucherDetails = {
+            period: {
+                title: 'Cel i okres naboru',
+                text: 'Jednorazowe, bezzwrotne wsparcie na pokrycie kosztów energii elektrycznej. Nabór na bon energetyczny obejmował okres od 1 sierpnia do 30 września 2024 roku, a w sekcji pojawiały się też informacje o bonie ciepłowniczym.'
+            },
+            income: {
+                title: 'Kryteria dochodowe',
+                text: 'Limit miesięcznego dochodu netto wynosi do 2500 zł w gospodarstwie jednoosobowym oraz do 1700 zł na osobę w gospodarstwie wieloosobowym. Po przekroczeniu progu stosuje się zasadę „złotówka za złotówkę” (minimalna wypłata to 20 zł).'
+            },
+            amounts: {
+                title: 'Wysokość dopłat',
+                text: 'Kwota zależy od liczby osób (1 os., 2–3 os., 4–5 os., 6+ os.) i wynosi od 300 zł do 600 zł albo od 600 zł do 1200 zł, jeśli główne źródło ogrzewania zasilane jest energią elektryczną i zostało wpisane do CEEB.'
+            },
+            form: {
+                title: 'Wniosek online',
+                text: 'Formularz elektroniczny przeprowadza przez wpisanie danych, sprawdzenie informacji z rejestrów państwowych (m.in. PESEL i adres) oraz podpisanie wniosku Profilem Zaufanym.'
+            },
+            gov: {
+                title: 'Informacja o sekcji',
+                text: 'Widok prezentuje uproszczony podgląd zasad bonu energetycznego w spójnym układzie podstron z sekcji Usługi.'
+            }
+        };
+
+        let activeVoucherKey = null;
+
+        function toggleVoucherDetail(key) {
+            const box = document.getElementById('voucherDetailBox');
+            const titleEl = document.getElementById('voucherDetailTitle');
+            const textEl = document.getElementById('voucherDetailText');
+            const item = voucherDetails[key];
+            if (!item) return;
+
+            if (activeVoucherKey === key && box.classList.contains('open')) {
+                box.classList.remove('open');
+                activeVoucherKey = null;
+                return;
+            }
+
+            titleEl.textContent = item.title;
+            textEl.textContent = item.text;
+            box.classList.add('open');
+            activeVoucherKey = key;
+        }
+    </script>
+</body>
+</html>

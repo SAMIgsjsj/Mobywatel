@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoiIiwic2hvcnRfbmFtZSI6IiIsInRoZW1lX2NvbG9yIjoiI2Y1ZjZmYiIsImJhY2tncm91bmRfY29sb3IiOiIjZjVmNmZiIiwiZGlzcGxheSI6InN0YW5kYWxvbmUifQ==">
+    <title>mObywatel — mPrawo jazdy</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <link rel="stylesheet" href="assets/main.css">
+    <link rel="stylesheet" href="assets/card.css">
+    <link rel="icon" type="image/x-icon" href="assets/images/logo.png">
+    <link rel="apple-touch-icon" href="assets/images/logo.png">
+    <link rel="shortcut icon" href="assets/images/logo.png">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, initial-scale=0.8, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <style>
+        .pj_top_switcher_bar {
+            position: relative;
+            z-index: 25;
+            padding: 6px 14px 4px;
+            margin-top: 64px;
+            box-sizing: border-box;
+        }
+
+        .pj_switch_wrap {
+            position: relative;
+            z-index: 25;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            background-color: #e5e7eb;
+            border: 1px solid #d1d5db;
+            border-radius: 10px;
+            padding: 3px;
+            margin: 0 auto 6px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .pj_switch_btn {
+            border: none;
+            background: transparent;
+            color: #374151;
+            font-size: 14px;
+            font-weight: 600;
+            padding: 8px 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .pj_switch_btn.active {
+            background-color: #ffffff;
+            color: #111827;
+            box-shadow: 0 1px 3px rgba(15, 23, 42, 0.12);
+        }
+
+        .pj_section_title {
+            margin: 16px 2px 8px;
+            font-size: 15px;
+            font-weight: 700;
+            color: #1f2125;
+        }
+
+        .pj_status_dot {
+            display: inline-block;
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background-color: #317C26;
+            margin-right: 6px;
+            vertical-align: middle;
+        }
+
+        .pj_extra_row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            height: 100%;
+            padding: 0 18px;
+            box-sizing: border-box;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            text-align: left;
+        }
+
+        .pj_extra_title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1f2125;
+            margin: 0;
+        }
+
+        .pj_extra_arrow {
+            font-size: 20px;
+            color: #6b7280;
+            line-height: 1;
+        }
+
+        .pj_cat_card {
+            background-color: #ffffff;
+            border-radius: 14px;
+            box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+            margin-bottom: 10px;
+            overflow: hidden;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .pj_cat_btn {
+            width: 100%;
+            border: none;
+            background-color: #ffffff;
+            padding: 15px 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 15px;
+            font-weight: 600;
+            color: #1f2125;
+            cursor: pointer;
+            text-align: left;
+            box-sizing: border-box;
+        }
+
+        .pj_cat_chevron {
+            font-size: 16px;
+            color: #6b7280;
+            transition: transform 0.18s ease;
+            display: inline-block;
+        }
+
+        .pj_cat_card.open .pj_cat_chevron {
+            transform: rotate(180deg);
+        }
+
+        .pj_cat_body {
+            display: none;
+            padding: 12px 18px 15px;
+            border-top: 1px solid #f1f3f7;
+            font-size: 13.5px;
+            line-height: 1.45;
+            color: #374151;
+            background-color: #ffffff;
+        }
+
+        .pj_cat_card.open .pj_cat_body {
+            display: block;
+        }
+
+        .pj_delete_card {
+            width: 100%;
+            border: none;
+            background-color: #ffffff;
+            color: #d93025;
+            font-size: 15px;
+            font-weight: 600;
+            padding: 15px 18px;
+            border-radius: 14px;
+            box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            margin: 14px 0 12px;
+            text-align: left;
+            box-sizing: border-box;
+        }
+
+        .pj_info_banner {
+            background-color: #dcebfa;
+            border-radius: 14px;
+            padding: 15px 16px;
+            margin-bottom: 10px;
+            display: grid;
+            grid-template-columns: 22px 1fr;
+            gap: 12px;
+            align-items: start;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .pj_info_badge {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 1.6px solid #1665e3;
+            color: #1665e3;
+            font-size: 12px;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 1px;
+        }
+
+        .pj_info_text {
+            margin: 0 0 6px;
+            font-size: 13.5px;
+            line-height: 1.4;
+            color: #1f2937;
+        }
+
+        .pj_info_link {
+            border: none;
+            background: transparent;
+            padding: 0;
+            color: #1665e3;
+            font-size: 13.5px;
+            font-weight: 500;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        .pj_toast {
+            position: fixed;
+            left: 50%;
+            bottom: 98px;
+            transform: translateX(-50%);
+            background-color: #111827;
+            color: #ffffff;
+            font-size: 13px;
+            padding: 9px 16px;
+            border-radius: 999px;
+            z-index: 60;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease;
+            max-width: 88vw;
+            text-align: center;
+        }
+
+        .pj_toast.show {
+            opacity: 1;
+        }
+
+        .pj_birth_line {
+            display: block;
+            line-height: 1.25;
+        }
+    </style>
+</head>
+<body>
+    <div class="top_grid_fixed">
+        <div class="action_grid_fixed">
+            <img src="assets/images/back_blue.png" class="back_img_fixed" alt="" onerror="this.style.display='none'">
+            <p onclick="sendTo('documents')" class="back_text_fixed">Wróć</p>
+        </div>
+        <p class="title_text_fixed" id="pjHeaderTitle">mPrawo jazdy</p>
+        <img src="assets/images/help.png" class="help_img_fixed" alt="" onclick="showPjToast('Podgląd dokumentu mPrawo jazdy.')" onerror="this.style.display='none'">
+    </div>
+
+    <div class="pj_top_switcher_bar">
+        <div class="pj_switch_wrap" role="tablist">
+            <button type="button" class="pj_switch_btn active" id="pjTabMain" role="tab" aria-selected="true" onclick="switchPjMode('main')">Główne</button>
+            <button type="button" class="pj_switch_btn" id="pjTabTemp" role="tab" aria-selected="false" onclick="switchPjMode('temp')">Tymczasowe</button>
+        </div>
+    </div>
+
+    <div class="bottom_bar" style="height: 85px;">
+        <div class="bottom_bar_grid">
+            <div class="bottom_element_grid" send="home">
+                <div class="bottom_element_image home"></div>
+                <p class="bottom_element_text">Pulpit</p>
+            </div>
+            <div class="bottom_element_grid" send="documents">
+                <div class="bottom_element_image documents documents_open"></div>
+                <p class="bottom_element_text open">Dokumenty</p>
+            </div>
+            <div class="bottom_element_grid" send="services">
+                <div class="bottom_element_image services"></div>
+                <p class="bottom_element_text">Usługi</p>
+            </div>
+            <div class="bottom_element_grid" send="qr">
+                <div class="bottom_element_image qr"></div>
+                <p class="bottom_element_text">Kod QR</p>
+            </div>
+            <div class="bottom_element_grid" send="more">
+                <div class="bottom_element_image more"></div>
+                <p class="bottom_element_text">Więcej</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" style="padding-top: 6px;">
+        <p class="time_text" id="time">Czas: 23:30:02 08.05.2025</p>
+
+        <div class="id_image_data">
+            <img draggable="false" class="id_image" src="assets/images/orzeł.png" alt="" onerror="this.style.display='none'">
+            <div class="inset"></div>
+            <div class="id_own_image" style="background-image: url(&quot;data:application/octet-stream;base64,&quot;);"></div>
+            <img draggable="false" src="assets/images/flag.webp" class="flag_video" alt="" onerror="this.style.display='none'">
+            <img draggable="false" src="assets/images/eagle.gif" class="eagle_video" alt="" onerror="this.style.display='none'">
+            <p class="eagle_text">Rzeczpospolita<br>Polska</p>
+            <div class="id_data_grid">
+                <div class="data_holder">
+                    <p class="data_title firstname" id="name"></p>
+                    <p class="data_value">Imię (imiona)</p>
+                </div>
+                <div class="data_holder">
+                    <p class="data_title surname" id="surname"></p>
+                    <p class="data_value">Nazwisko</p>
+                </div>
+                <div class="data_holder">
+                    <p class="data_title" id="birthday_place">
+                        <span class="pj_birth_line" id="birthday"></span>
+                        <span class="pj_birth_line" id="birthplace"></span>
+                    </p>
+                    <p class="data_value">Data i miejsce urodzenia</p>
+                </div>
+                <div class="data_holder">
+                    <p class="data_title" id="pesel"></p>
+                    <p class="data_value">Numer PESEL</p>
+                </div>
+                <div class="data_holder">
+                    <p class="data_title" id="categories">A, B</p>
+                    <p class="data_value">Kategoria</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="id_bottom">
+            <div class="bottom_grid">
+                <img class="bottom_image" src="assets/images/valid.png" alt="" onerror="this.style.display='none'">
+                <p class="bottom_text" id="pjDocStatus" style="color: #317C26; font-weight: 400; font-size: 18px; margin-left: 20px;">Dokument ważny</p>
+            </div>
+        </div>
+
+        <p class="pj_section_title">Dane dokumentu</p>
+        <div class="confirm_info" style="margin-top: 0;">
+            <div class="confirm_box">
+                <p class="box_top">Data ważności</p>
+                <p class="box_value" id="pjExpiryDate">Bezterminowo</p>
+            </div>
+            <div class="confirm_box">
+                <p class="box_top">Data wydania</p>
+                <p class="box_value" id="pjGivenDate">09.04.2010</p>
+            </div>
+            <div class="confirm_box">
+                <p class="box_top">Status blankietu</p>
+                <p class="box_value" id="pjBlankStatus"><span class="pj_status_dot"></span>Wydany</p>
+            </div>
+            <div class="confirm_box">
+                <p class="box_top">Numer dokumentu</p>
+                <p class="box_value" id="pjDocNumber">03675/08/0463</p>
+            </div>
+            <div class="confirm_box">
+                <p class="box_top">Numer blankietu</p>
+                <p class="box_value" id="pjBlankNumber">J54323422</p>
+            </div>
+            <div class="confirm_box">
+                <p class="box_top">Organ wydający</p>
+                <p class="box_value" id="pjAuthority">Starostwo Powiatowe w Lublinie</p>
+            </div>
+            <div class="confirm_box" style="border: none;">
+                <p class="box_top">Ograniczenia</p>
+                <p class="box_value" id="pjRestrictions">01.01, 02.01</p>
+            </div>
+        </div>
+
+        <div class="other_grid">
+            <div class="bottom_holder" style="height: 64px; margin-top: 12px;">
+                <button type="button" class="pj_extra_row" onclick="sendTo('punkty_karne')">
+                    <span class="pj_extra_title">Punkty karne</span>
+                    <span class="pj_extra_arrow">›</span>
+                </button>
+            </div>
+
+            <div class="bottom_holder" style="height: 64px; margin-top: 10px;">
+                <button type="button" class="pj_extra_row" onclick="sendTo('mandaty')">
+                    <span class="pj_extra_title">Mandaty</span>
+                    <span class="pj_extra_arrow">›</span>
+                </button>
+            </div>
+
+            <div class="bottom_holder" style="height: 90px; margin-top: 10px; margin-bottom: 14px;">
+                <div class="bottom_update">
+                    <div class="bottom_update_grid">
+                        <p class="bottom_update_text" style="margin-left: 0px;">Ostatnia aktualizacja</p>
+                        <p class="bottom_update_value" id="pjLastUpdate" style="margin-left: 0px;">24.12.2024</p>
+                    </div>
+                    <button type="button" class="main_button update" onclick="updatePjTimestamp()">Aktualizuj</button>
+                </div>
+            </div>
+
+            <p class="pj_section_title">Twoje kategorie</p>
+
+            <div class="pj_cat_card" id="catCardA">
+                <button type="button" class="pj_cat_btn" onclick="toggleCatCard('catCardA')">
+                    <span>Kategoria A</span>
+                    <span class="pj_cat_chevron">⌄</span>
+                </button>
+                <div class="pj_cat_body">
+                    Posiadasz uprawnienie <strong>Kategoria A</strong> — jesteś upoważniony do kierowania motocyklem oraz pozostałymi pojazdami objętymi tą kategorią. Data uzyskania: <strong id="catDateA">09.04.2010</strong>.
+                </div>
+            </div>
+
+            <div class="pj_cat_card" id="catCardB">
+                <button type="button" class="pj_cat_btn" onclick="toggleCatCard('catCardB')">
+                    <span>Kategoria B</span>
+                    <span class="pj_cat_chevron">⌄</span>
+                </button>
+                <div class="pj_cat_body">
+                    Posiadasz uprawnienie <strong>Kategoria B</strong> — jesteś upoważniony do kierowania pojazdem samochodowym o dopuszczalnej masie całkowitej do 3,5 t. Data uzyskania: <strong id="catDateB">09.04.2010</strong>.
+                </div>
+            </div>
+
+            <button type="button" class="pj_delete_card" onclick="showPjToast('Dokument mPrawo jazdy pozostaje przypisany do pulpitu.')">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <polyline points="3 6 5 6 21 6"></polyline>
+                    <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"></path>
+                    <path d="M10 11v6"></path>
+                    <path d="M14 11v6"></path>
+                    <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"></path>
+                </svg>
+                <span>Usuń dokument</span>
+            </button>
+
+            <div class="pj_info_banner">
+                <span class="pj_info_badge" aria-hidden="true">i</span>
+                <div>
+                    <p class="pj_info_text">Chcesz poznać szczegółowe informacje o prezentowanych danych?</p>
+                    <button type="button" class="pj_info_link" onclick="showPjToast('Dane w widoku mPrawo jazdy są pobierane z lokalnego profilu w przeglądarce.')">Dowiedz się więcej</button>
+                </div>
+            </div>
+
+            <div class="pj_info_banner" style="margin-bottom: 120px;">
+                <span class="pj_info_badge" aria-hidden="true">i</span>
+                <div>
+                    <p class="pj_info_text">Widzisz błędne dane? Możesz je zgłosić na stronie gov.pl.</p>
+                    <button type="button" class="pj_info_link" onclick="showPjToast('Zmień dane w formularzu startowym i zapisz je ponownie.')">Przejdź do gov.pl</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="pj_toast" id="pjToast"></div>
+
+    <script src="assets/encode.js"></script>
+    <script src="assets/bar.js"></script>
+    <script src="assets/manifest.js"></script>
+    <script src="assets/cache.js"></script>
+    <script>
+        let pjCurrentMode = 'main';
+        let pjSavedMainMeta = null;
+
+        function sendTo(page) {
+            const currentParams = new URLSearchParams(window.location.search);
+            if (pjCurrentMode === 'temp') {
+                currentParams.set('pjMode', 'temp');
+            } else {
+                currentParams.delete('pjMode');
+            }
+            const query = currentParams.toString();
+            location.href = query ? `${page}.html?${query}` : `${page}.html`;
+        }
+
+        function showPjToast(msg) {
+            const toast = document.getElementById('pjToast');
+            if (!toast) return;
+            toast.textContent = msg;
+            toast.classList.add('show');
+            clearTimeout(window.__pjToastTimer);
+            window.__pjToastTimer = setTimeout(() => toast.classList.remove('show'), 2500);
+        }
+
+        function toggleCatCard(id) {
+            const card = document.getElementById(id);
+            if (card) card.classList.toggle('open');
+        }
+
+        function captureMainMeta() {
+            const expiryEl = document.getElementById('pjExpiryDate');
+            const givenEl = document.getElementById('pjGivenDate');
+            const docNumEl = document.getElementById('pjDocNumber');
+            const blankNumEl = document.getElementById('pjBlankNumber');
+            const blankStatusEl = document.getElementById('pjBlankStatus');
+
+            pjSavedMainMeta = {
+                expiry: expiryEl ? expiryEl.textContent : 'Bezterminowo',
+                given: givenEl ? givenEl.textContent : '09.04.2010',
+                docNum: docNumEl ? docNumEl.textContent : '03675/08/0463',
+                blankNum: blankNumEl ? blankNumEl.textContent : 'J54323422',
+                blankStatusHtml: blankStatusEl ? blankStatusEl.innerHTML : '<span class="pj_status_dot"></span>Wydany'
+            };
+        }
+
+        function switchPjMode(mode) {
+            const btnMain = document.getElementById('pjTabMain');
+            const btnTemp = document.getElementById('pjTabTemp');
+            const statusEl = document.getElementById('pjDocStatus');
+            const headerEl = document.getElementById('pjHeaderTitle');
+            const expiryEl = document.getElementById('pjExpiryDate');
+            const docNumEl = document.getElementById('pjDocNumber');
+            const blankNumEl = document.getElementById('pjBlankNumber');
+            const blankStatusEl = document.getElementById('pjBlankStatus');
+
+            if (!pjSavedMainMeta) {
+                captureMainMeta();
+            }
+
+            pjCurrentMode = mode === 'temp' ? 'temp' : 'main';
+
+            try {
+                window.localStorage.setItem('mobywatel_pj_mode', pjCurrentMode);
+            } catch (e) {}
+
+            if (pjCurrentMode === 'temp') {
+                if (btnMain) {
+                    btnMain.classList.remove('active');
+                    btnMain.setAttribute('aria-selected', 'false');
+                }
+                if (btnTemp) {
+                    btnTemp.classList.add('active');
+                    btnTemp.setAttribute('aria-selected', 'true');
+                }
+
+                if (headerEl) headerEl.textContent = 'Prawo jazdy tymczasowe';
+                if (statusEl) statusEl.textContent = 'Dokument tymczasowy ważny';
+                if (expiryEl) expiryEl.textContent = '30 dni od wydania';
+                if (blankStatusEl) blankStatusEl.innerHTML = '<span class="pj_status_dot"></span>Tymczasowy';
+                if (docNumEl) docNumEl.textContent = 'TMP/08/0463';
+                if (blankNumEl) blankNumEl.textContent = 'T54323422';
+            } else {
+                if (btnTemp) {
+                    btnTemp.classList.remove('active');
+                    btnTemp.setAttribute('aria-selected', 'false');
+                }
+                if (btnMain) {
+                    btnMain.classList.add('active');
+                    btnMain.setAttribute('aria-selected', 'true');
+                }
+
+                if (headerEl) headerEl.textContent = 'mPrawo jazdy';
+                if (statusEl) statusEl.textContent = 'Dokument ważny';
+                if (pjSavedMainMeta) {
+                    if (expiryEl) expiryEl.textContent = pjSavedMainMeta.expiry;
+                    if (blankStatusEl) blankStatusEl.innerHTML = pjSavedMainMeta.blankStatusHtml;
+                    if (docNumEl) docNumEl.textContent = pjSavedMainMeta.docNum;
+                    if (blankNumEl) blankNumEl.textContent = pjSavedMainMeta.blankNum;
+                }
+            }
+        }
+
+        function updatePjTimestamp() {
+            const formatted = new Date().toLocaleDateString('pl-PL', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric'
+            });
+            try {
+                localStorage.setItem('mobywatel_pj_update', formatted);
+            } catch (e) {}
+            const el = document.getElementById('pjLastUpdate');
+            if (el) el.textContent = formatted;
+            showPjToast('Zaktualizowano datę dokumentu.');
+        }
+
+        (function hydratePjCardFromIndex() {
+            function safeGetStorage(storage, key) {
+                try {
+                    return storage ? storage.getItem(key) : null;
+                } catch (e) {
+                    return null;
+                }
+            }
+
+            function safeParseJson(str) {
+                if (!str || typeof str !== 'string') return null;
+                try {
+                    const parsed = JSON.parse(str);
+                    return parsed && typeof parsed === 'object' ? parsed : null;
+                } catch (e) {
+                    return null;
+                }
+            }
+
+            function formatBirthDateValue(raw) {
+                if (!raw) return '';
+
+                if (typeof raw === 'object') {
+                    const d = parseInt(raw.day, 10);
+                    const m = parseInt(raw.month, 10);
+                    const y = parseInt(raw.year, 10);
+                    if (!Number.isNaN(d) && !Number.isNaN(m) && !Number.isNaN(y) &&
+                        d >= 1 && d <= 31 && m >= 1 && m <= 12 && y >= 1900) {
+                        return `${String(d).padStart(2, '0')}.${String(m).padStart(2, '0')}.${String(y)}`;
+                    }
+                    return '';
+                }
+
+                const s = String(raw).trim();
+                if (!s) return '';
+
+                let match = s.match(/^(\d{1,2})[./-](\d{1,2})[./-](\d{4})$/);
+                if (match) {
+                    return `${match[1].padStart(2, '0')}.${match[2].padStart(2, '0')}.${match[3]}`;
+                }
+
+                match = s.match(/^(\d{4})[./-](\d{1,2})[./-](\d{1,2})$/);
+                if (match) {
+                    return `${match[3].padStart(2, '0')}.${match[2].padStart(2, '0')}.${match[1]}`;
+                }
+
+                return s;
+            }
+
+            function buildProfileSource() {
+                const sources = [
+                    safeParseJson(safeGetStorage(window.localStorage, 'mobywatel_profile_data')),
+                    safeParseJson(safeGetStorage(window.sessionStorage, 'mobywatel_profile_data')),
+                    safeParseJson(safeGetStorage(window.localStorage, 'profileData')),
+                    safeParseJson(safeGetStorage(window.sessionStorage, 'profileData'))
+                ].filter(Boolean);
+
+                const merged = Object.assign({}, ...sources);
+
+                const directKeys = [
+                    'name', 'imie',
+                    'surname', 'nazwisko',
+                    'birthday', 'birthDate', 'birth_date', 'dataUrodzenia', 'data_urodzenia',
+                    'birthplace', 'birthPlace', 'placeOfBirth', 'miejsceUrodzenia', 'miejsce_urodzenia', 'city',
+                    'pesel',
+                    'categories', 'kategorie',
+                    'givenDate', 'dataWydania',
+                    'expiryDate', 'dataWaznosci',
+                    'image', 'photo', 'zdjecie',
+                    'sex', 'plec'
+                ];
+
+                const params = new URLSearchParams(window.location.search);
+
+                directKeys.forEach((key) => {
+                    const lsVal = safeGetStorage(window.localStorage, key);
+                    const ssVal = safeGetStorage(window.sessionStorage, key);
+                    const qpVal = params.get(key);
+                    const chosen = (lsVal !== null && lsVal !== '')
+                        ? lsVal
+                        : ((ssVal !== null && ssVal !== '') ? ssVal : qpVal);
+
+                    if (chosen !== null && chosen !== '') {
+                        if (!(key in merged) || merged[key] === '' || merged[key] === null || merged[key] === undefined) {
+                            merged[key] = chosen;
+                        }
+                    }
+                });
+
+                return merged;
+            }
+
+            function applyData() {
+                const data = buildProfileSource();
+
+                const rawBirth = data.birthDate ?? data.birthday ?? data.birth_date ?? data.dataUrodzenia ?? data.data_urodzenia ?? '';
+                const formattedBirthDate = formatBirthDateValue(rawBirth);
+
+                const rawBirthplace = data.birthplace ?? data.birthPlace ?? data.placeOfBirth ?? data.miejsceUrodzenia ?? data.miejsce_urodzenia ?? data.city ?? '';
+                const rawPesel = data.pesel ?? '';
+                const rawName = data.name ?? data.imie ?? '';
+                const rawSurname = data.surname ?? data.nazwisko ?? '';
+                const rawCategories = data.categories ?? data.kategorie ?? '';
+                const givenVal = data.givenDate ?? data.dataWydania ?? '';
+                const expiryVal = data.expiryDate ?? data.dataWaznosci ?? '';
+                const photoVal = data.image ?? data.photo ?? data.zdjecie ?? '';
+
+                const textMap = {
+                    name: rawName ? String(rawName).toUpperCase() : '',
+                    surname: rawSurname ? String(rawSurname).toUpperCase() : '',
+                    birthday: formattedBirthDate,
+                    birthplace: rawBirthplace ? String(rawBirthplace).toUpperCase() : '',
+                    pesel: rawPesel ? String(rawPesel).trim() : '',
+                    categories: rawCategories ? String(rawCategories) : '',
+                    pjGivenDate: givenVal ? String(givenVal) : '',
+                    pjExpiryDate: expiryVal ? String(expiryVal) : '',
+                    catDateA: givenVal ? String(givenVal) : '',
+                    catDateB: givenVal ? String(givenVal) : ''
+                };
+
+                Object.entries(textMap).forEach(([id, val]) => {
+                    const el = document.getElementById(id);
+                    if (el && val !== '') {
+                        el.textContent = val;
+                    }
+                });
+
+                const savedUpdate = safeGetStorage(window.localStorage, 'mobywatel_pj_update') || safeGetStorage(window.sessionStorage, 'mobywatel_pj_update');
+                if (savedUpdate) {
+                    const updEl = document.getElementById('pjLastUpdate');
+                    if (updEl) updEl.textContent = savedUpdate;
+                }
+
+                if (photoVal) {
+                    const ownPhotoEl = document.querySelector('.id_own_image');
+                    if (ownPhotoEl) {
+                        const safeUrl = String(photoVal).replace(/"/g, '&quot;');
+                        ownPhotoEl.style.backgroundImage = `url("${safeUrl}")`;
+                        ownPhotoEl.style.backgroundSize = 'cover';
+                        ownPhotoEl.style.backgroundPosition = 'center';
+                    }
+                }
+
+                captureMainMeta();
+
+                const params = new URLSearchParams(window.location.search);
+                const savedMode = params.get('pjMode') || safeGetStorage(window.localStorage, 'mobywatel_pj_mode') || 'main';
+                switchPjMode(savedMode === 'temp' ? 'temp' : 'main');
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', applyData);
+            } else {
+                applyData();
+            }
+            window.addEventListener('load', applyData);
+            window.addEventListener('storage', applyData);
+        })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoiIiwic2hvcnRfbmFtZSI6IiIsInRoZW1lX2NvbG9yIjoiI2Y1ZjZmYiIsImJhY2tncm91bmRfY29sb3IiOiIjZjVmNmZiIiwiZGlzcGxheSI6InN0YW5kYWxvbmUifQ==">
+    <title>mObywatel</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <link rel="stylesheet" href="assets/id.css">
+    <link rel="stylesheet" href="assets/main.css">
+    <link rel="icon" type="image/x-icon" href="assets/images/logo.png">
+    <link rel="apple-touch-icon" href="assets/images/logo.png">
+    <link rel="shortcut icon" href="assets/images/logo.png">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, initial-scale=0.8, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <style>
+        .forgot_password,
+        .login {
+            cursor: pointer;
+            user-select: none;
+        }
+        .confirm_pass_wrap {
+            margin-top: 12px;
+            display: none;
+        }
+        .confirm_pass_wrap.show {
+            display: block;
+        }
+        .password_text_sub {
+            margin: 0 0 6px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #374151;
+        }
+        .auth_feedback {
+            margin-top: 8px;
+            font-size: 13px;
+            line-height: 1.4;
+            color: #b91c1c;
+            min-height: 18px;
+        }
+        .auth_feedback.info {
+            color: #0b4ea2;
+        }
+        .reset_pass_link {
+            display: none;
+            margin-top: 8px;
+            border: none;
+            background: transparent;
+            padding: 0;
+            color: #6b7280;
+            font-size: 12.5px;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+        .reset_pass_link.show {
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <div class="background"></div>
+    <div class="container">
+        <div class="top_grid">
+            <img class="logo" src="assets/images/logo_large.png" alt="">
+            <p class="logo_text">mObywatel</p>
+        </div>
+        <div class="top_text">
+            <p class="welcome">Dobry wieczór!</p>
+            <p class="login_text" id="mobywatelAuthSubtitle">Zaloguj się do aplikacji.</p>
+        </div>
+        <div class="password_box">
+            <div class="password_grid">
+                <p class="password_text" id="mobywatelPassLabel">Hasło</p>
+                <div class="input_holder">
+                    <input class="password_input" id="mobywatelAuthPass1" type="password" autocomplete="current-password">
+                    <div class="eye" id="mobywatelToggleEye" role="button" tabindex="0" aria-label="Pokaż lub ukryj hasło"></div>
+                </div>
+
+                <div class="confirm_pass_wrap" id="mobywatelConfirmWrap">
+                    <p class="password_text_sub">Powtórz hasło</p>
+                    <div class="input_holder">
+                        <input class="password_input" id="mobywatelAuthPass2" type="password" autocomplete="new-password">
+                    </div>
+                </div>
+
+                <p class="auth_feedback" id="mobywatelAuthFeedback"></p>
+                <p class="forgot_password" id="mobywatelForgotBtn">Nie pamiętasz hasła?</p>
+                <button type="button" class="reset_pass_link" id="mobywatelResetBtn">Zmień / zresetuj zapisane hasło</button>
+            </div>
+        </div>
+        <div class="bottom">
+            <p class="login" id="mobywatelAuthSubmit">Zaloguj się</p>
+            <div class="data">
+                <img class="logo_other" style="height: 20px;" src="assets/images/coi.png" alt="">
+                <img class="logo_other" src="assets/images/mc.png" alt="">
+                <p class="version">wersja 4.52.0 (13)</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/manifest.js"></script>
+    <script>
+        (function initMobywatelAuth() {
+            const PASS_KEY = 'mobywatel_app_password';
+            let isSubmitting = false;
+
+            function navigateTo(page) {
+                const query = window.location.search;
+                location.href = query ? `${page}.html${query}` : `${page}.html`;
+            }
+
+            function readSavedPassword() {
+                try {
+                    return localStorage.getItem(PASS_KEY) || '';
+                } catch (e) {
+                    return '';
+                }
+            }
+
+            function writeSavedPassword(value) {
+                try {
+                    localStorage.setItem(PASS_KEY, value);
+                    return true;
+                } catch (e) {
+                    return false;
+                }
+            }
+
+            function showFeedback(text, isInfo) {
+                const el = document.getElementById('mobywatelAuthFeedback');
+                if (!el) return;
+                el.textContent = text || '';
+                el.className = isInfo ? 'auth_feedback info' : 'auth_feedback';
+            }
+
+            function refreshModeUI() {
+                const saved = readSavedPassword();
+                const setupMode = !saved;
+
+                const subtitle = document.getElementById('mobywatelAuthSubtitle');
+                const label = document.getElementById('mobywatelPassLabel');
+                const confirmWrap = document.getElementById('mobywatelConfirmWrap');
+                const submitBtn = document.getElementById('mobywatelAuthSubmit');
+                const forgotBtn = document.getElementById('mobywatelForgotBtn');
+                const resetBtn = document.getElementById('mobywatelResetBtn');
+                const p1 = document.getElementById('mobywatelAuthPass1');
+                const p2 = document.getElementById('mobywatelAuthPass2');
+
+                if (p1) p1.value = '';
+                if (p2) p2.value = '';
+
+                if (setupMode) {
+                    if (subtitle) subtitle.textContent = 'Ustaw hasło do aplikacji, aby przejść dalej.';
+                    if (label) label.textContent = 'Utwórz hasło (min. 4 znaki)';
+                    if (confirmWrap) confirmWrap.classList.add('show');
+                    if (submitBtn) submitBtn.textContent = 'Ustaw hasło i wejdź';
+                    if (forgotBtn) forgotBtn.style.display = 'none';
+                    if (resetBtn) resetBtn.classList.remove('show');
+                    showFeedback('Bez ustawienia hasła przejście do aplikacji jest zablokowane.', true);
+                } else {
+                    if (subtitle) subtitle.textContent = 'Zaloguj się do aplikacji.';
+                    if (label) label.textContent = 'Hasło';
+                    if (confirmWrap) confirmWrap.classList.remove('show');
+                    if (submitBtn) submitBtn.textContent = 'Zaloguj się';
+                    if (forgotBtn) forgotBtn.style.display = 'block';
+                    if (resetBtn) resetBtn.classList.add('show');
+                    showFeedback('', false);
+                }
+            }
+
+            function onResetClick(e) {
+                if (e) e.preventDefault();
+                try {
+                    localStorage.removeItem(PASS_KEY);
+                } catch (err) {}
+                refreshModeUI();
+            }
+
+            function onToggleEye(e) {
+                if (e) e.preventDefault();
+                const p1 = document.getElementById('mobywatelAuthPass1');
+                const p2 = document.getElementById('mobywatelAuthPass2');
+                if (!p1) return;
+                const nextType = p1.type === 'password' ? 'text' : 'password';
+                p1.type = nextType;
+                if (p2) p2.type = nextType;
+            }
+
+            function onSubmitAuth(e) {
+                if (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                }
+                if (isSubmitting) return;
+                isSubmitting = true;
+
+                try {
+                    const p1 = document.getElementById('mobywatelAuthPass1');
+                    const p2 = document.getElementById('mobywatelAuthPass2');
+                    const val1 = p1 ? p1.value : '';
+                    const saved = readSavedPassword();
+
+                    if (!saved) {
+                        const val2 = p2 ? p2.value : '';
+                        if (val1.length < 4) {
+                            showFeedback('Podaj hasło (minimum 4 znaki), aby kontynuować.', false);
+                            if (p1) p1.focus();
+                            return;
+                        }
+                        if (val1 !== val2) {
+                            showFeedback('Hasła nie są identyczne. Wpisz to samo hasło w obu polach.', false);
+                            if (p2) p2.focus();
+                            return;
+                        }
+                        if (!writeSavedPassword(val1)) {
+                            showFeedback('Nie udało się zapisać hasła w przeglądarce.', false);
+                            return;
+                        }
+                        navigateTo('home');
+                        return;
+                    }
+
+                    if (!val1) {
+                        showFeedback('Wpisz hasło, aby się zalogować.', false);
+                        if (p1) p1.focus();
+                        return;
+                    }
+
+                    if (val1 !== saved) {
+                        showFeedback('Nieprawidłowe hasło. Spróbuj ponownie.', false);
+                        if (p1) {
+                            p1.value = '';
+                            p1.focus();
+                        }
+                        return;
+                    }
+
+                    showFeedback('', false);
+                    navigateTo('home');
+                } finally {
+                    setTimeout(() => {
+                        isSubmitting = false;
+                    }, 150);
+                }
+            }
+
+            function bindEvents() {
+                refreshModeUI();
+
+                const submitBtn = document.getElementById('mobywatelAuthSubmit');
+                const forgotBtn = document.getElementById('mobywatelForgotBtn');
+                const resetBtn = document.getElementById('mobywatelResetBtn');
+                const eyeBtn = document.getElementById('mobywatelToggleEye');
+                const p1 = document.getElementById('mobywatelAuthPass1');
+                const p2 = document.getElementById('mobywatelAuthPass2');
+
+                if (submitBtn) submitBtn.addEventListener('click', onSubmitAuth);
+                if (forgotBtn) forgotBtn.addEventListener('click', () => navigateTo('odzyskiwanie_hasla'));
+                if (resetBtn) resetBtn.addEventListener('click', onResetClick);
+                if (eyeBtn) eyeBtn.addEventListener('click', onToggleEye);
+
+                [p1, p2].forEach((inp) => {
+                    if (!inp) return;
+                    inp.addEventListener('keydown', (ev) => {
+                        if (ev.key === 'Enter') {
+                            ev.preventDefault();
+                            onSubmitAuth(ev);
+                        }
+                    });
+                });
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', bindEvents, { once: true });
+            } else {
+                bindEvents();
+            }
+        })();
+    </script>
+</body>
+</html>

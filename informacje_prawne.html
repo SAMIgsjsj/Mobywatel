@@ -1,0 +1,194 @@
+<html>
+<head>
+<link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoiIiwic2hvcnRfbmFtZSI6IiIsInRoZW1lX2NvbG9yIjoiI2Y1ZjZmYiIsImJhY2tncm91bmRfY29sb3IiOiIjZjVmNmZiIiwiZGlzcGxheSI6InN0YW5kYWxvbmUifQ==">
+    <title>mObywatel</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <link rel="stylesheet" href="assets/main.css">
+    <link rel="stylesheet" href="assets/more.css">
+    <link rel="icon" type="image/x-icon" href="assets/images/logo.png">
+    <link rel="apple-touch-icon" href="assets/images/logo.png">
+    <link rel="shortcut icon" href="assets/images/logo.png">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, initial-scale=0.8, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <style>
+        body {
+            background-color: #f5f6fb;
+            color: #111827;
+            margin: 0;
+        }
+
+        .legal_header {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 18px 18px 14px;
+            background-color: #f5f6fb;
+        }
+
+        .legal_back_btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 34px;
+            height: 34px;
+            border: none;
+            background: transparent;
+            color: #111827;
+            font-size: 22px;
+            line-height: 1;
+            cursor: pointer;
+            padding: 0;
+            border-radius: 50%;
+        }
+
+        .legal_back_btn:active {
+            background-color: rgba(17, 24, 39, 0.06);
+        }
+
+        .legal_title {
+            margin: 0;
+            font-size: 20px;
+            font-weight: 700;
+            color: #111827;
+            letter-spacing: -0.2px;
+        }
+
+        .legal_container {
+            padding: 8px 16px 120px;
+        }
+
+        .legal_list {
+            background-color: #ffffff;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(15, 23, 42, 0.04);
+        }
+
+        .legal_item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 18px 18px;
+            background-color: #ffffff;
+            border-bottom: 1px solid #eef0f6;
+            cursor: pointer;
+            transition: background-color 0.15s ease;
+        }
+
+        .legal_item:last-child {
+            border-bottom: none;
+        }
+
+        .legal_item:active {
+            background-color: #f1f3fa;
+        }
+
+        .legal_item_label {
+            margin: 0;
+            font-size: 16px;
+            font-weight: 500;
+            color: #111827;
+            line-height: 1.35;
+        }
+
+        .legal_item_arrow {
+            flex-shrink: 0;
+            width: 18px;
+            height: 18px;
+            opacity: 0.55;
+            object-fit: contain;
+        }
+
+        .legal_arrow_fallback {
+            flex-shrink: 0;
+            color: #6b7280;
+            font-size: 18px;
+            line-height: 1;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bottom_bar" style="height: 85px;">
+        <div class="bottom_bar_grid">
+            <div class="bottom_element_grid" send="home">
+                <div class="bottom_element_image home"></div>
+                <p class="bottom_element_text">Pulpit</p>
+            </div>
+            <div class="bottom_element_grid" send="documents">
+                <div class="bottom_element_image documents"></div>
+                <p class="bottom_element_text">Dokumenty</p>
+            </div>
+            <div class="bottom_element_grid" send="services">
+                <div class="bottom_element_image services"></div>
+                <p class="bottom_element_text">Usługi</p>
+            </div>
+            <div class="bottom_element_grid" send="qr">
+                <div class="bottom_element_image qr"></div>
+                <p class="bottom_element_text">Kod QR</p>
+            </div>
+            <div class="bottom_element_grid" send="more">
+                <div class="bottom_element_image more more_open"></div>
+                <p class="bottom_element_text open">Więcej</p>
+            </div>
+        </div>
+    </div>
+
+    <header class="legal_header">
+        <button type="button" class="legal_back_btn" onclick="sendTo('more')" aria-label="Wróć">←</button>
+        <h1 class="legal_title">Informacje prawne</h1>
+    </header>
+
+    <main class="legal_container">
+        <div class="legal_list">
+            <div class="legal_item" onclick="sendTo('regulamin_aplikacji')">
+                <p class="legal_item_label">Regulamin aplikacji</p>
+                <img class="legal_item_arrow" src="assets/images/arrow_light.png" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
+                <span class="legal_arrow_fallback" style="display:none;">›</span>
+            </div>
+
+            <div class="legal_item" onclick="sendTo('polityka_prywatnosci')">
+                <p class="legal_item_label">Polityka prywatności</p>
+                <img class="legal_item_arrow" src="assets/images/arrow_light.png" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
+                <span class="legal_arrow_fallback" style="display:none;">›</span>
+            </div>
+
+            <div class="legal_item" onclick="sendTo('deklaracja_dostepnosci')">
+                <p class="legal_item_label">Deklaracja dostępności</p>
+                <img class="legal_item_arrow" src="assets/images/arrow_light.png" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
+                <span class="legal_arrow_fallback" style="display:none;">›</span>
+            </div>
+
+            <div class="legal_item" onclick="sendTo('bip')">
+                <p class="legal_item_label">Biuletyn Informacji Publicznej</p>
+                <img class="legal_item_arrow" src="assets/images/arrow_light.png" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
+                <span class="legal_arrow_fallback" style="display:none;">›</span>
+            </div>
+
+            <div class="legal_item" onclick="sendTo('przepisy_profil_mobywatel')">
+                <p class="legal_item_label">Przepisy dotyczące profilu mObywatel</p>
+                <img class="legal_item_arrow" src="assets/images/arrow_light.png" alt="" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
+                <span class="legal_arrow_fallback" style="display:none;">›</span>
+            </div>
+        </div>
+    </main>
+
+    <script src="assets/bar.js"></script>
+    <script src="assets/manifest.js"></script>
+    <script src="assets/cache.js"></script>
+    <script>
+        function sendTo(page) {
+            const query = window.location.search;
+            location.href = query ? `${page}.html${query}` : `${page}.html`;
+        }
+    </script>
+</body>
+</html>

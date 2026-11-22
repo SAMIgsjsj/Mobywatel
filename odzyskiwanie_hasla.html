@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoiIiwic2hvcnRfbmFtZSI6IiIsInRoZW1lX2NvbG9yIjoiI2Y1ZjZmYiIsImJhY2tncm91bmRfY29sb3IiOiIjZjVmNmZiIiwiZGlzcGxheSI6InN0YW5kYWxvbmUifQ==">
+    <title>mObywatel — Odzyskiwanie hasła</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <link rel="stylesheet" href="assets/main.css">
+    <link rel="icon" type="image/x-icon" href="assets/images/logo.png">
+    <link rel="apple-touch-icon" href="assets/images/logo.png">
+    <link rel="shortcut icon" href="assets/images/logo.png">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, initial-scale=0.8, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <style>
+        body {
+            margin: 0;
+            background-color: #f5f6fb;
+            font-family: inherit;
+        }
+        .rec_wrap {
+            max-width: 520px;
+            margin: 0 auto;
+            padding: 24px 18px 60px;
+            box-sizing: border-box;
+        }
+        .rec_top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+        }
+        .rec_back {
+            border: none;
+            background: transparent;
+            color: #0b4ea2;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 6px 4px;
+        }
+        .rec_brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            font-size: 18px;
+            color: #111827;
+        }
+        .rec_brand img {
+            height: 28px;
+            width: auto;
+        }
+        .rec_card {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 22px 20px;
+            box-shadow: 0 4px 18px rgba(15, 23, 42, 0.06);
+        }
+        .rec_title {
+            margin: 0 0 8px;
+            font-size: 22px;
+            font-weight: 700;
+            color: #111827;
+        }
+        .rec_desc {
+            margin: 0 0 20px;
+            font-size: 14px;
+            line-height: 1.5;
+            color: #4b5563;
+        }
+        .rec_field {
+            margin-bottom: 16px;
+        }
+        .rec_label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 13.5px;
+            font-weight: 600;
+            color: #1f2937;
+        }
+        .rec_input {
+            width: 100%;
+            height: 46px;
+            border: 1px solid #cbd5e1;
+            border-radius: 10px;
+            padding: 0 14px;
+            font-size: 15px;
+            color: #111827;
+            background: #ffffff;
+            box-sizing: border-box;
+        }
+        .rec_input:focus {
+            outline: none;
+            border-color: #0b4ea2;
+        }
+        .rec_hint {
+            margin-top: 6px;
+            font-size: 12.5px;
+            color: #6b7280;
+        }
+        .rec_btn {
+            width: 100%;
+            height: 48px;
+            border: none;
+            border-radius: 999px;
+            background-color: #0b4ea2;
+            color: #ffffff;
+            font-size: 15.5px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 6px;
+        }
+        .rec_btn:hover {
+            background-color: #093f84;
+        }
+        .rec_btn_secondary {
+            width: 100%;
+            height: 44px;
+            border: 1px solid #cbd5e1;
+            border-radius: 999px;
+            background-color: #ffffff;
+            color: #1f2937;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .rec_msg {
+            margin-top: 14px;
+            padding: 12px 14px;
+            border-radius: 10px;
+            font-size: 13.5px;
+            line-height: 1.45;
+            display: none;
+        }
+        .rec_msg.info {
+            display: block;
+            background-color: #e8f1fd;
+            color: #0b4ea2;
+        }
+        .rec_msg.err {
+            display: block;
+            background-color: #fee2e2;
+            color: #991b1b;
+        }
+        .rec_msg.ok {
+            display: block;
+            background-color: #dcfce7;
+            color: #166534;
+        }
+        .rec_step_hide {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="rec_wrap">
+        <div class="rec_top">
+            <button type="button" class="rec_back" onclick="sendTo('id')">‹ Wróć do logowania</button>
+            <div class="rec_brand">
+                <img src="assets/images/logo_large.png" alt="">
+                <span>mObywatel</span>
+            </div>
+        </div>
+
+        <div class="rec_card">
+            <div id="stepEmail">
+                <h1 class="rec_title">Odzyskiwanie hasła</h1>
+                <p class="rec_desc">
+                    Podaj adres e-mail powiązany z kontem, aby otrzymać kod weryfikacyjny potrzebny do ustawienia nowego hasła.
+                </p>
+                <div class="rec_field">
+                    <label class="rec_label" for="recEmail">Adres e-mail</label>
+                    <input id="recEmail" class="rec_input" type="email" placeholder="np. jan.kowalski@domena.pl" autocomplete="email">
+                    <div class="rec_hint">Na ten adres wyślemy 6-cyfrowy kod potwierdzający.</div>
+                </div>
+                <button type="button" class="rec_btn" onclick="sendCode()">Wyślij kod</button>
+                <div id="msgEmail" class="rec_msg"></div>
+            </div>
+
+            <div id="stepCode" class="rec_step_hide">
+                <h1 class="rec_title">Wpisz kod weryfikacyjny</h1>
+                <p class="rec_desc" id="codeSentInfo">
+                    Wysłaliśmy 6-cyfrowy kod na podany adres e-mail. Wpisz go poniżej, aby przejść dalej.
+                </p>
+                <div class="rec_field">
+                    <label class="rec_label" for="recCode">Kod z wiadomości e-mail</label>
+                    <input id="recCode" class="rec_input" type="text" inputmode="numeric" maxlength="6" placeholder="np. 482910">
+                    <div class="rec_hint">Wersja pokazowa: możesz wpisać dowolny 6-cyfrowy kod (np. 123456).</div>
+                </div>
+                <button type="button" class="rec_btn" onclick="verifyCode()">Potwierdź kod</button>
+                <button type="button" class="rec_btn_secondary" onclick="backToEmail()">Zmień adres e-mail</button>
+                <div id="msgCode" class="rec_msg"></div>
+            </div>
+
+            <div id="stepPassword" class="rec_step_hide">
+                <h1 class="rec_title">Ustaw nowe hasło</h1>
+                <p class="rec_desc">
+                    Kod został zweryfikowany. Wpisz nowe hasło do aplikacji i potwierdź je.
+                </p>
+                <div class="rec_field">
+                    <label class="rec_label" for="recNewPass">Nowe hasło</label>
+                    <input id="recNewPass" class="rec_input" type="password" placeholder="Minimum 4 znaki">
+                </div>
+                <div class="rec_field">
+                    <label class="rec_label" for="recConfirmPass">Powtórz nowe hasło</label>
+                    <input id="recConfirmPass" class="rec_input" type="password" placeholder="Wpisz ponownie to samo hasło">
+                </div>
+                <button type="button" class="rec_btn" onclick="saveNewPassword()">Zapisz nowe hasło</button>
+                <div id="msgPass" class="rec_msg"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/manifest.js"></script>
+    <script src="assets/cache.js"></script>
+    <script>
+        function sendTo(page) {
+            const query = window.location.search;
+            location.href = query ? `${page}.html${query}` : `${page}.html`;
+        }
+
+        function setMsg(id, type, text) {
+            const el = document.getElementById(id);
+            if (!el) return;
+            el.className = `rec_msg ${type}`;
+            el.textContent = text;
+        }
+
+        function sendCode() {
+            const emailInput = document.getElementById('recEmail');
+            const email = (emailInput.value || '').trim();
+            if (!email || !email.includes('@')) {
+                setMsg('msgEmail', 'err', 'Wpisz poprawny adres e-mail.');
+                return;
+            }
+            document.getElementById('stepEmail').classList.add('rec_step_hide');
+            document.getElementById('stepCode').classList.remove('rec_step_hide');
+            document.getElementById('codeSentInfo').textContent =
+                `Wysłaliśmy 6-cyfrowy kod weryfikacyjny na adres ${email}. Wpisz go poniżej.`;
+            setMsg('msgCode', 'info', 'Kod został wysłany. Wpisz 6 cyfr, aby kontynuować.');
+        }
+
+        function backToEmail() {
+            document.getElementById('stepCode').classList.add('rec_step_hide');
+            document.getElementById('msgCode').className = 'rec_msg';
+            document.getElementById('stepEmail').classList.remove('rec_step_hide');
+        }
+
+        function verifyCode() {
+            const code = (document.getElementById('recCode').value || '').trim();
+            if (!/^\d{6}$/.test(code)) {
+                setMsg('msgCode', 'err', 'Kod musi składać się z 6 cyfr.');
+                return;
+            }
+            document.getElementById('stepCode').classList.add('rec_step_hide');
+            document.getElementById('stepPassword').classList.remove('rec_step_hide');
+            setMsg('msgPass', 'info', 'Kod zaakceptowany. Możesz teraz ustawić nowe hasło.');
+        }
+
+        function saveNewPassword() {
+            const p1 = document.getElementById('recNewPass').value || '';
+            const p2 = document.getElementById('recConfirmPass').value || '';
+            if (p1.length < 4) {
+                setMsg('msgPass', 'err', 'Hasło powinno mieć co najmniej 4 znaki.');
+                return;
+            }
+            if (p1 !== p2) {
+                setMsg('msgPass', 'err', 'Hasła nie są takie same.');
+                return;
+            }
+            try {
+                localStorage.setItem('mobywatel_app_password', p1);
+            } catch (e) {}
+            setMsg('msgPass', 'ok', 'Hasło zostało zapisane. Za chwilę wrócisz do ekranu logowania...');
+            setTimeout(() => sendTo('id'), 1200);
+        }
+    </script>
+</body>
+</html>

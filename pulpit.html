@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoiIiwic2hvcnRfbmFtZSI6IiIsInRoZW1lX2NvbG9yIjoiI2Y1ZjZmYiIsImJhY2tncm91bmRfY29sb3IiOiIjZjVmNmZiIiwiZGlzcGxheSI6InN0YW5kYWxvbmUifQ==">
+    <title>mObywatel — Pulpit</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <link rel="stylesheet" href="assets/main.css">
+    <link rel="stylesheet" href="assets/card.css">
+    <link rel="icon" type="image/x-icon" href="assets/images/logo.png">
+    <link rel="apple-touch-icon" href="assets/images/logo.png">
+    <link rel="shortcut icon" href="assets/images/logo.png">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, initial-scale=0.8, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <style>
+        .pulpit_container {
+            padding-top: 76px;
+            padding-bottom: 120px;
+            box-sizing: border-box;
+        }
+
+        .pulpit_top_actions {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 14px;
+            margin: 4px 2px 6px;
+        }
+
+        .pulpit_link_btn {
+            border: none;
+            background: transparent;
+            color: #1665e3;
+            font-size: 14.5px;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 4px 2px;
+        }
+
+        .pulpit_header_row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 2px 2px 12px;
+        }
+
+        .pulpit_main_title {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 700;
+            color: #1f2125;
+        }
+
+        .pulpit_mode_badge {
+            font-size: 12px;
+            font-weight: 600;
+            color: #1665e3;
+            background-color: #e8f0fe;
+            padding: 4px 10px;
+            border-radius: 999px;
+            display: none;
+        }
+
+        .pulpit_mode_badge.active {
+            display: inline-block;
+        }
+
+        .pulpit_section_title {
+            margin: 18px 2px 10px;
+            font-size: 15px;
+            font-weight: 700;
+            color: #1f2125;
+        }
+
+        .pulpit_list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .pulpit_doc_card {
+            background-color: #ffffff;
+            border-radius: 14px;
+            padding: 15px 16px;
+            box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            box-sizing: border-box;
+        }
+
+        .pulpit_doc_main {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+            min-width: 0;
+            cursor: pointer;
+        }
+
+        .pulpit_doc_icon {
+            width: 34px;
+            height: 34px;
+            border-radius: 9px;
+            background-color: #eef3fe;
+            color: #1665e3;
+            font-size: 12.5px;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .pulpit_doc_name {
+            margin: 0;
+            font-size: 15.5px;
+            font-weight: 600;
+            color: #1f2125;
+        }
+
+        .pulpit_doc_arrow {
+            font-size: 20px;
+            color: #6b7280;
+            flex-shrink: 0;
+        }
+
+        .pulpit_edit_controls {
+            display: none;
+            align-items: center;
+            gap: 6px;
+            flex-shrink: 0;
+        }
+
+        body.editing .pulpit_edit_controls {
+            display: flex;
+        }
+
+        body.editing .pulpit_doc_arrow {
+            display: none;
+        }
+
+        .pulpit_mini_btn {
+            border: 1px solid #d1d5db;
+            background-color: #f9fafb;
+            color: #1f2937;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 6px 9px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .pulpit_mini_btn.move_btn {
+            border-color: #bfd4fe;
+            background-color: #eef4ff;
+            color: #1665e3;
+        }
+
+        .pulpit_empty_box {
+            background-color: #ffffff;
+            border-radius: 14px;
+            padding: 20px 16px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03);
+        }
+
+        .pulpit_empty_title {
+            margin: 0 0 6px;
+            font-size: 14.5px;
+            font-weight: 700;
+            color: #1f2125;
+        }
+
+        .pulpit_empty_desc {
+            margin: 0;
+            font-size: 12.5px;
+            line-height: 1.45;
+            color: #6b7280;
+        }
+
+        .pulpit_toast {
+            position: fixed;
+            left: 50%;
+            bottom: 98px;
+            transform: translateX(-50%);
+            background-color: #111827;
+            color: #ffffff;
+            font-size: 13px;
+            padding: 9px 16px;
+            border-radius: 999px;
+            z-index: 60;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease;
+            max-width: 88vw;
+            text-align: center;
+        }
+
+        .pulpit_toast.show {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="top_grid_fixed">
+        <div class="action_grid_fixed">
+            <img src="assets/images/back_blue.png" class="back_img_fixed" alt="" onerror="this.style.display='none'">
+            <p onclick="sendTo('home')" class="back_text_fixed">Wróć</p>
+        </div>
+        <p class="title_text_fixed">Pulpit dokumentów</p>
+        <img src="assets/images/help.png" class="help_img_fixed" alt="" onclick="showPulpitToast('Kliknij Edytuj, aby przenosić dokumenty między pulpitem a pozostałymi.')" onerror="this.style.display='none'">
+    </div>
+
+    <div class="bottom_bar" style="height: 85px;">
+        <div class="bottom_bar_grid">
+            <div class="bottom_element_grid" send="home">
+                <div class="bottom_element_image home"></div>
+                <p class="bottom_element_text">Pulpit</p>
+            </div>
+            <div class="bottom_element_grid" send="documents">
+                <div class="bottom_element_image documents documents_open"></div>
+                <p class="bottom_element_text open">Dokumenty</p>
+            </div>
+            <div class="bottom_element_grid" send="services">
+                <div class="bottom_element_image services"></div>
+                <p class="bottom_element_text">Usługi</p>
+            </div>
+            <div class="bottom_element_grid" send="qr">
+                <div class="bottom_element_image qr"></div>
+                <p class="bottom_element_text">Kod QR</p>
+            </div>
+            <div class="bottom_element_grid" send="more">
+                <div class="bottom_element_image more"></div>
+                <p class="bottom_element_text">Więcej</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container pulpit_container">
+        <div class="pulpit_top_actions">
+            <button type="button" class="pulpit_link_btn" onclick="sendTo('dodawanie_dokumentu')">Dodaj</button>
+            <button type="button" class="pulpit_link_btn" id="editToggleBtn" onclick="toggleEditMode()">Edytuj</button>
+        </div>
+
+        <div class="pulpit_header_row">
+            <h1 class="pulpit_main_title">Dokumenty</h1>
+            <span class="pulpit_mode_badge" id="editBadge">Tryb edycji</span>
+        </div>
+
+        <p class="pulpit_section_title">Na pulpiscie</p>
+        <div class="pulpit_list" id="onPulpitList"></div>
+
+        <p class="pulpit_section_title">Pozostałe</p>
+        <div class="pulpit_list" id="otherDocsList"></div>
+    </div>
+
+    <div class="pulpit_toast" id="pulpitToast"></div>
+
+    <script src="assets/encode.js"></script>
+    <script src="assets/bar.js"></script>
+    <script src="assets/manifest.js"></script>
+    <script src="assets/cache.js"></script>
+    <script>
+        const STORAGE_KEY = 'mobywatel_pulpit_layout';
+        const ADDED_KEY = 'mobywatel_added_docs';
+
+        const BASE_DOCS = {
+            dowod: { id: 'dowod', name: 'mDowód', badge: 'ID', page: 'card' },
+            prawo_jazdy: { id: 'prawo_jazdy', name: 'mPrawo jazdy', badge: 'PJ', page: 'prawo_jazdy' },
+            szkolna: { id: 'szkolna', name: 'Legitymacja szkolna', badge: 'LS', page: 'documents' },
+            studencka: { id: 'studencka', name: 'Legitymacja studencka', badge: 'ELS', page: 'documents' },
+            kdr: { id: 'kdr', name: 'Karta Dużej Rodziny', badge: 'KDR', page: 'documents' }
+        };
+
+        let isEditing = false;
+        let layoutState = {
+            onPulpit: ['dowod', 'prawo_jazdy'],
+            other: []
+        };
+
+        function sendTo(page) {
+            const currentParams = new URLSearchParams(window.location.search);
+            const query = currentParams.toString();
+            location.href = query ? `${page}.html?${query}` : `${page}.html`;
+        }
+
+        function showPulpitToast(msg) {
+            const toast = document.getElementById('pulpitToast');
+            if (!toast) return;
+            toast.textContent = msg;
+            toast.classList.add('show');
+            clearTimeout(window.__pulpitToastT);
+            window.__pulpitToastT = setTimeout(() => toast.classList.remove('show'), 2300);
+        }
+
+        function loadLayoutState() {
+            let added = [];
+            try {
+                const rawAdded = localStorage.getItem(ADDED_KEY);
+                if (rawAdded) {
+                    const parsedAdded = JSON.parse(rawAdded);
+                    if (Array.isArray(parsedAdded)) added = parsedAdded;
+                }
+            } catch (e) {}
+
+            try {
+                const rawLayout = localStorage.getItem(STORAGE_KEY);
+                if (rawLayout) {
+                    const parsed = JSON.parse(rawLayout);
+                    if (parsed && Array.isArray(parsed.onPulpit) && Array.isArray(parsed.other)) {
+                        layoutState.onPulpit = parsed.onPulpit.filter(id => BASE_DOCS[id]);
+                        layoutState.other = parsed.other.filter(id => BASE_DOCS[id] && !layoutState.onPulpit.includes(id));
+                    }
+                }
+            } catch (e) {}
+
+            added.forEach(id => {
+                if (BASE_DOCS[id] && !layoutState.onPulpit.includes(id) && !layoutState.other.includes(id)) {
+                    layoutState.other.push(id);
+                }
+            });
+        }
+
+        function saveLayoutState() {
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(layoutState));
+            } catch (e) {}
+        }
+
+        function toggleEditMode() {
+            isEditing = !isEditing;
+            document.body.classList.toggle('editing', isEditing);
+
+            const btn = document.getElementById('editToggleBtn');
+            const badge = document.getElementById('editBadge');
+
+            if (isEditing) {
+                btn.textContent = 'Gotowe';
+                badge.classList.add('active');
+                showPulpitToast('Włączono tryb edycji dokumentów.');
+            } else {
+                btn.textContent = 'Edytuj';
+                badge.classList.remove('active');
+                saveLayoutState();
+                showPulpitToast('Zapisano układ dokumentów.');
+            }
+            renderLists();
+        }
+
+        function moveSection(docId, fromPulpit) {
+            if (!isEditing) return;
+            if (fromPulpit) {
+                layoutState.onPulpit = layoutState.onPulpit.filter(id => id !== docId);
+                if (!layoutState.other.includes(docId)) layoutState.other.push(docId);
+                showPulpitToast(`Przeniesiono ${BASE_DOCS[docId].name} do pozostałych.`);
+            } else {
+                layoutState.other = layoutState.other.filter(id => id !== docId);
+                if (!layoutState.onPulpit.includes(docId)) layoutState.onPulpit.push(docId);
+                showPulpitToast(`Przeniesiono ${BASE_DOCS[docId].name} na pulpit.`);
+            }
+            saveLayoutState();
+            renderLists();
+        }
+
+        function shiftDocOrder(docId, fromPulpit, delta) {
+            if (!isEditing) return;
+            const arr = fromPulpit ? layoutState.onPulpit : layoutState.other;
+            const idx = arr.indexOf(docId);
+            const targetIdx = idx + delta;
+            if (idx === -1 || targetIdx < 0 || targetIdx >= arr.length) return;
+            const temp = arr[idx];
+            arr[idx] = arr[targetIdx];
+            arr[targetIdx] = temp;
+            saveLayoutState();
+            renderLists();
+        }
+
+        function handleDocClick(docId) {
+            if (isEditing) return;
+            const doc = BASE_DOCS[docId];
+            if (doc && doc.page) {
+                sendTo(doc.page);
+            }
+        }
+
+        function buildDocCard(docId, fromPulpit, index, total) {
+            const doc = BASE_DOCS[docId];
+            if (!doc) return null;
+
+            const card = document.createElement('div');
+            card.className = 'pulpit_doc_card';
+
+            const mainBtn = document.createElement('div');
+            mainBtn.className = 'pulpit_doc_main';
+            mainBtn.onclick = () => handleDocClick(docId);
+            mainBtn.innerHTML = `
+                <span class="pulpit_doc_icon">${doc.badge}</span>
+                <p class="pulpit_doc_name">${doc.name}</p>
+            `;
+
+            const arrow = document.createElement('span');
+            arrow.className = 'pulpit_doc_arrow';
+            arrow.textContent = '›';
+
+            const controls = document.createElement('div');
+            controls.className = 'pulpit_edit_controls';
+
+            const upBtn = document.createElement('button');
+            upBtn.type = 'button';
+            upBtn.className = 'pulpit_mini_btn';
+            upBtn.textContent = '↑';
+            upBtn.disabled = index === 0;
+            upBtn.onclick = (e) => {
+                e.stopPropagation();
+                shiftDocOrder(docId, fromPulpit, -1);
+            };
+
+            const downBtn = document.createElement('button');
+            downBtn.type = 'button';
+            downBtn.className = 'pulpit_mini_btn';
+            downBtn.textContent = '↓';
+            downBtn.disabled = index === total - 1;
+            downBtn.onclick = (e) => {
+                e.stopPropagation();
+                shiftDocOrder(docId, fromPulpit, 1);
+            };
+
+            const moveBtn = document.createElement('button');
+            moveBtn.type = 'button';
+            moveBtn.className = 'pulpit_mini_btn move_btn';
+            moveBtn.textContent = fromPulpit ? 'Do pozostałych' : 'Na pulpit';
+            moveBtn.onclick = (e) => {
+                e.stopPropagation();
+                moveSection(docId, fromPulpit);
+            };
+
+            controls.appendChild(upBtn);
+            controls.appendChild(downBtn);
+            controls.appendChild(moveBtn);
+
+            card.appendChild(mainBtn);
+            card.appendChild(arrow);
+            card.appendChild(controls);
+            return card;
+        }
+
+        function renderLists() {
+            const onPulpitEl = document.getElementById('onPulpitList');
+            const otherEl = document.getElementById('otherDocsList');
+            onPulpitEl.innerHTML = '';
+            otherEl.innerHTML = '';
+
+            if (layoutState.onPulpit.length === 0) {
+                onPulpitEl.innerHTML = `
+                    <div class="pulpit_empty_box">
+                        <p class="pulpit_empty_title">Brak dokumentów na pulpicie</p>
+                        <p class="pulpit_empty_desc">Kliknij „Edytuj”, aby przenieść tu dokumenty z sekcji „Pozostałe”.</p>
+                    </div>
+                `;
+            } else {
+                layoutState.onPulpit.forEach((id, i) => {
+                    const el = buildDocCard(id, true, i, layoutState.onPulpit.length);
+                    if (el) onPulpitEl.appendChild(el);
+                });
+            }
+
+            if (layoutState.other.length === 0) {
+                otherEl.innerHTML = `
+                    <div class="pulpit_empty_box">
+                        <p class="pulpit_empty_title">Chcesz przenieść tu dokument z pulpitu?</p>
+                        <p class="pulpit_empty_desc">Użyj przycisku Edytuj w prawym górnym rogu.</p>
+                    </div>
+                `;
+            } else {
+                layoutState.other.forEach((id, i) => {
+                    const el = buildDocCard(id, false, i, layoutState.other.length);
+                    if (el) otherEl.appendChild(el);
+                });
+            }
+        }
+
+        loadLayoutState();
+        renderLists();
+    </script>
+</body>
+</html>

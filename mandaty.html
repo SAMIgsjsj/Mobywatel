@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoiIiwic2hvcnRfbmFtZSI6IiIsInRoZW1lX2NvbG9yIjoiI2Y1ZjZmYiIsImJhY2tncm91bmRfY29sb3IiOiIjZjVmNmZiIiwiZGlzcGxheSI6InN0YW5kYWxvbmUifQ==">
+    <title>mObywatel</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <link rel="stylesheet" href="assets/main.css">
+    <link rel="icon" type="image/x-icon" href="assets/images/logo.png">
+    <link rel="apple-touch-icon" href="assets/images/logo.png">
+    <link rel="shortcut icon" href="assets/images/logo.png">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, initial-scale=0.8, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            background-color: #f6f7fb;
+            color: #111827;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
+        }
+
+        .fines_topbar {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            display: grid;
+            grid-template-columns: 92px 1fr 92px;
+            align-items: center;
+            padding: 16px 14px 10px;
+            background-color: #f6f7fb;
+        }
+
+        .fines_back_btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            border: none;
+            background: transparent;
+            color: #1665e3;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            padding: 4px 2px;
+            justify-self: start;
+        }
+
+        .fines_back_btn svg {
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+        }
+
+        .fines_header_title {
+            margin: 0;
+            text-align: center;
+            font-size: 17px;
+            font-weight: 700;
+            color: #111827;
+        }
+
+        .fines_help_btn {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: 1.6px solid #4b5563;
+            background: transparent;
+            color: #374151;
+            font-size: 15px;
+            font-weight: 600;
+            line-height: 1;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            justify-self: end;
+            padding: 0;
+        }
+
+        .fines_help_btn:active {
+            background-color: rgba(17, 24, 39, 0.06);
+        }
+
+        .fines_tabs_wrap {
+            max-width: 460px;
+            margin: 0 auto;
+            padding: 6px 16px 8px;
+            box-sizing: border-box;
+        }
+
+        .fines_tabs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            background-color: #e6e8ef;
+            border-radius: 10px;
+            padding: 3px;
+        }
+
+        .fines_tab {
+            border: none;
+            background: transparent;
+            color: #525866;
+            font-size: 14px;
+            font-weight: 600;
+            padding: 7px 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.15s ease, color 0.15s ease;
+        }
+
+        .fines_tab.active {
+            background-color: #ffffff;
+            color: #111827;
+            box-shadow: 0 1px 4px rgba(15, 23, 42, 0.08);
+        }
+
+        .fines_main {
+            min-height: calc(100vh - 190px);
+            max-width: 460px;
+            margin: 0 auto;
+            padding: 24px 24px 124px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        .fines_tray_icon {
+            width: 86px;
+            height: 70px;
+            margin-bottom: 24px;
+            color: #0b4da2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .fines_tray_icon svg {
+            width: 82px;
+            height: 64px;
+        }
+
+        .fines_empty_title {
+            margin: 0 0 14px;
+            font-size: 22px;
+            line-height: 1.25;
+            font-weight: 800;
+            color: #111827;
+            letter-spacing: -0.3px;
+        }
+
+        .fines_empty_desc {
+            margin: 0;
+            max-width: 310px;
+            font-size: 14.5px;
+            line-height: 1.48;
+            color: #525866;
+        }
+
+        .fines_help_note {
+            display: none;
+            margin-top: 22px;
+            max-width: 340px;
+            background-color: #ffffff;
+            border-radius: 14px;
+            padding: 14px 16px;
+            box-shadow: 0 2px 10px rgba(15, 23, 42, 0.04);
+            border-left: 4px solid #0b4da2;
+            font-size: 13px;
+            line-height: 1.5;
+            color: #4b5563;
+            text-align: left;
+        }
+
+        .fines_help_note.open {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <header class="fines_topbar">
+        <button type="button" class="fines_back_btn" onclick="sendTo('services')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+            <span>Usługi</span>
+        </button>
+        <h1 class="fines_header_title">Mandaty</h1>
+        <button type="button" class="fines_help_btn" onclick="toggleHelpNote()" aria-label="Pomoc">?</button>
+    </header>
+
+    <div class="fines_tabs_wrap">
+        <div class="fines_tabs" role="tablist" aria-label="Status mandatów">
+            <button type="button" class="fines_tab active" id="tabUnpaid" role="tab" aria-selected="true" onclick="switchFinesTab('unpaid')">Nieopłacone</button>
+            <button type="button" class="fines_tab" id="tabPaid" role="tab" aria-selected="false" onclick="switchFinesTab('paid')">Opłacone</button>
+        </div>
+    </div>
+
+    <div class="bottom_bar" style="height: 85px;">
+        <div class="bottom_bar_grid">
+            <div class="bottom_element_grid" send="home">
+                <div class="bottom_element_image home"></div>
+                <p class="bottom_element_text">Pulpit</p>
+            </div>
+            <div class="bottom_element_grid" send="documents">
+                <div class="bottom_element_image documents"></div>
+                <p class="bottom_element_text">Dokumenty</p>
+            </div>
+            <div class="bottom_element_grid" send="services">
+                <div class="bottom_element_image services services_open"></div>
+                <p class="bottom_element_text open">Usługi</p>
+            </div>
+            <div class="bottom_element_grid" send="qr">
+                <div class="bottom_element_image qr"></div>
+                <p class="bottom_element_text">Kod QR</p>
+            </div>
+            <div class="bottom_element_grid" send="more">
+                <div class="bottom_element_image more"></div>
+                <p class="bottom_element_text">Więcej</p>
+            </div>
+        </div>
+    </div>
+
+    <main class="fines_main">
+        <div class="fines_tray_icon" aria-hidden="true">
+            <svg viewBox="0 0 88 68" fill="none" stroke="#0b4da2" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 10H66L79 42V56C79 58.2 77.2 60 75 60H13C10.8 60 9 58.2 9 56V42L22 10Z"></path>
+                <path d="M9 42H29L35 50H53L59 42H79"></path>
+            </svg>
+        </div>
+
+        <h2 class="fines_empty_title" id="finesTitle">Nie masz mandatów<br>do zapłaty</h2>
+        <p class="fines_empty_desc" id="finesDesc">
+            Jeśli niedawno wypisano Ci mandat, zobaczysz go tu, gdy policjant lub inny funkcjonariusz wprowadzi go do systemu.
+        </p>
+
+        <div class="fines_help_note" id="finesHelpNote">
+            Widok prezentuje zestawienie mandatów nałożonych elektronicznie i widocznych w systemie. Brak wpisów oznacza, że na tym koncie nie odnotowano mandatów w wybranej zakładce.
+        </div>
+    </main>
+
+    <script src="assets/bar.js"></script>
+    <script src="assets/manifest.js"></script>
+    <script src="assets/cache.js"></script>
+    <script>
+        function sendTo(page) {
+            const query = window.location.search;
+            location.href = query ? `${page}.html${query}` : `${page}.html`;
+        }
+
+        function switchFinesTab(tab) {
+            const tabUnpaid = document.getElementById('tabUnpaid');
+            const tabPaid = document.getElementById('tabPaid');
+            const titleEl = document.getElementById('finesTitle');
+            const descEl = document.getElementById('finesDesc');
+
+            if (tab === 'paid') {
+                tabPaid.classList.add('active');
+                tabPaid.setAttribute('aria-selected', 'true');
+                tabUnpaid.classList.remove('active');
+                tabUnpaid.setAttribute('aria-selected', 'false');
+                titleEl.innerHTML = 'Brak opłaconych<br>mandatów';
+                descEl.textContent = 'Nie masz jeszcze żadnych opłaconych mandatów odnotowanych w historii.';
+            } else {
+                tabUnpaid.classList.add('active');
+                tabUnpaid.setAttribute('aria-selected', 'true');
+                tabPaid.classList.remove('active');
+                tabPaid.setAttribute('aria-selected', 'false');
+                titleEl.innerHTML = 'Nie masz mandatów<br>do zapłaty';
+                descEl.textContent = 'Jeśli niedawno wypisano Ci mandat, zobaczysz go tu, gdy policjant lub inny funkcjonariusz wprowadzi go do systemu.';
+            }
+        }
+
+        function toggleHelpNote() {
+            const note = document.getElementById('finesHelpNote');
+            note.classList.toggle('open');
+        }
+    </script>
+</body>
+</html>
