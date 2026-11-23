@@ -64,6 +64,24 @@
         <span class="placeholder">Numer PESEL</span>
         <p class="error">To pole jest wymagane</p>
     </div>
+
+    <div class="input_holder">
+        <input type="text" id="cardNumber" class="input" placeholder="">
+        <span class="placeholder">Numer legitymacji</span>
+        <p class="error">To pole jest wymagane</p>
+    </div>
+
+    <div class="input_holder">
+        <input type="text" id="cardGivenDate" class="input" placeholder="">
+        <span class="placeholder">Data wydania legitymacji</span>
+        <p class="error">To pole jest wymagane</p>
+    </div>
+
+    <div class="input_holder">
+        <input type="text" id="cardExpiryDate" class="input" placeholder="">
+        <span class="placeholder">Termin ważności legitymacji</span>
+        <p class="error">To pole jest wymagane</p>
+    </div>
     
     <div class="input_holder">
         <input type="text" id="nationality" class="input" placeholder="">
@@ -241,6 +259,9 @@
                 name: document.getElementById('name')?.value.trim() || '',
                 surname: document.getElementById('surname')?.value.trim() || '',
                 pesel: document.getElementById('pesel')?.value.trim() || '',
+                cardNumber: document.getElementById('cardNumber')?.value.trim() || '',
+                cardGivenDate: document.getElementById('cardGivenDate')?.value.trim() || '',
+                cardExpiryDate: document.getElementById('cardExpiryDate')?.value.trim() || '',
                 nationality: document.getElementById('nationality')?.value.trim() || '',
                 birthDate: {
                     day: birthDay,
