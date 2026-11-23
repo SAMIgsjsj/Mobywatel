@@ -34,6 +34,41 @@
 
     <meta name="mobile-web-app-capable" content="yes">
 
+    <style>
+        html,
+        body,
+        .container {
+            background-color: #FFEFD5 !important;
+        }
+
+        .top_grid_fixed {
+            background-color: #FFEFD5 !important;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+        }
+
+        .back_arrow_btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .back_arrow_btn .back_img_fixed {
+            display: block;
+            cursor: pointer;
+        }
+
+        .back_arrow_fallback {
+            font-size: 28px;
+            line-height: 1;
+            font-weight: 600;
+            color: #0b4ea2;
+        }
+    </style>
+
 </head>
 
 <body>
@@ -42,13 +77,14 @@
 
         <div class="action_grid_fixed">
 
-            <img src="assets/images/back_blue.png" class="back_img_fixed">
-
-            <p onclick="sendTo('home')" class="back_text_fixed">Wróć</p>
+            <div class="back_arrow_btn" onclick="sendTo('home')" role="button" tabindex="0" aria-label="Wróć">
+                <img src="assets/images/back_blue.png" class="back_img_fixed" alt="Wróć" onload="if(this.nextElementSibling)this.nextElementSibling.style.display='none'" onerror="this.style.display='none';if(this.nextElementSibling)this.nextElementSibling.style.display='inline'">
+                <span class="back_arrow_fallback" style="display:none;">‹</span>
+            </div>
 
         </div>
 
-        <p class="title_text_fixed">mLegitymacja</p>
+        <p class="title_text_fixed">Legitymacja szkolna</p>
 
         <img src="assets/images/help.png" class="help_img_fixed">
 
