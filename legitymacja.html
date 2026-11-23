@@ -43,29 +43,46 @@
 
         .top_grid_fixed {
             background-color: #FFEFD5 !important;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+            padding-top: 22px !important;
+            padding-bottom: 14px !important;
+            min-height: 76px;
+            box-sizing: border-box;
         }
 
-        .back_arrow_btn {
+        .container {
+            padding-top: 96px !important;
+        }
+
+        .container .time_text {
+            margin-top: 12px !important;
+            margin-bottom: 14px !important;
+        }
+
+        .back_btn_group {
             display: inline-flex;
             align-items: center;
-            justify-content: center;
-            width: 36px;
-            height: 36px;
+            gap: 6px;
             cursor: pointer;
             user-select: none;
+            padding: 4px 2px;
         }
 
-        .back_arrow_btn .back_img_fixed {
+        .back_btn_group .back_img_fixed {
+            margin: 0 !important;
             display: block;
-            cursor: pointer;
+        }
+
+        .back_btn_group .back_text_fixed {
+            margin: 0 !important;
+            display: inline-block;
         }
 
         .back_arrow_fallback {
-            font-size: 28px;
+            font-size: 24px;
             line-height: 1;
-            font-weight: 600;
+            font-weight: 500;
             color: #0b4ea2;
+            margin-top: -1px;
         }
     </style>
 
@@ -77,9 +94,10 @@
 
         <div class="action_grid_fixed">
 
-            <div class="back_arrow_btn" onclick="sendTo('home')" role="button" tabindex="0" aria-label="Wróć">
-                <img src="assets/images/back_blue.png" class="back_img_fixed" alt="Wróć" onload="if(this.nextElementSibling)this.nextElementSibling.style.display='none'" onerror="this.style.display='none';if(this.nextElementSibling)this.nextElementSibling.style.display='inline'">
+            <div class="back_btn_group" onclick="sendTo('home')" role="button" tabindex="0" aria-label="Wróć">
+                <img src="assets/images/back_blue.png" class="back_img_fixed" alt="" onload="if(this.nextElementSibling)this.nextElementSibling.style.display='none'" onerror="this.style.display='none';if(this.nextElementSibling)this.nextElementSibling.style.display='inline'">
                 <span class="back_arrow_fallback" style="display:none;">‹</span>
+                <p class="back_text_fixed">Wróć</p>
             </div>
 
         </div>
