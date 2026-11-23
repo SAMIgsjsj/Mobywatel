@@ -2,7 +2,7 @@
 <html lang="pl">
 <head>
     <link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoiIiwic2hvcnRfbmFtZSI6IiIsInRoZW1lX2NvbG9yIjoiI2Y1ZjZmYiIsImJhY2tncm91bmRfY29sb3IiOiIjZjVmNmZiIiwiZGlzcGxheSI6InN0YW5kYWxvbmUifQ==">
-    <title>mObywatel — Dodaj dokument</title>
+    <title>mObywatel — Dodawanie dokumentów</title>
     <meta charset="UTF-8">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
@@ -16,92 +16,136 @@
     <meta name="viewport" content="width=device-width, initial-scale=0.8, user-scalable=no">
     <meta name="mobile-web-app-capable" content="yes">
     <style>
-        .add_doc_container {
-            padding-top: 76px;
-            padding-bottom: 120px;
+        html,
+        body {
+            background-color: #f5f6fa !important;
+            margin: 0;
+            padding: 0;
+        }
+
+        .add_header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 68px;
+            padding-top: 10px;
+            background-color: #f5f6fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 40;
             box-sizing: border-box;
         }
 
-        .add_doc_heading {
-            margin: 8px 2px 6px;
-            font-size: 20px;
-            font-weight: 700;
-            color: #1f2125;
+        .add_header_title {
+            margin: 0;
+            font-size: 18px;
+            font-weight: 600;
+            color: #1c1e21;
+            text-align: center;
         }
 
-        .add_doc_sub {
-            margin: 0 2px 14px;
-            font-size: 13.5px;
-            line-height: 1.45;
-            color: #525866;
+        .add_close_btn {
+            position: absolute;
+            right: 18px;
+            top: 50%;
+            transform: translateY(-25%);
+            width: 36px;
+            height: 36px;
+            border: none;
+            background: transparent;
+            color: #1665e3;
+            font-size: 24px;
+            line-height: 1;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .add_doc_container {
+            padding: 82px 16px 40px !important;
+            max-width: 540px;
+            margin: 0 auto;
+            box-sizing: border-box;
         }
 
         .add_doc_list {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 12px;
         }
 
         .add_doc_item {
             width: 100%;
+            min-height: 68px;
             border: none;
             background-color: #ffffff;
-            border-radius: 14px;
-            padding: 15px 16px;
-            box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+            border-radius: 16px;
+            padding: 16px 18px;
+            box-shadow: 0 2px 10px rgba(15, 23, 42, 0.04);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 12px;
+            gap: 14px;
             cursor: pointer;
             text-align: left;
             box-sizing: border-box;
+            transition: transform 0.12s ease, background-color 0.12s ease;
+        }
+
+        .add_doc_item:active {
+            transform: scale(0.99);
+            background-color: #f9fafb;
         }
 
         .add_doc_item_left {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 16px;
             min-width: 0;
+            flex: 1;
         }
 
-        .add_doc_icon {
-            width: 38px;
-            height: 38px;
-            border-radius: 10px;
-            background-color: #eef3fe;
-            color: #1665e3;
-            font-size: 14px;
-            font-weight: 700;
+        .add_doc_icon_box {
+            width: 32px;
+            height: 32px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
         }
 
+        .add_doc_icon_box svg {
+            width: 28px;
+            height: 28px;
+            display: block;
+        }
+
         .add_doc_name {
             margin: 0;
-            font-size: 15px;
-            font-weight: 600;
+            font-size: 16.5px;
+            font-weight: 500;
+            line-height: 1.3;
             color: #1f2125;
         }
 
-        .add_doc_desc {
-            margin: 2px 0 0;
-            font-size: 12px;
-            color: #6b7280;
-        }
-
-        .add_doc_arrow {
-            font-size: 20px;
-            color: #6b7280;
+        .add_doc_chevron {
+            width: 20px;
+            height: 20px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: #374151;
             flex-shrink: 0;
         }
 
         .add_doc_card {
             background-color: #ffffff;
             border-radius: 16px;
-            padding: 18px;
+            padding: 20px 18px;
             box-shadow: 0 2px 10px rgba(15, 23, 42, 0.05);
             box-sizing: border-box;
         }
@@ -126,7 +170,7 @@
 
         .add_doc_card_text {
             margin: 0 0 14px;
-            font-size: 13.5px;
+            font-size: 14px;
             line-height: 1.5;
             color: #4b5563;
         }
@@ -151,8 +195,8 @@
             background-color: #f8fafc;
             border-radius: 12px;
             padding: 12px 14px;
-            margin-bottom: 14px;
-            font-size: 13px;
+            margin-bottom: 16px;
+            font-size: 13.5px;
             line-height: 1.5;
             color: #1f2937;
         }
@@ -170,7 +214,7 @@
             color: #ffffff;
             font-size: 15px;
             font-weight: 600;
-            padding: 13px 16px;
+            padding: 14px 16px;
             border-radius: 12px;
             cursor: pointer;
         }
@@ -180,112 +224,196 @@
             border: 1px solid #d1d5db;
             background-color: #ffffff;
             color: #1f2125;
-            font-size: 14px;
+            font-size: 14.5px;
             font-weight: 600;
-            padding: 12px 16px;
+            padding: 13px 16px;
             border-radius: 12px;
             cursor: pointer;
         }
 
         .add_doc_hidden {
-            display: none;
+            display: none !important;
         }
     </style>
 </head>
 <body>
-    <div class="top_grid_fixed">
-        <div class="action_grid_fixed">
-            <img src="assets/images/back_blue.png" class="back_img_fixed" alt="" onerror="this.style.display='none'">
-            <p onclick="handleBackClick()" class="back_text_fixed">Wróć</p>
-        </div>
-        <p class="title_text_fixed">Dodaj dokument</p>
-        <img src="assets/images/help.png" class="help_img_fixed" alt="" onclick="alert('Wybierz dokument z listy, aby zasymulować sprawdzenie w rejestrze i dodanie go do aplikacji.')" onerror="this.style.display='none'">
-    </div>
-
-    <div class="bottom_bar" style="height: 85px;">
-        <div class="bottom_bar_grid">
-            <div class="bottom_element_grid" send="home">
-                <div class="bottom_element_image home"></div>
-                <p class="bottom_element_text">Pulpit</p>
-            </div>
-            <div class="bottom_element_grid" send="documents">
-                <div class="bottom_element_image documents documents_open"></div>
-                <p class="bottom_element_text open">Dokumenty</p>
-            </div>
-            <div class="bottom_element_grid" send="services">
-                <div class="bottom_element_image services"></div>
-                <p class="bottom_element_text">Usługi</p>
-            </div>
-            <div class="bottom_element_grid" send="qr">
-                <div class="bottom_element_image qr"></div>
-                <p class="bottom_element_text">Kod QR</p>
-            </div>
-            <div class="bottom_element_grid" send="more">
-                <div class="bottom_element_image more"></div>
-                <p class="bottom_element_text">Więcej</p>
-            </div>
-        </div>
-    </div>
+    <header class="add_header">
+        <p class="add_header_title" id="headerTitle">Dodawanie dokumentów</p>
+        <button type="button" class="add_close_btn" onclick="handleCloseClick()" aria-label="Zamknij">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1665e3" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+        </button>
+    </header>
 
     <div class="container add_doc_container">
         <div id="stepSelectDoc">
-            <p class="add_doc_heading">Wybierz dokument</p>
-            <p class="add_doc_sub">Wybierz dokument, który chcesz zasymulować i dodać do swojego profilu w aplikacji.</p>
-
             <div class="add_doc_list">
-                <button type="button" class="add_doc_item" onclick="startDocFlow('dowod')">
+                <!-- 1. Legitymacja emeryta-rencisty -->
+                <button type="button" class="add_doc_item" onclick="startDocFlow('emeryt')">
                     <span class="add_doc_item_left">
-                        <span class="add_doc_icon">ID</span>
-                        <span>
-                            <span class="add_doc_name">mDowód</span><br>
-                            <span class="add_doc_desc">Potwierdzenie tożsamości • Rejestr PESEL</span>
+                        <span class="add_doc_icon_box">
+                            <svg viewBox="0 0 28 28" fill="none" aria-hidden="true">
+                                <rect x="3" y="6" width="22" height="18" rx="3" fill="#5D8C3E"/>
+                                <rect x="7" y="3" width="2.5" height="5" rx="1.25" fill="#5D8C3E"/>
+                                <rect x="18.5" y="3" width="2.5" height="5" rx="1.25" fill="#5D8C3E"/>
+                                <path d="M14 19.6C14 19.6 9.5 16.7 9.5 13.7C9.5 12.2 10.6 11.1 12 11.1C12.9 11.1 13.6 11.6 14 12.3C14.4 11.6 15.1 11.1 16 11.1C17.4 11.1 18.5 12.2 18.5 13.7C18.5 16.7 14 19.6 14 19.6Z" fill="#FFFFFF"/>
+                            </svg>
                         </span>
+                        <span class="add_doc_name">Legitymacja emeryta-rencisty</span>
                     </span>
-                    <span class="add_doc_arrow">›</span>
+                    <span class="add_doc_chevron" aria-hidden="true">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </span>
                 </button>
 
+                <!-- 2. Legitymacja poselska -->
+                <button type="button" class="add_doc_item" onclick="startDocFlow('poselska')">
+                    <span class="add_doc_item_left">
+                        <span class="add_doc_icon_box">
+                            <svg viewBox="0 0 28 28" fill="none" aria-hidden="true">
+                                <path d="M14 4L3 10H25L14 4Z" fill="#5B3A29"/>
+                                <rect x="5" y="11" width="18" height="2" fill="#5B3A29"/>
+                                <rect x="6.5" y="13.5" width="2.5" height="8" fill="#5B3A29"/>
+                                <rect x="11" y="13.5" width="2.5" height="8" fill="#5B3A29"/>
+                                <rect x="15.5" y="13.5" width="2.5" height="8" fill="#5B3A29"/>
+                                <rect x="20" y="13.5" width="2.5" height="8" fill="#5B3A29"/>
+                                <rect x="3.5" y="22" width="21" height="2.5" rx="1" fill="#5B3A29"/>
+                            </svg>
+                        </span>
+                        <span class="add_doc_name">Legitymacja poselska</span>
+                    </span>
+                    <span class="add_doc_chevron" aria-hidden="true">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </span>
+                </button>
+
+                <!-- 3. Legitymacja adwokacka -->
+                <button type="button" class="add_doc_item" onclick="startDocFlow('adwokacka')">
+                    <span class="add_doc_item_left">
+                        <span class="add_doc_icon_box">
+                            <svg viewBox="0 0 28 28" fill="none" aria-hidden="true">
+                                <rect x="13" y="5" width="2" height="18" fill="#234E2A"/>
+                                <rect x="8" y="22" width="12" height="2.2" rx="1.1" fill="#234E2A"/>
+                                <path d="M6 8.5H22" stroke="#234E2A" stroke-width="2" stroke-linecap="round"/>
+                                <path d="M7.5 8.5L4.5 15.5H10.5L7.5 8.5Z" stroke="#234E2A" stroke-width="1.6" stroke-linejoin="round"/>
+                                <path d="M4 15.5C4.5 17.5 10.5 17.5 11 15.5H4Z" fill="#234E2A"/>
+                                <path d="M20.5 8.5L17.5 15.5H23.5L20.5 8.5Z" stroke="#234E2A" stroke-width="1.6" stroke-linejoin="round"/>
+                                <path d="M17 15.5C17.5 17.5 23.5 17.5 24 15.5H17Z" fill="#234E2A"/>
+                            </svg>
+                        </span>
+                        <span class="add_doc_name">Legitymacja adwokacka</span>
+                    </span>
+                    <span class="add_doc_chevron" aria-hidden="true">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </span>
+                </button>
+
+                <!-- 4. Moje pojazdy / mPrawo jazdy -->
                 <button type="button" class="add_doc_item" onclick="startDocFlow('prawo_jazdy')">
                     <span class="add_doc_item_left">
-                        <span class="add_doc_icon">PJ</span>
-                        <span>
-                            <span class="add_doc_name">mPrawo jazdy</span><br>
-                            <span class="add_doc_desc">Uprawnienia do kierowania pojazdami • CEPiK</span>
+                        <span class="add_doc_icon_box">
+                            <svg viewBox="0 0 28 28" fill="none" aria-hidden="true">
+                                <path d="M6.5 13L8.6 7.5C9 6.5 9.9 6 11 6H17C18.1 6 19 6.5 19.4 7.5L21.5 13H23C23.8 13 24.5 13.7 24.5 14.5V19.5C24.5 20.1 24 20.5 23.5 20.5H22V22.5C22 23.1 21.5 23.5 21 23.5H19.5C18.9 23.5 18.5 23.1 18.5 22.5V20.5H9.5V22.5C9.5 23.1 9.1 23.5 8.5 23.5H7C6.4 23.5 6 23.1 6 22.5V20.5H4.5C3.9 20.5 3.5 20.1 3.5 19.5V14.5C3.5 13.7 4.2 13 5 13H6.5ZM9.2 12.5H18.8L17.3 8.3H10.7L9.2 12.5ZM7.5 17.5C8.3 17.5 9 16.8 9 16C9 15.2 8.3 14.5 7.5 14.5C6.7 14.5 6 15.2 6 16C6 16.8 6.7 17.5 7.5 17.5ZM20.5 17.5C21.3 17.5 22 16.8 22 16C22 15.2 21.3 14.5 20.5 14.5C19.7 14.5 19 15.2 19 16C19 16.8 19.7 17.5 20.5 17.5Z" fill="#0B3B8C"/>
+                            </svg>
                         </span>
+                        <span class="add_doc_name">Moje pojazdy</span>
                     </span>
-                    <span class="add_doc_arrow">›</span>
+                    <span class="add_doc_chevron" aria-hidden="true">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </span>
                 </button>
 
-                <button type="button" class="add_doc_item" onclick="startDocFlow('szkolna')">
-                    <span class="add_doc_item_left">
-                        <span class="add_doc_icon">LS</span>
-                        <span>
-                            <span class="add_doc_name">Legitymacja szkolna</span><br>
-                            <span class="add_doc_desc">System informacji oświatowej</span>
-                        </span>
-                    </span>
-                    <span class="add_doc_arrow">›</span>
-                </button>
-
-                <button type="button" class="add_doc_item" onclick="startDocFlow('studencka')">
-                    <span class="add_doc_item_left">
-                        <span class="add_doc_icon">ELS</span>
-                        <span>
-                            <span class="add_doc_name">Legitymacja studencka</span><br>
-                            <span class="add_doc_desc">Rejestr uczelni i studentów</span>
-                        </span>
-                    </span>
-                    <span class="add_doc_arrow">›</span>
-                </button>
-
+                <!-- 5. Karta Dużej Rodziny -->
                 <button type="button" class="add_doc_item" onclick="startDocFlow('kdr')">
                     <span class="add_doc_item_left">
-                        <span class="add_doc_icon">KDR</span>
-                        <span>
-                            <span class="add_doc_name">Karta Dużej Rodziny</span><br>
-                            <span class="add_doc_desc">Uprawnienia dla rodzin wielodzietnych</span>
+                        <span class="add_doc_icon_box">
+                            <svg viewBox="0 0 28 28" fill="none" aria-hidden="true">
+                                <circle cx="9" cy="9.5" r="2.6" fill="#2A75E8"/>
+                                <circle cx="19" cy="9.5" r="2.6" fill="#2A75E8"/>
+                                <circle cx="14" cy="12" r="2.1" fill="#2A75E8"/>
+                                <path d="M4.5 19.5C4.5 16.7 6.5 14.8 9 14.8C10.3 14.8 11.4 15.3 12.2 16.1C11 16.8 10.2 18.1 10.2 19.7V21.5H4.5V19.5Z" fill="#2A75E8"/>
+                                <path d="M23.5 19.5C23.5 16.7 21.5 14.8 19 14.8C17.7 14.8 16.6 15.3 15.8 16.1C17 16.8 17.8 18.1 17.8 19.7V21.5H23.5V19.5Z" fill="#2A75E8"/>
+                                <path d="M11 20C11 17.9 12.3 16.5 14 16.5C15.7 16.5 17 17.9 17 20V22H11V20Z" fill="#2A75E8"/>
+                            </svg>
                         </span>
+                        <span class="add_doc_name">Karta Dużej Rodziny</span>
                     </span>
-                    <span class="add_doc_arrow">›</span>
+                    <span class="add_doc_chevron" aria-hidden="true">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </span>
+                </button>
+
+                <!-- 6. Legitymacja szkolna -->
+                <button type="button" class="add_doc_item" onclick="startDocFlow('szkolna')">
+                    <span class="add_doc_item_left">
+                        <span class="add_doc_icon_box">
+                            <svg viewBox="0 0 28 28" fill="none" aria-hidden="true">
+                                <path d="M4 7.5C7.2 6.8 10.8 7.3 13.3 9V21.5C10.8 19.9 7.2 19.4 4 20V7.5Z" fill="#D9304F"/>
+                                <path d="M24 7.5C20.8 6.8 17.2 7.3 14.7 9V21.5C17.2 19.9 20.8 19.4 24 20V7.5Z" fill="#D9304F"/>
+                            </svg>
+                        </span>
+                        <span class="add_doc_name">Legitymacja szkolna</span>
+                    </span>
+                    <span class="add_doc_chevron" aria-hidden="true">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </span>
+                </button>
+
+                <!-- 7. Legitymacja studencka -->
+                <button type="button" class="add_doc_item" onclick="startDocFlow('studencka')">
+                    <span class="add_doc_item_left">
+                        <span class="add_doc_icon_box">
+                            <svg viewBox="0 0 28 28" fill="none" aria-hidden="true">
+                                <path d="M14 5.5L2.5 11.2L14 16.9L23.5 12.2V18.5H25.5V11.2L14 5.5Z" fill="#1D2B44"/>
+                                <path d="M7.5 15.5V19.6C7.5 21.5 10.4 23 14 23C17.6 23 20.5 21.5 20.5 19.6V15.5L14 18.7L7.5 15.5Z" fill="#1D2B44"/>
+                            </svg>
+                        </span>
+                        <span class="add_doc_name">Legitymacja studencka</span>
+                    </span>
+                    <span class="add_doc_chevron" aria-hidden="true">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </span>
+                </button>
+
+                <!-- 8. Legitymacja Ulgowych Usług Transportowych -->
+                <button type="button" class="add_doc_item" onclick="startDocFlow('luut')">
+                    <span class="add_doc_item_left">
+                        <span class="add_doc_icon_box">
+                            <svg viewBox="0 0 28 28" fill="none" aria-hidden="true">
+                                <rect x="6.5" y="4" width="15" height="17" rx="3.5" fill="#1D56B8"/>
+                                <rect x="9" y="7" width="10" height="6" rx="1.2" fill="#FFFFFF"/>
+                                <circle cx="10.2" cy="17.2" r="1.3" fill="#FFFFFF"/>
+                                <circle cx="17.8" cy="17.2" r="1.3" fill="#FFFFFF"/>
+                                <path d="M9.5 21L7.5 24" stroke="#1D56B8" stroke-width="2" stroke-linecap="round"/>
+                                <path d="M18.5 21L20.5 24" stroke="#1D56B8" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                        </span>
+                        <span class="add_doc_name">Legitymacja Ulgowych Usług Transportowych</span>
+                    </span>
+                    <span class="add_doc_chevron" aria-hidden="true">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </span>
+                </button>
+
+                <!-- 9. mPrawo jazdy -->
+                <button type="button" class="add_doc_item" onclick="startDocFlow('prawo_jazdy')">
+                    <span class="add_doc_item_left">
+                        <span class="add_doc_icon_box">
+                            <svg viewBox="0 0 28 28" fill="none" aria-hidden="true">
+                                <rect x="3.5" y="6.5" width="21" height="15" rx="2.8" fill="#1665E3"/>
+                                <circle cx="9.5" cy="12.2" r="2.1" fill="#FFFFFF"/>
+                                <path d="M6.2 17.5C6.2 15.9 7.6 14.8 9.5 14.8C11.4 14.8 12.8 15.9 12.8 17.5H6.2Z" fill="#FFFFFF"/>
+                                <rect x="15" y="10.5" width="6.5" height="1.8" rx="0.9" fill="#FFFFFF"/>
+                                <rect x="15" y="14.2" width="5" height="1.8" rx="0.9" fill="#FFFFFF"/>
+                            </svg>
+                        </span>
+                        <span class="add_doc_name">mPrawo jazdy</span>
+                    </span>
+                    <span class="add_doc_chevron" aria-hidden="true">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </span>
                 </button>
             </div>
         </div>
@@ -328,35 +456,54 @@
     </div>
 
     <script src="assets/encode.js"></script>
-    <script src="assets/bar.js"></script>
     <script src="assets/manifest.js"></script>
     <script src="assets/cache.js"></script>
     <script>
         const DOC_CONFIG = {
-            dowod: {
-                name: 'mDowód',
-                registry: 'Rejestr Dowodów Osobistych / PESEL',
-                targetPage: 'card'
+            emeryt: {
+                name: 'Legitymacja emeryta-rencisty',
+                registry: 'Zakład Ubezpieczeń Społecznych (ZUS)',
+                targetPage: 'documents'
+            },
+            poselska: {
+                name: 'Legitymacja poselska',
+                registry: 'Kancelaria Sejmu RP',
+                targetPage: 'documents'
+            },
+            adwokacka: {
+                name: 'Legitymacja adwokacka',
+                registry: 'Naczelna Rada Adwokacka',
+                targetPage: 'documents'
             },
             prawo_jazdy: {
                 name: 'mPrawo jazdy',
                 registry: 'Centralna Ewidencja Kierowców (CEPiK)',
                 targetPage: 'prawo_jazdy'
             },
+            kdr: {
+                name: 'Karta Dużej Rodziny',
+                registry: 'Rejestr Karty Dużej Rodziny',
+                targetPage: 'documents'
+            },
             szkolna: {
                 name: 'Legitymacja szkolna',
                 registry: 'System Informacji Oświatowej',
-                targetPage: 'documents'
+                targetPage: 'card'
             },
             studencka: {
                 name: 'Legitymacja studencka',
                 registry: 'Zintegrowany System Informacji o Szkolnictwie Wyższym',
                 targetPage: 'documents'
             },
-            kdr: {
-                name: 'Karta Dużej Rodziny',
-                registry: 'Rejestr Karty Dużej Rodziny',
+            luut: {
+                name: 'Legitymacja Ulgowych Usług Transportowych',
+                registry: 'Rejestr Uprawnień Przewozowych',
                 targetPage: 'documents'
+            },
+            dowod: {
+                name: 'mDowód',
+                registry: 'Rejestr Dowodów Osobistych / PESEL',
+                targetPage: 'card'
             }
         };
 
@@ -368,7 +515,7 @@
             location.href = query ? `${page}.html?${query}` : `${page}.html`;
         }
 
-        function handleBackClick() {
+        function handleCloseClick() {
             const verifyVisible = !document.getElementById('stepVerifyDoc').classList.contains('add_doc_hidden');
             const doneVisible = !document.getElementById('stepDoneDoc').classList.contains('add_doc_hidden');
             if (verifyVisible || doneVisible) {
