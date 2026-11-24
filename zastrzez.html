@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-<link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoiIiwic2hvcnRfbmFtZSI6IiIsInRoZW1lX2NvbG9yIjoiI2Y1ZjZmYiIsImJhY2tncm91bmRfY29sb3IiOiIjZjVmNmZiIiwiZGlzcGxheSI6InN0YW5kYWxvbmUifQ==">
-    <title>mObywatel</title>
+    <link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoiIiwic2hvcnRfbmFtZSI6IiIsInRoZW1lX2NvbG9yIjoiI2Y1ZjZmYiIsImJhY2tncm91bmRfY29sb3IiOiIjZjVmNmZiIiwiZGlzcGxheSI6InN0YW5kYWxvbmUifQ==">
+    <title>mObywatel — Zastrzeżenie PESEL</title>
     <meta charset="UTF-8">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
@@ -15,197 +15,404 @@
     <meta name="viewport" content="width=device-width, initial-scale=0.8, user-scalable=no">
     <meta name="mobile-web-app-capable" content="yes">
     <style>
-        html, body {
+        html,
+        body {
             margin: 0;
             padding: 0;
-            background-color: #f5f6fb;
+            background-color: #f5f6fb !important;
             color: #111827;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         }
 
-        .reserve_header {
-            position: sticky;
+        .pesel_top_bar {
+            position: fixed;
             top: 0;
-            z-index: 20;
+            left: 0;
+            right: 0;
+            height: 62px;
+            padding: 8px 14px 0;
+            background-color: #f5f6fb;
             display: flex;
             align-items: center;
-            gap: 12px;
-            padding: 16px 18px;
-            background-color: #f5f6fb;
+            justify-content: center;
+            z-index: 30;
+            box-sizing: border-box;
         }
 
-        .reserve_back_btn {
+        .pesel_back_btn {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-38%);
             display: inline-flex;
             align-items: center;
-            gap: 6px;
+            gap: 4px;
             border: none;
             background: transparent;
-            color: #1d4ed8;
-            font-size: 16px;
-            font-weight: 600;
+            color: #1665e3;
+            font-size: 16.5px;
+            font-weight: 500;
             cursor: pointer;
-            padding: 4px 6px;
+            padding: 6px 8px;
         }
 
-        .reserve_header_title {
+        .pesel_back_chevron {
+            font-size: 23px;
+            line-height: 1;
+            margin-top: -2px;
+        }
+
+        .pesel_header_title {
             margin: 0;
-            font-size: 18px;
-            font-weight: 700;
-            color: #111827;
+            font-size: 17.5px;
+            font-weight: 600;
+            color: #1c1e21;
+            text-align: center;
         }
 
-        .reserve_container {
-            padding: 14px 16px 120px;
-            max-width: 460px;
+        .pesel_main {
+            padding: 76px 16px 175px;
+            max-width: 480px;
             margin: 0 auto;
+            box-sizing: border-box;
         }
 
-        .reserve_card {
+        .pesel_question {
+            margin: 8px 2px 18px;
+            font-size: 22px;
+            font-weight: 700;
+            line-height: 1.25;
+            color: #1c1e21;
+        }
+
+        .pesel_options_card {
             background-color: #ffffff;
             border-radius: 16px;
-            padding: 22px 18px;
             box-shadow: 0 2px 10px rgba(15, 23, 42, 0.04);
+            overflow: hidden;
         }
 
-        .reserve_badge {
-            display: inline-block;
-            padding: 4px 10px;
-            border-radius: 999px;
-            font-size: 12px;
-            font-weight: 700;
-            margin-bottom: 12px;
-            background-color: #eff6ff;
-            color: #1d4ed8;
-        }
-
-        .reserve_badge.reserved {
-            background-color: #ecfdf5;
-            color: #047857;
-        }
-
-        .reserve_title {
-            margin: 0 0 10px;
-            font-size: 20px;
-            font-weight: 700;
-            color: #111827;
-            line-height: 1.3;
-        }
-
-        .reserve_desc {
-            margin: 0 0 14px;
-            font-size: 14.5px;
-            color: #374151;
-            line-height: 1.55;
-        }
-
-        .reserve_list {
-            margin: 0 0 20px;
-            padding-left: 18px;
-            font-size: 13.5px;
-            color: #4b5563;
-            line-height: 1.55;
-        }
-
-        .reserve_list li {
-            margin-bottom: 6px;
-        }
-
-        .reserve_confirm_btn {
-            width: 100%;
-            padding: 14px 16px;
-            border: none;
-            border-radius: 12px;
-            background-color: #1d4ed8;
-            color: #ffffff;
-            font-size: 15.5px;
-            font-weight: 600;
+        .pesel_option_row {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            padding: 18px 16px;
             cursor: pointer;
+            user-select: none;
+            box-sizing: border-box;
         }
 
-        .reserve_confirm_btn:disabled {
-            opacity: 0.7;
-            cursor: default;
+        .pesel_option_row + .pesel_option_row {
+            border-top: 1px solid #eef0f4;
         }
 
-        .reserve_status_box {
+        .pesel_radio_input {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .pesel_radio_ui {
+            width: 22px;
+            height: 22px;
+            min-width: 22px;
+            border-radius: 50%;
+            border: 2px solid #9ca3af;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 2px;
+            box-sizing: border-box;
+            transition: border-color 0.15s ease;
+        }
+
+        .pesel_radio_ui::after {
+            content: "";
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #1665e3;
+            transform: scale(0);
+            transition: transform 0.15s ease;
+        }
+
+        .pesel_radio_input:checked + .pesel_radio_ui {
+            border-color: #1665e3;
+        }
+
+        .pesel_radio_input:checked + .pesel_radio_ui::after {
+            transform: scale(1);
+        }
+
+        .pesel_option_content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .pesel_option_title {
+            margin: 0 0 4px;
+            font-size: 16px;
+            font-weight: 500;
+            line-height: 1.3;
+            color: #1f2125;
+        }
+
+        .pesel_option_sub {
+            margin: 0;
+            font-size: 13.5px;
+            line-height: 1.4;
+            color: #6b7280;
+        }
+
+        .pesel_schedule_box {
+            display: none;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px dashed #e5e7eb;
+            gap: 10px;
+        }
+
+        .pesel_schedule_box.visible {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .pesel_schedule_field label {
+            display: block;
+            font-size: 12px;
+            color: #4b5563;
+            margin-bottom: 4px;
+        }
+
+        .pesel_schedule_field input {
+            width: 100%;
+            padding: 8px 10px;
+            border: 1px solid #d1d5db;
+            border-radius: 10px;
+            font-size: 13.5px;
+            color: #111827;
+            background-color: #f9fafb;
+            box-sizing: border-box;
+        }
+
+        .pesel_status_toast {
             display: none;
             margin-top: 14px;
             padding: 12px 14px;
             border-radius: 12px;
-            background-color: #f8fafc;
-            border: 1px solid #e2e8f0;
+            background-color: #ffffff;
+            box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05);
             font-size: 13.5px;
             font-weight: 600;
             color: #111827;
             text-align: center;
         }
 
-        .reserve_status_box.visible {
+        .pesel_status_toast.visible {
+            display: block;
+        }
+
+        .pesel_cta_wrap {
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 84px;
+            padding: 10px 16px 12px;
+            background: linear-gradient(to top, #f5f6fb 75%, rgba(245, 246, 251, 0));
+            z-index: 25;
+            box-sizing: border-box;
+        }
+
+        .pesel_cta_inner {
+            max-width: 480px;
+            margin: 0 auto;
+        }
+
+        .pesel_primary_btn {
+            width: 100%;
+            padding: 15px 18px;
+            border: none;
+            border-radius: 999px;
+            background-color: #1665e3;
+            color: #ffffff;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(22, 101, 227, 0.22);
+        }
+
+        .pesel_primary_btn:disabled {
+            opacity: 0.65;
+            cursor: default;
+        }
+
+        .pesel_bottom_bar {
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 84px;
+            background-color: #ffffff;
+            border-top: 1px solid #e5e7eb;
+            z-index: 30;
+            box-sizing: border-box;
+        }
+
+        .pesel_bottom_grid {
+            max-width: 520px;
+            height: 100%;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            align-items: center;
+        }
+
+        .pesel_nav_btn {
+            border: none;
+            background: transparent;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            cursor: pointer;
+            padding: 6px 2px;
+            color: #6b7280;
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .pesel_nav_btn.active {
+            color: #1665e3;
+            font-weight: 600;
+        }
+
+        .pesel_nav_btn svg {
+            width: 22px;
+            height: 22px;
             display: block;
         }
     </style>
 </head>
 <body>
-    <header class="reserve_header">
-        <button type="button" class="reserve_back_btn" onclick="sendTo('pesel')">← Wróć</button>
-        <h1 class="reserve_header_title" id="headerTitle">Zastrzeż PESEL</h1>
+    <header class="pesel_top_bar">
+        <button type="button" class="pesel_back_btn" onclick="sendTo('pesel')">
+            <span class="pesel_back_chevron" aria-hidden="true">‹</span>
+            <span>Wróć</span>
+        </button>
+        <h1 class="pesel_header_title" id="headerTitle">Cofnij zastrzeżenie</h1>
     </header>
 
-    <div class="bottom_bar" style="height: 85px;">
-        <div class="bottom_bar_grid">
-            <div class="bottom_element_grid" send="home">
-                <div class="bottom_element_image home_open"></div>
-                <p class="bottom_element_text open">Pulpit</p>
-            </div>
-            <div class="bottom_element_grid" send="documents">
-                <div class="bottom_element_image documents"></div>
-                <p class="bottom_element_text">Dokumenty</p>
-            </div>
-            <div class="bottom_element_grid" send="services">
-                <div class="bottom_element_image services"></div>
-                <p class="bottom_element_text">Usługi</p>
-            </div>
-            <div class="bottom_element_grid" send="qr">
-                <div class="bottom_element_image qr"></div>
-                <p class="bottom_element_text">Kod QR</p>
-            </div>
-            <div class="bottom_element_grid" send="more">
-                <div class="bottom_element_image more"></div>
-                <p class="bottom_element_text">Więcej</p>
-            </div>
+    <main class="pesel_main">
+        <h2 class="pesel_question" id="questionTitle">Czy chcesz cofnąć zastrzeżenie numeru PESEL</h2>
+
+        <div class="pesel_options_card">
+            <label class="pesel_option_row" for="optIndefinite">
+                <input type="radio" class="pesel_radio_input" name="peselActionMode" id="optIndefinite" value="indefinite" checked onchange="onModeChange()">
+                <span class="pesel_radio_ui" aria-hidden="true"></span>
+                <span class="pesel_option_content">
+                    <p class="pesel_option_title" id="optIndefiniteTitle">Cofnij bezterminowo</p>
+                    <p class="pesel_option_sub" id="optIndefiniteSub">W każdej chwili możesz zastrzec go ponownie.</p>
+                </span>
+            </label>
+
+            <label class="pesel_option_row" for="optScheduled">
+                <input type="radio" class="pesel_radio_input" name="peselActionMode" id="optScheduled" value="scheduled" onchange="onModeChange()">
+                <span class="pesel_radio_ui" aria-hidden="true"></span>
+                <span class="pesel_option_content">
+                    <p class="pesel_option_title" id="optScheduledTitle">Cofnij i ustaw ponowne zastrzeżenie</p>
+                    <p class="pesel_option_sub" id="optScheduledSub">Wybierz datę i godzinę zastrzeżenia.</p>
+
+                    <div class="pesel_schedule_box" id="scheduleBox">
+                        <div class="pesel_schedule_field">
+                            <label for="scheduleDate">Data</label>
+                            <input type="date" id="scheduleDate">
+                        </div>
+                        <div class="pesel_schedule_field">
+                            <label for="scheduleTime">Godzina</label>
+                            <input type="time" id="scheduleTime" value="12:00">
+                        </div>
+                    </div>
+                </span>
+            </label>
+        </div>
+
+        <div class="pesel_status_toast" id="statusBox"></div>
+    </main>
+
+    <div class="pesel_cta_wrap">
+        <div class="pesel_cta_inner">
+            <button type="button" class="pesel_primary_btn" id="confirmBtn" onclick="submitPeselAction()">
+                Cofnij zastrzeżenie
+            </button>
         </div>
     </div>
 
-    <main class="reserve_container">
-        <div class="reserve_card">
-            <span class="reserve_badge" id="statusBadge">Obecnie: niezastrzeżony</span>
-            <h2 class="reserve_title" id="cardTitle">Potwierdź zastrzeżenie numeru PESEL</h2>
-            <p class="reserve_desc" id="cardDesc">
-                Po zastrzeżeniu numeru PESEL instytucje i firmy weryfikujące Twój PESEL otrzymają informację o zastrzeżeniu przy czynnościach takich jak zawarcie umowy kredytu czy pożyczki.
-            </p>
-            <ul class="reserve_list" id="infoList">
-                <li>Zastrzeżenie możesz w każdej chwili cofnąć w aplikacji.</li>
-                <li>Zmiana statusu zostanie zapisana w historii Twoich zmian.</li>
-            </ul>
-            <button type="button" class="reserve_confirm_btn" id="confirmBtn" onclick="togglePeselStatus()">
-                Potwierdź i zastrzeż PESEL
+    <nav class="pesel_bottom_bar" aria-label="Nawigacja dolna">
+        <div class="pesel_bottom_grid">
+            <button type="button" class="pesel_nav_btn" onclick="sendTo('documents')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <rect x="4" y="6" width="16" height="13" rx="2"></rect>
+                    <path d="M7 4h10"></path>
+                </svg>
+                <span>Dokumenty</span>
             </button>
-            <div class="reserve_status_box" id="statusBox">Przetwarzanie zmiany statusu...</div>
-        </div>
-    </main>
 
-    <script src="assets/bar.js"></script>
+            <button type="button" class="pesel_nav_btn active" onclick="sendTo('services')">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M3 7.5A2.5 2.5 0 0 1 5.5 5h4.2l1.6 2H18.5A2.5 2.5 0 0 1 21 9.5v8a2.5 2.5 0 0 1-2.5 2.5h-13A2.5 2.5 0 0 1 3 17.5v-10z"></path>
+                </svg>
+                <span>Usługi</span>
+            </button>
+
+            <button type="button" class="pesel_nav_btn" onclick="sendTo('qr')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M4 8V5.5A1.5 1.5 0 0 1 5.5 4H8"></path>
+                    <path d="M16 4h2.5A1.5 1.5 0 0 1 20 5.5V8"></path>
+                    <path d="M20 16v2.5a1.5 1.5 0 0 1-1.5 1.5H16"></path>
+                    <path d="M8 20H5.5A1.5 1.5 0 0 1 4 18.5V16"></path>
+                    <rect x="9" y="9" width="6" height="6" rx="1"></rect>
+                </svg>
+                <span>Kod QR</span>
+            </button>
+
+            <button type="button" class="pesel_nav_btn" onclick="sendTo('home')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <circle cx="11" cy="11" r="6.5"></circle>
+                    <line x1="16" y1="16" x2="21" y2="21"></line>
+                </svg>
+                <span>Szukaj</span>
+            </button>
+
+            <button type="button" class="pesel_nav_btn" onclick="sendTo('more')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <rect x="4" y="4" width="6.5" height="6.5" rx="1.5"></rect>
+                    <rect x="13.5" y="4" width="6.5" height="6.5" rx="1.5"></rect>
+                    <rect x="4" y="13.5" width="6.5" height="6.5" rx="1.5"></rect>
+                    <rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.5"></rect>
+                </svg>
+                <span>Więcej</span>
+            </button>
+        </div>
+    </nav>
+
     <script src="assets/manifest.js"></script>
     <script src="assets/cache.js"></script>
     <script>
         const PESEL_STATUS_KEY = 'mobywatel_pesel_reserved';
         const PESEL_CHANGES_KEY = 'mobywatel_pesel_changes';
+        const PESEL_SCHEDULE_KEY = 'mobywatel_pesel_schedule';
 
         const headerTitle = document.getElementById('headerTitle');
-        const statusBadge = document.getElementById('statusBadge');
-        const cardTitle = document.getElementById('cardTitle');
-        const cardDesc = document.getElementById('cardDesc');
-        const infoList = document.getElementById('infoList');
+        const questionTitle = document.getElementById('questionTitle');
+        const optIndefiniteTitle = document.getElementById('optIndefiniteTitle');
+        const optIndefiniteSub = document.getElementById('optIndefiniteSub');
+        const optScheduledTitle = document.getElementById('optScheduledTitle');
+        const optScheduledSub = document.getElementById('optScheduledSub');
+        const optScheduledInput = document.getElementById('optScheduled');
+        const scheduleBox = document.getElementById('scheduleBox');
+        const scheduleDate = document.getElementById('scheduleDate');
+        const scheduleTime = document.getElementById('scheduleTime');
         const confirmBtn = document.getElementById('confirmBtn');
         const statusBox = document.getElementById('statusBox');
 
@@ -222,35 +429,44 @@
             }
         }
 
+        function onModeChange() {
+            if (!scheduleBox) return;
+            if (optScheduledInput && optScheduledInput.checked) {
+                scheduleBox.classList.add('visible');
+                if (!scheduleDate.value) {
+                    const tomorrow = new Date(Date.now() + 86400000);
+                    scheduleDate.value = tomorrow.toISOString().slice(0, 10);
+                }
+            } else {
+                scheduleBox.classList.remove('visible');
+            }
+        }
+
         function renderReserveScreen() {
             const reserved = isPeselReserved();
 
             if (reserved) {
-                headerTitle.textContent = 'Cofnij zastrzeżenie PESEL';
-                statusBadge.textContent = 'Obecnie: zastrzeżony';
-                statusBadge.classList.add('reserved');
-                cardTitle.textContent = 'Potwierdź cofnięcie zastrzeżenia PESEL';
-                cardDesc.textContent = 'Po cofnięciu zastrzeżenia Twój numer PESEL ponownie będzie widoczny jako niezastrzeżony podczas weryfikacji przez instytucje.';
-                infoList.innerHTML = `
-                    <li>PESEL możesz ponownie zastrzec w dowolnym momencie.</li>
-                    <li>Zmiana statusu zostanie zapisana w historii Twoich zmian.</li>
-                `;
-                confirmBtn.textContent = 'Potwierdź i cofnij zastrzeżenie';
+                headerTitle.textContent = 'Cofnij zastrzeżenie';
+                questionTitle.textContent = 'Czy chcesz cofnąć zastrzeżenie numeru PESEL';
+                optIndefiniteTitle.textContent = 'Cofnij bezterminowo';
+                optIndefiniteSub.textContent = 'W każdej chwili możesz zastrzec go ponownie.';
+                optScheduledTitle.textContent = 'Cofnij i ustaw ponowne zastrzeżenie';
+                optScheduledSub.textContent = 'Wybierz datę i godzinę zastrzeżenia.';
+                confirmBtn.textContent = 'Cofnij zastrzeżenie';
             } else {
                 headerTitle.textContent = 'Zastrzeż PESEL';
-                statusBadge.textContent = 'Obecnie: niezastrzeżony';
-                statusBadge.classList.remove('reserved');
-                cardTitle.textContent = 'Potwierdź zastrzeżenie numeru PESEL';
-                cardDesc.textContent = 'Po zastrzeżeniu numeru PESEL instytucje i firmy weryfikujące Twój PESEL otrzymają informację o zastrzeżeniu przy czynnościach takich jak zawarcie umowy kredytu czy pożyczki.';
-                infoList.innerHTML = `
-                    <li>Zastrzeżenie możesz w każdej chwili cofnąć w aplikacji.</li>
-                    <li>Zmiana statusu zostanie zapisana w historii Twoich zmian.</li>
-                `;
-                confirmBtn.textContent = 'Potwierdź i zastrzeż PESEL';
+                questionTitle.textContent = 'Czy chcesz zastrzec numer PESEL';
+                optIndefiniteTitle.textContent = 'Zastrzeż bezterminowo';
+                optIndefiniteSub.textContent = 'W każdej chwili możesz cofnąć zastrzeżenie.';
+                optScheduledTitle.textContent = 'Zastrzeż od wybranej daty i godziny';
+                optScheduledSub.textContent = 'Wybierz datę i godzinę rozpoczęcia zastrzeżenia.';
+                confirmBtn.textContent = 'Zastrzeż PESEL';
             }
+
+            onModeChange();
         }
 
-        function appendChangeLog(newReservedState) {
+        function appendChangeLog(labelText) {
             try {
                 const raw = localStorage.getItem(PESEL_CHANGES_KEY);
                 const list = raw ? JSON.parse(raw) : [];
@@ -259,7 +475,7 @@
                 const dateStr = now.toLocaleDateString('pl-PL', { day: '2-digit', month: '2-digit', year: 'numeric' });
 
                 list.unshift({
-                    label: newReservedState ? 'Zastrzeżono numer PESEL' : 'Cofnięto zastrzeżenie numeru PESEL',
+                    label: labelText,
                     date: `${dateStr}, ${timeStr}`
                 });
 
@@ -267,29 +483,55 @@
             } catch (e) {}
         }
 
-        function togglePeselStatus() {
-            const nextState = !isPeselReserved();
+        function submitPeselAction() {
+            const currentlyReserved = isPeselReserved();
+            const isScheduled = !!(optScheduledInput && optScheduledInput.checked);
+            const chosenDate = scheduleDate ? scheduleDate.value : '';
+            const chosenTime = scheduleTime ? scheduleTime.value : '';
+
             confirmBtn.disabled = true;
-            statusBox.textContent = nextState
-                ? 'Zastrzeganie numeru PESEL...'
-                : 'Cofanie zastrzeżenia numeru PESEL...';
+            statusBox.textContent = currentlyReserved
+                ? 'Cofanie zastrzeżenia numeru PESEL...'
+                : 'Zastrzeganie numeru PESEL...';
             statusBox.classList.add('visible');
 
             setTimeout(() => {
                 try {
-                    localStorage.setItem(PESEL_STATUS_KEY, String(nextState));
+                    if (currentlyReserved) {
+                        localStorage.setItem(PESEL_STATUS_KEY, 'false');
+                        if (isScheduled && chosenDate) {
+                            localStorage.setItem(PESEL_SCHEDULE_KEY, JSON.stringify({
+                                date: chosenDate,
+                                time: chosenTime || '12:00'
+                            }));
+                            appendChangeLog(`Cofnięto zastrzeżenie (ponowne od ${chosenDate} ${chosenTime || '12:00'})`);
+                            statusBox.textContent = `Cofnięto zastrzeżenie. Ponowne zastrzeżenie: ${chosenDate} ${chosenTime || '12:00'}.`;
+                        } else {
+                            localStorage.removeItem(PESEL_SCHEDULE_KEY);
+                            appendChangeLog('Cofnięto zastrzeżenie numeru PESEL');
+                            statusBox.textContent = 'Zastrzeżenie numeru PESEL zostało cofnięte.';
+                        }
+                    } else {
+                        localStorage.setItem(PESEL_STATUS_KEY, 'true');
+                        if (isScheduled && chosenDate) {
+                            localStorage.setItem(PESEL_SCHEDULE_KEY, JSON.stringify({
+                                date: chosenDate,
+                                time: chosenTime || '12:00'
+                            }));
+                            appendChangeLog(`Zastrzeżono numer PESEL (od ${chosenDate} ${chosenTime || '12:00'})`);
+                            statusBox.textContent = `Numer PESEL zastrzeżony (od ${chosenDate} ${chosenTime || '12:00'}).`;
+                        } else {
+                            localStorage.removeItem(PESEL_SCHEDULE_KEY);
+                            appendChangeLog('Zastrzeżono numer PESEL bezterminowo');
+                            statusBox.textContent = 'Twój numer PESEL jest teraz zastrzeżony.';
+                        }
+                    }
                 } catch (e) {}
-
-                appendChangeLog(nextState);
-
-                statusBox.textContent = nextState
-                    ? 'Twój numer PESEL jest teraz zastrzeżony.'
-                    : 'Zastrzeżenie numeru PESEL zostało cofnięte.';
 
                 setTimeout(() => {
                     sendTo('pesel');
                 }, 700);
-            }, 1200);
+            }, 900);
         }
 
         renderReserveScreen();
